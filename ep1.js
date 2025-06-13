@@ -1,24 +1,40 @@
+let typingIndex = 0;
+let typingText = '';
+let typingInterval;
+let isTyping = false;
 
-function choose(option) {
-  const messages = [
-    "You head out with your friends and find a picnic surprise — there's even your favorite drink! 🍹",
-    "You turn off the lights, grab a blanket, and binge your favorite dramas. So many feels 😭💕",
-    "You open the mysterious box... it’s a letter from future-you saying: 'You're doing amazing, sweetie!' 💌",
-    "You sleep in. Like a queen. And you dream of cake falling from the sky. 🍰💤"
-  ];
+function typeText(text) {
+  const textElement = document.getElementById('result-text');
+  clearInterval(typingInterval);
+  typingText = text;
+  typingIndex = 0;
+  textElement.innerText = '';
+  isTyping = true;
 
-  const resultDiv = document.getElementById('result');
-  resultDiv.classList.remove('hidden');
-  resultDiv.innerHTML = '';
-
-  const text = messages[option];
-  let i = 0;
-  function typeChar() {
-    if (i < text.length) {
-      resultDiv.innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typeChar, 30);
+  typingInterval = setInterval(() => {
+    if (typingIndex < typingText.length) {
+      textElement.innerText += typingText.charAt(typingIndex);
+      typingIndex++;
+    } else {
+      clearInterval(typingInterval);
+      isTyping = false;
     }
+  }, 40);
+}
+
+function chooseOption(option) {
+  if (isTyping) {
+    clearInterval(typingInterval);
+    document.getElementById('result-text').innerText = typingText;
+    isTyping = false;
+    return;
   }
-  typeChar();
+
+  if (option === 'coffee') {
+    typeText("☕ You chose coffee — the fuel of legends!");
+  } else if (option === 'juice') {
+    typeText("🍹 You chose your favorite drink! Refreshing!");
+  } else {
+    typeText("🌟 A surprise? You're full of mystery and sparkle!");
+  }
 }
