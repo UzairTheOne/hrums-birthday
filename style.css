@@ -96,3 +96,17 @@ body.starry .card{
   box-shadow:0 0 25px rgba(102,102,255,.4)
 }
 body.starry .portrait{border-color:#8d8dff;box-shadow:0 0 20px #8d8dff}
+
+.ep1-button {
+  background-color: #f8bfe6;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 18px;
+  display: inline-block;
+  margin-top: 20px;
+}
+.ep1-button:hover {
+  background-color: #f49fcf;
+}
