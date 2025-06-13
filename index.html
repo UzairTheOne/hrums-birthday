@@ -44,19 +44,31 @@
   <!-- MAIN JS -->
   <script src="script.js"></script>
 
-  <audio id="bgMusic" autoplay loop hidden></audio>
+  <audio id="audioPlayer"></audio>
 
 <script>
-  const playlist = ['song1.mp3', 'song2.mp3', 'song3.mp3'];
-  let index = 0;
-  const audio = document.getElementById('bgMusic');
-  audio.src = playlist[index];
-  audio.play();
+  const playlist = ['Song1.mp3', 'Song2.mp3', 'Song3.mp3'];
+  let currentTrack = 0;
+  const audio = document.getElementById('audioPlayer');
 
-  audio.addEventListener('ended', () => {
-    index = (index + 1) % playlist.length;
-    audio.src = playlist[index];
+  function playPlaylist() {
+    audio.src = playlist[currentTrack];
+    audio.load();
     audio.play();
+
+    audio.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % playlist.length;
+      audio.src = playlist[currentTrack];
+      audio.load();
+      audio.play();
+    });
+  }
+
+  // Play when user clicks anywhere
+  document.addEventListener('click', () => {
+    if (audio.paused) {
+      playPlaylist();
+    }
   });
 </script>
 
