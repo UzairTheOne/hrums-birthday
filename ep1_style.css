@@ -1,51 +1,52 @@
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #ffeef8;
-  margin: 0;
-  padding: 20px;
-  color: #333;
+  background-color: #fff0f5;
+  font-family: Arial, sans-serif;
   text-align: center;
+  padding: 40px;
+}
+
+.korean-font {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 24px;
 }
 
 .container {
-  max-width: 600px;
-  margin: auto;
-  background: white;
-  border-radius: 15px;
-  padding: 30px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-h1 {
-  color: #d14ba6;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .subtitle {
-  margin-bottom: 20px;
-  color: #666;
+  font-size: 20px;
+  color: #555;
+  margin-top: 20px;
 }
 
-.choices button {
-  margin: 10px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #ffd5ec;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease;
-}
-
-.choices button:hover {
-  background-color: #ffbee3;
-}
-
-.result {
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
   margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.btn-group button {
+  background-color: #ffd6e8;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
   font-size: 18px;
-  font-weight: bold;
-  color: #5e3c6f;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-group button:hover {
+  background-color: #ffc0cb;
+}
+
+#result-text {
+  margin-top: 40px;
+  font-size: 22px;
+  color: #333;
   min-height: 60px;
 }
 
