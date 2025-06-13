@@ -1,23 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Haru's Birthday Surprise</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Happy Birthday Haru 💖</title>
+
+  <!-- Main CSS -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Particles + Confetti libraries-->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
+
 <body>
+  <!-- PRELOADER -->
   <div id="preloader"><div class="loader">🎉</div></div>
+
+  <!-- SPARKLE LAYER -->
   <div id="sparkles"></div>
-  <div class="content">
-    <h1 class="title">생일 축하해요, Haru Chan 🎂</h1>
-    <p class="subtitle">You're one of the most hardworking, loving, and fun people I know.</p>
-    <img src="hrum-digital-art.png" alt="Haru Art" class="birthday-img" />
-    <button class="confetti-btn" onclick="runConfetti()">🎊 Celebrate!</button>
-  </div>
+
+  <!-- THEME TOGGLE / EASTER‑EGG ICON -->
+  <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
+
+  <!-- MAIN CARD -->
+  <main class="card">
+      <h1>Happy Birthday Hrum 💕</h1>
+      <h3 class="korean">해피버스데이 하루짱 💐</h3>
+      <h2>To: Noona • Haru • Haru‑chan</h2>
+
+      <!-- your image -->
+      <img src="art.png" alt="Digital art of Hrum" class="portrait">
+
+      <p class="message">
+        I built you a tiny K‑drama universe because you’re the star today.  
+        Smile wide — the next episodes are full of surprises 🎬✨
+      </p>
+
+      <audio controls>
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_abb51f9561.mp3?filename=snowflake-12690.mp3" type="audio/mp3">
+      </audio>
+
+      <button class="confetti-btn" onclick="runConfetti()">🎊 Celebrate!</button>
+  </main>
+
+  <!-- MAIN JS -->
   <script src="script.js"></script>
 </body>
 </html>
