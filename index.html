@@ -37,23 +37,19 @@
         Smile wide — the next episodes are full of surprises 🎬✨
       </p>
 
-      <audio controls>
-        <source src="https://youtu.be/l08Zw-RY__Q?si=AOPP02OJcmPDgUsF">
-      </audio>
-
       <button class="confetti-btn" onclick="runConfetti()">🎊 Celebrate!</button>
   </main>
 
   <!-- MAIN JS -->
   <script src="script.js"></script>
 
-  <div style="display: none;">
+  <div style="position: absolute; width: 0; height: 0; overflow: hidden;">
   <iframe 
-    src="https://www.youtube.com/embed/l08Zw-RY__Q?autoplay=1&loop=1&playlist=l08Zw-RY__Q" 
+    src="https://www.youtube.com/embed/l08Zw-RY__Q?autoplay=1&mute=1&loop=1&playlist=l08Zw-RY__Q" 
     frameborder="0" 
-    allow="autoplay"
-    allowfullscreen
-  ></iframe>
+    allow="autoplay" 
+    allowfullscreen>
+  </iframe>
 </div>
 
 </body>
