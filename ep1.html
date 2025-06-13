@@ -1,13 +1,37 @@
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <title>Episode 1: Choose Your Birthday</title>
   <link rel="stylesheet" href="ep1_style.css">
   <script defer src="ep1.js"></script>
 </head>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const colors = ["#ffb6c1", "#ffc0cb", "#ff69b4", "#ff1493", "#db7093"];
+  const sparkles = [];
+
+  document.addEventListener("mousemove", function (e) {
+    for (let i = 0; i < 3; i++) {
+      let sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.style.left = `${e.pageX + (Math.random() * 10 - 5)}px`;
+      sparkle.style.top = `${e.pageY + (Math.random() * 10 - 5)}px`;
+      sparkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      document.body.appendChild(sparkle);
+      sparkles.push(sparkle);
+
+      setTimeout(() => {
+        sparkle.remove();
+      }, 500);
+    }
+  });
+});
+</script>
+
 <body class="light">
   <div class="container">
     <h1>🎀 Episode 1: Choose Your Birthday 🎀</h1>
