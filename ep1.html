@@ -9,28 +9,50 @@
   <script defer src="ep1.js"></script>
 </head>
 
-  <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const colors = ["#ffb6c1", "#ffc0cb", "#ff69b4", "#ff1493", "#db7093"];
-  const sparkles = [];
+ <script>
+let typingIndex = 0;
+let typingText = '';
+let typingInterval;
+let isTyping = false;
 
-  document.addEventListener("mousemove", function (e) {
-    for (let i = 0; i < 3; i++) {
-      let sparkle = document.createElement("div");
-      sparkle.className = "sparkle";
-      sparkle.style.left = `${e.pageX + (Math.random() * 10 - 5)}px`;
-      sparkle.style.top = `${e.pageY + (Math.random() * 10 - 5)}px`;
-      sparkle.style.background = colors[Math.floor(Math.random() * colors.length)];
-      document.body.appendChild(sparkle);
-      sparkles.push(sparkle);
+function typeText(text) {
+  const textElement = document.getElementById('ep1-text');
+  clearInterval(typingInterval); // Stop previous typing loop
+  typingText = text;
+  typingIndex = 0;
+  textElement.innerText = '';
+  isTyping = true;
 
-      setTimeout(() => {
-        sparkle.remove();
-      }, 500);
+  typingInterval = setInterval(() => {
+    if (typingIndex < typingText.length) {
+      textElement.innerText += typingText.charAt(typingIndex);
+      typingIndex++;
+    } else {
+      clearInterval(typingInterval);
+      isTyping = false;
     }
-  });
-});
+  }, 40);
+}
+
+function chooseOption(option) {
+  if (isTyping) {
+    // skip to final text if clicked too early
+    clearInterval(typingInterval);
+    document.getElementById('ep1-text').innerText = typingText;
+    isTyping = false;
+    return;
+  }
+
+  if (option === 'coffee') {
+    typeText("☕ You chose coffee — the fuel of legends!");
+  } else if (option === 'juice') {
+    typeText("🍹 You chose your favorite drink! Refreshing!");
+  } else {
+    typeText("🌟 A surprise? You're full of mystery and sparkle!");
+  }
+}
 </script>
+
 
 <body class="light">
   <div class="container">
@@ -46,5 +68,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <div id="result" class="result hidden"></div>
   </div>
+
+  <div>
+  <button onclick="chooseOption('coffee')">Coffee</button>
+  <button onclick="chooseOption('juice')">Juice</button>
+  <button onclick="chooseOption('surprise')">Surprise</button>
+</div>
+
+<p id="ep1-text" class="korean-font"></p>
+
 </body>
 </html>
