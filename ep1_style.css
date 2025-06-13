@@ -68,3 +68,10 @@ h1 {
 @keyframes blink {
   50% { border-color: transparent }
 }
+
+@keyframes sparkleFade {
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.6);
+  }
+}
