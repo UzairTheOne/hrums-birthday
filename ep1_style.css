@@ -8,6 +8,13 @@ body {
   text-align: center;
 }
 
+.korean-font {
+  font-family: 'Nanum Pen Script', cursive;
+}
+
+<h1 class="korean-font">하루짱의 생일 스페셜 🎉</h1>
+
+
 .container {
   max-width: 600px;
   margin: auto;
