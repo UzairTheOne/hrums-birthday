@@ -37,9 +37,6 @@
         Smile wide — the next episodes are full of surprises 🎬✨
       </p>
 
-     <audio controls>
-        <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_abb51f9561.mp3?filename=snowflake-12690.mp3" type="audio/mp3">
-      </audio>
 
       <button class="confetti-btn" onclick="runConfetti()">🎊 Celebrate!</button>
   </main>
@@ -47,14 +44,22 @@
   <!-- MAIN JS -->
   <script src="script.js"></script>
 
-  <div style="position: absolute; width: 0; height: 0; overflow: hidden;">
-  <iframe 
-    src="https://www.youtube.com/embed/l08Zw-RY__Q?autoplay=1&mute=1&loop=1&playlist=l08Zw-RY__Q" 
-    frameborder="0" 
-    allow="autoplay" 
-    allowfullscreen>
-  </iframe>
-</div>
+  <audio id="bgMusic" autoplay loop hidden></audio>
+
+<script>
+  const playlist = ['song1.mp3', 'song2.mp3', 'song3.mp3'];
+  let index = 0;
+  const audio = document.getElementById('bgMusic');
+  audio.src = playlist[index];
+  audio.play();
+
+  audio.addEventListener('ended', () => {
+    index = (index + 1) % playlist.length;
+    audio.src = playlist[index];
+    audio.play();
+  });
+</script>
+
 
 </body>
 </html>
