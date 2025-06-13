@@ -100,13 +100,18 @@ body.starry .portrait{border-color:#8d8dff;box-shadow:0 0 20px #8d8dff}
 .ep1-button {
   background-color: #f8bfe6;
   color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
-  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 12px;
   font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   display: inline-block;
-  margin-top: 20px;
+  margin-top: 30px;
 }
+
 .ep1-button:hover {
   background-color: #f49fcf;
+  transform: scale(1.05);
 }
