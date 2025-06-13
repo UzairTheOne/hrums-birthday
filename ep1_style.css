@@ -67,3 +67,21 @@ h1 {
 @keyframes blink {
   50% { border-color: transparent }
 }
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 9999;
+  animation: sparkleFade 0.5s ease-out forwards;
+}
+
+@keyframes sparkleFade {
+  to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.6);
+  }
+}
+
