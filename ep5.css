@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fff0f5;--text:#222;--accent:#ffd1dc}
+html,body{
+  height:100%;background:var(--bg);color:var(--text);
+  font-family:'Segoe UI',sans-serif;overflow-x:hidden;
+  display:flex;align-items:center;justify-content:center;
+  transition:.4s;
+}
+body.dark,html.dark{--bg:#1d1d1d;--text:#f0f0f0;--accent:#ff8dc7}
+body.starry,html.starry{background:#000;color:#eee}
+
+/* sparkles */
+#sparkles{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,#ffccff 2px,transparent 2px);
+  background-size:40px 40px;animation:spark 6s linear infinite}
+@keyframes spark{to{background-position:40px 40px}}
+
+.toggle{
+  position:fixed;top:14px;right:20px;padding:.4em .7em;border:none;
+  border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;z-index:3;font-size:1.2rem;
+}
+
+/* card container */
+.card{
+  position:relative;z-index:2;width:90%;max-width:800px;
+  background:rgba(255,255,255,.92);border:2px dashed var(--accent);border-radius:28px;
+  padding:34px 28px;box-shadow:0 0 25px rgba(0,0,0,.15);overflow-y:auto;max-height:90vh;
+}
+body.dark .card{background:rgba(40,40,40,.9)}
+body.starry .card{background:rgba(25,25,35,.9)}
+
+.title{text-align:center;font-size:34px;margin-bottom:24px;color:var(--accent)}
+.korean-font{font-family:'Nanum Pen Script',cursive}
+
+/* timeline */
+.timeline{position:relative;margin:0 auto;border-left:3px solid var(--accent);padding-left:25px}
+.tl-item{margin:22px 0;position:relative}
+.tl-dot{
+  position:absolute;left:-10px;top:4px;width:16px;height:16px;
+  background:var(--accent);border-radius:50%;box-shadow:0 0 0 4px rgba(0,0,0,.05)}
+.tl-year{font-weight:bold;font-size:1.1rem;color:var(--accent)}
+.tl-content p{margin:.4rem 0 0}
+
+/* nav buttons */
+.nav{text-align:center;margin-top:24px}
+.nav-btn{
+  display:inline-block;margin:0 .5rem;padding:.6rem 1.3rem;border-radius:14px;
+  background:var(--accent);color:#fff;text-decoration:none;transition:.3s;
+}
+.nav-btn:hover{transform:scale(1.05)}
