@@ -98,10 +98,15 @@ body.starry .card{
 body.starry .portrait{border-color:#8d8dff;box-shadow:0 0 20px #8d8dff}
 
 .ep1-button {
-  padding:.8rem 1.6rem;font-size:1rem;
-  background:#ffb6c1;border:none;border-radius:20px;
-  cursor:pointer;transition:transform .2s;
-  box-shadow:0 2px 5px rgba(0,0,0,.15)
+  background-color: #f8bfe6;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 18px;
+  display: inline-block;
+  margin-top: 20px;
 }
-
-.ep1-button:hover{transform:scale(1.06)}
+.ep1-button:hover {
+  background-color: #f49fcf;
+}
