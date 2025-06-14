@@ -12,6 +12,7 @@ function toggleTheme(){
 }
 
 
+
 /* SPARKLES */
 tsParticles.load("sparkles",{
   fullScreen:{enable:false},
