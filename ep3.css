@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;width:100%;overflow-x:hidden;
+  background:linear-gradient(135deg,#fff0f8,#e0f7ff);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .4s,color .4s;
+}
+html.dark,body.dark{background:linear-gradient(135deg,#222,#444);color:#eee}
+html.starry,body.starry{background:#000;color:#eee}
+
+#sparkles{position:fixed;inset:0;pointer-events:none;z-index:1}
+.toggle-theme{position:fixed;top:18px;right:24px;font-size:1.8rem;cursor:pointer;z-index:3}
+
+.korean-font{font-family:'Nanum Pen Script',cursive}
+
+/* secret heart */
+#secretHeart{position:fixed;top:18px;left:22px;font-size:1.6rem;cursor:pointer;opacity:.5;z-index:3;transition:.3s}
+#secretHeart:hover{opacity:1}
+
+.card{
+  position:relative;z-index:2;
+  width:92%;max-width:840px;background:rgba(255,255,255,.92);
+  border:2px dashed #ffc0cb;border-radius:28px;
+  padding:34px 30px;text-align:center;
+  box-shadow:0 0 25px rgba(255,192,203,.4)
+}
+body.dark .card{background:rgba(40,40,40,.9);border-color:#ff8dc7}
+body.starry .card{background:rgba(20,20,30,.9);border-color:#6a5fff}
+
+.title{font-size:34px;color:#ff6fb5;margin-bottom:24px}
+
+/* grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:20px;margin-bottom:32px
+}
+
+/* flip card */
+.flip{
+  perspective:800px;cursor:pointer;
+}
+.flip div{
+  height:140px;display:flex;align-items:center;justify-content:center;
+  border-radius:18px;font-size:20px;
+  transition:transform .6s;backface-visibility:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,.15)
+}
+.front{
+  background:#ffd1dc;color:#5e2d79;
+}
+.back{
+  background:#ffb6c1;color:#fff;
+  transform:rotateY(180deg);
+}
+.flip.flip-active .front{transform:rotateY(180deg)}
+.flip.flip-active .back{transform:rotateY(360deg)}
+
+.nav{display:flex;justify-content:center;gap:20px}
+.nav-btn{
+  background:#ffa8d4;padding:10px 24px;border-radius:14px;
+  color:#fff;text-decoration:none;font-size:18px;transition:.3s
+}
+.nav-btn:hover{background:#ff85c0}
