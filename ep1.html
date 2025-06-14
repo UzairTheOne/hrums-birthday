@@ -3,21 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Episode 1 - Choose Your Birthday Drink</title>
+  <title>Episode 1 - Choose Your Birthday Treat</title>
+  <link rel="stylesheet" href="ep1.css" />
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1 class="korean-font">🎀 하루짱의 생일 에피소드 1 🎀</h1>
-    <h2 class="subtitle">Pick your birthday drink!</h2>
-    <div class="btn-group">
-      <button onclick="chooseOption('coffee')">Coffee ☕</button>
-      <button onclick="chooseOption('juice')">Juice 🍹</button>
-      <button onclick="chooseOption('surprise')">Surprise 🎁</button>
+    <h1 class="title">🎀 하루짱의 생일 에피소드 1 🎀</h1>
+    <img src="hrum_image.png" alt="Hrum" class="profile-img" />
+    <p class="subtitle">Pick your birthday treat!</p>
+
+    <div class="choices">
+      <button onclick="choose('ramen')">🍜 Ramen</button>
+      <button onclick="choose('bubbletea')">🧋 Bubble Tea</button>
+      <button onclick="choose('surprise')">🎁 Surprise</button>
     </div>
-    <p id="result-text" class="korean-font"></p>
+
+    <p id="typed-output" class="typed korean-font"></p>
   </div>
-  <script src="script.js"></script>
+
+  <script src="ep1.js"></script>
 </body>
 </html>
