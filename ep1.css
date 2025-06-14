@@ -1,0 +1,57 @@
+/* Base */
+*{box-sizing:border-box;margin:0;padding:0;}
+body,html{width:100%;height:100%;overflow:hidden;background:#ffe4f0;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .4s;color:#333;}
+.korean-font{font-family:'Nanum Pen Script',cursive;}
+.toggle-theme{position:fixed;top:15px;right:20px;font-size:1.6rem;cursor:pointer;z-index:3;}
+.card{
+  position:relative;z-index:2;
+  background:rgba(255,255,255,0.9);
+  border:2px dashed #ffc0cb;border-radius:24px;
+  padding:30px;max-width:700px;width:90%;text-align:center;
+  box-shadow:0 0 25px rgba(255,192,203,.45);
+}
+
+/* Dark & Starry */
+body.dark{background:#383838;color:#eee;}
+body.starry{background:#000;}
+body.dark .card{background:rgba(45,45,45,0.9);border-color:#ff8dc7;}
+body.starry .card{background:rgba(20,20,30,0.9);border-color:#6a5fff;}
+
+/* Hero Image */
+.hero-img{
+  width:200px;border-radius:20px;margin:16px 0;
+  box-shadow:0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* Subtitle */
+.subtitle{font-size:22px;color:#704f7c;margin-bottom:24px;}
+
+/* Choices */
+.choices{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:24px;}
+.choices button{
+  background:#ffd1dc;border:none;border-radius:14px;
+  padding:12px 24px;font-size:18px;cursor:pointer;
+  position:relative;
+  animation:glow 2s infinite alternate;
+  box-shadow:0 0 10px rgba(255,182,193,0.5);
+  transition:transform .2s;
+}
+.choices button:hover{transform:scale(1.05);}
+
+/* Glow Animation */
+@keyframes glow{
+  from{box-shadow:0 0 5px rgba(255,182,193,0.3)}
+  to{box-shadow:0 0 20px rgba(255,182,193,0.7)}
+}
+
+/* Typing output */
+.typed{font-size:20px;min-height:60px;margin-top:20px;}
+
+/* Audio Button */
+.controls{margin-bottom:16px;}
+#audio-btn{font-size:1.4rem;background:none;border:none;cursor:pointer;}
+
+/* Bubbles */
+#bubbles{position:fixed;inset:0;z-index:0;}
