@@ -3,55 +3,176 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Episode 6 – Special Messages</title>
-  <link rel="stylesheet" href="ep6.css" />
+  <title>Episode 6: Messages from the Heart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Gowun Dodum', sans-serif;
+      background: linear-gradient(to right, #fce4ec, #e1f5fe);
+      overflow-x: hidden;
+    }
+    .container {
+      text-align: center;
+      padding: 50px 20px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #444;
+    }
+    .gift-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .gift-box {
+      width: 120px;
+      height: 120px;
+      background: url('https://cdn-icons-png.flaticon.com/512/254/254061.png') no-repeat center/contain;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      position: relative;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .message-box {
+      display: none;
+      margin-top: 20px;
+      background: #ffffffcc;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 600px;
+      margin: 40px auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    audio, video {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+    .easter-egg-btn {
+      margin-top: 50px;
+      padding: 12px 25px;
+      border: none;
+      background: #8e44ad;
+      color: white;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      display: none;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff6f9;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+  </style>
 </head>
 <body>
-  <div class="theme-toggle">
-    <button onclick="toggleTheme()">🌙 Toggle Theme</button>
-    <button onclick="revealEasterEgg()">🎁 Secret Gift</button>
+
+<div class="container">
+  <h1>🎁 Special Messages from Your Favorite People 🎁</h1>
+
+  <div class="gift-grid">
+    <div class="gift-box" data-target="msg1"></div>
+    <div class="gift-box" data-target="msg2"></div>
+    <div class="gift-box" data-target="msg3"></div>
+    <div class="gift-box" data-target="msg4"></div>
+    <div class="gift-box" data-target="msg5"></div>
   </div>
 
-  <h1 class="title">🎀 Special Messages for You 🎀</h1>
-  <div class="gift-container">
-    <div class="gift" onclick="openGift(0)">🎁 A Message from Rina</div>
-    <div class="gift" onclick="openGift(1)">🎁 A Message from Jun</div>
-    <div class="gift" onclick="openGift(2)">🎁 A Message from Saba</div>
-    <div class="gift" onclick="openGift(3)">🎁 A Message from Hana</div>
-    <div class="gift hidden" id="easterGift" onclick="openGift(4)">🌌 A Secret Message</div>
+  <div class="message-box" id="msg1">
+    <h2>From Aiman 💌</h2>
+    <p>Hey Hrum! You're the most hardworking person I know, and I’m lucky to call you my friend 💕</p>
+    <audio controls src="audio1.mp3"></audio>
   </div>
 
-  <div class="message-box" id="message0">
-    <h2>From Rina</h2>
-    <p>Happy Birthday! You're one of the kindest souls I’ve ever met 🩷</p>
-    <audio controls><source src="voice1.mp3" type="audio/mpeg" /></audio>
+  <div class="message-box" id="msg2">
+    <h2>From Sana 🎥</h2>
+    <p>Happy Birthday, Haru Chan! May your year be filled with joy and K-dramas!</p>
+    <video controls src="video1.mp4"></video>
   </div>
 
-  <div class="message-box" id="message1">
-    <h2>From Jun</h2>
-    <p>Wishing you endless joy and sweet memories ahead 💫</p>
-    <video controls width="300"><source src="video1.mp4" type="video/mp4" /></video>
+  <div class="message-box" id="msg3">
+    <h2>From Zoya 💌</h2>
+    <p>You shine brighter than any sparkle in the universe 🌟 Stay amazing!</p>
+    <audio controls src="audio2.mp3"></audio>
   </div>
 
-  <div class="message-box" id="message2">
-    <h2>From Saba</h2>
-    <p>May your day be as beautiful and wonderful as you are 🌸</p>
-    <audio controls><source src="voice2.mp3" type="audio/mpeg" /></audio>
+  <div class="message-box" id="msg4">
+    <h2>From Hafsa 🎥</h2>
+    <p>Never forget how much you're loved, Noona. You're irreplaceable 💜</p>
+    <video controls src="video2.mp4"></video>
   </div>
 
-  <div class="message-box" id="message3">
-    <h2>From Hana</h2>
-    <p>Cheers to another year of growth and happiness 🍰</p>
-    <video controls width="300"><source src="video2.mp4" type="video/mp4" /></video>
+  <div class="message-box" id="msg5">
+    <h2>From Ayra 💌</h2>
+    <p>You're the sunshine in our group 🌞 Happy Birthday Hrum!</p>
+    <audio controls src="audio3.mp3"></audio>
   </div>
 
-  <!-- Your secret message -->
-  <div class="message-box" id="message4">
-    <h2>From Someone Who Cares</h2>
-    <p>I may not always say it, but you mean a lot to me. I hope this year brings you magic ✨</p>
-    <audio controls><source src="secretvoice.mp3" type="audio/mpeg" /></audio>
-  </div>
+  <button class="easter-egg-btn" id="secretMessageBtn">🎇 Secret Message 🎇</button>
 
-  <script src="ep6.js"></script>
+  <div class="popup" id="popup">
+    <h2>💖 My Message to You 💖</h2>
+    <p>You're not just a friend, you're a whole blessing. If love had a face, it’d look like you.</p>
+  </div>
+</div>
+
+<!-- Sparkle script -->
+<script src="https://cdn.jsdelivr.net/gh/VincentGarreau/particles.js/particles.min.js"></script>
+<div id="particles-js" style="position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1;"></div>
+
+<script>
+  // Particles setup
+  particlesJS("particles-js", {
+    "particles": {
+      "number": { "value": 80 },
+      "color": { "value": "#ff69b4" },
+      "shape": { "type": "circle" },
+      "opacity": { "value": 0.6 },
+      "size": { "value": 3 },
+      "line_linked": { "enable": false },
+      "move": { "enable": true, "speed": 1 }
+    }
+  });
+
+  let viewed = new Set();
+
+  document.querySelectorAll(".gift-box").forEach(box => {
+    box.addEventListener("click", () => {
+      const target = box.dataset.target;
+
+      document.querySelectorAll(".message-box").forEach(m => m.style.display = "none");
+
+      document.getElementById(target).style.display = "block";
+
+      viewed.add(target);
+
+      if (viewed.size === 5) {
+        document.getElementById("secretMessageBtn").style.display = "inline-block";
+      }
+    });
+  });
+
+  document.getElementById("secretMessageBtn").addEventListener("click", () => {
+    document.getElementById("popup").style.display = "block";
+    const sound = new Audio("secret.mp3"); // Add your own fun sound!
+    sound.play();
+  });
+</script>
+
 </body>
 </html>
