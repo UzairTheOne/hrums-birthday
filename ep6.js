@@ -1,78 +1,76 @@
-function openGift(index) {
-  document.querySelectorAll('.message-box').forEach((box, i) => {
-    box.style.display = (i === index) ? 'block' : 'none';
-  });
-}
+// Wait loader
+window.onload = () => {
+  document.getElementById('loader').style.display = 'none';
+  confetti({ particleCount: 50, spread: 70, colors: ['#ff69b4','#fcdfff','#fbcce7'] });
+};
 
-function toggleTheme() {
-  document.body.classList.toggle('dark');
-}
-
-function revealEasterEgg() {
-  const gift = document.getElementById('easterGift');
-  gift.classList.remove('hidden');
-  gift.scrollIntoView({ behavior: "smooth" });
-  gift.style.animation = "pop 0.5s ease";
-}
-
-document.getElementById("closePopup").addEventListener("click", () => {
-  document.getElementById("popup").style.display = "none";
-});
-
-/* ---------- CLOSE POPUP ---------- */
-document.getElementById('closePopup').addEventListener('click',()=>{
-  document.getElementById('popup').style.display='none';
-});
-
-/* ---------- REPLY TEXT ---------- */
-const saveBtn  = document.getElementById('saveReply');
-const replyTxt = document.getElementById('replyText');
-const savedMsg = document.getElementById('savedMsg');
-
-saveBtn.addEventListener('click',()=>{
-  const val = replyTxt.value.trim();
-  if(val){
-    localStorage.setItem('hrumReply', val);
-    savedMsg.textContent = "✅ Saved locally! (Refresh to see again)";
-    replyTxt.value = '';
+// Particles.js
+particlesJS("particles-js", {
+  "particles": {
+    "number": {"value":60},
+    "color": {"value":"#ff69b4"},
+    "shape": {"type":"circle"},
+    "opacity":{"value":0.5},
+    "size":{"value":3},
+    "move":{"enable":true,"speed":1}
   }
 });
 
-/* ---------- LOAD any saved reply on page load ---------- */
-window.addEventListener('load',()=>{
-  const stored = localStorage.getItem('hrumReply');
-  if(stored) savedMsg.textContent = "📌 Your saved reply: " + stored;
-});
-
-/* ---------- VOICE NOTE RECORD ---------- */
-const recBtn = document.getElementById('recBtn');
-const stopBtn = document.getElementById('stopBtn');
-const downloadLink = document.getElementById('downloadLink');
-let mediaRecorder, chunks=[];
-
-if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-  recBtn.disabled=true; recBtn.textContent='Mic not supported 😥';
+// Shooting star animation
+const canvas = document.getElementById('shootingStar');
+const ctx = canvas.getContext('2d');
+canvas.width = innerWidth; canvas.height = innerHeight;
+function shoot() {
+  const x = Math.random()*canvas.width*0.5;
+  const y = Math.random()*canvas.height*0.5;
+  const len = 150;
+  const speed = 5;
+  let dx = x, dy = y;
+  const id = setInterval(() => {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(dx,dy);
+    ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    dx += speed; dy += speed;
+    if(dx > x+len) {
+      clearInterval(id);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+  },16);
 }
+setInterval(shoot, 5000);
 
-recBtn.addEventListener('click', async ()=>{
-  const stream = await navigator.mediaDevices.getUserMedia({audio:true});
-  mediaRecorder = new MediaRecorder(stream);
-  mediaRecorder.start(); chunks=[];
-  recBtn.disabled=true; stopBtn.disabled=false; recBtn.textContent='Recording…';
-  mediaRecorder.ondataavailable=e=>chunks.push(e.data);
+// Theme toggle
+const toggleBtn = document.getElementById('themeToggle');
+toggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('starry');
 });
 
-stopBtn.addEventListener('click', ()=>{
-  mediaRecorder.stop();
-  recBtn.disabled=false; stopBtn.disabled=true; recBtn.textContent='🎙️ Record Voice Note';
-  mediaRecorder.onstop = ()=>{
-    const blob = new Blob(chunks,{type:'audio/webm'});
-    const url = URL.createObjectURL(blob);
-    downloadLink.href=url;
-    downloadLink.download='voice_note.webm';
-    downloadLink.textContent='⬇️ Download your note';
-    downloadLink.style.display='inline-block';
-  };
+// Gift open & confetti
+let opened = [false,false,false,false,false];
+document.querySelectorAll('.gift-box').forEach(box => {
+  box.addEventListener('click', () => {
+    const i = box.dataset.id;
+    document.querySelectorAll('.message-box').forEach(m=>m.style.display='none');
+    document.getElementById('msg'+i).style.display='block';
+    opened[i] = true;
+    confetti({ particleCount: 30, spread: 60, colors: ['#ff69b4','#fcdfff'] });
+    if(opened.every(v=>v)){
+      document.getElementById('viewedAllPopup').style.display = 'block';
+    }
+  });
 });
 
-
+// Secret Popup button
+document.getElementById('secretBtn').addEventListener('click', () => {
+  document.getElementById('secretPopup').style.display = 'block';
+});
+document.getElementById('closeSecret').addEventListener('click', () => {
+  document.getElementById('secretPopup').style.display = 'none';
+});
+document.getElementById('closeViewed').addEventListener('click', () => {
+  document.getElementById('viewedAllPopup').style.display = 'none';
+});
