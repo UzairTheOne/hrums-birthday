@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Episode 4 – Your Ideal Birthday Day</title>
+
+  <!-- shared pastel css for this episode -->
+  <link rel="stylesheet" href="ep4.css"/>
+
+  <!-- Korean handwriting font -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- sparkle overlay -->
+  <div class="sparkle"></div>
+
+  <!-- dark‑mode / starry toggle -->
+  <button id="themeToggle" class="toggle">🌙</button>
+
+  <!-- simple pre‑loader -->
+  <div id="preloader">Loading your birthday surprise…</div>
+
+  <!-- main content -->
+  <main class="container">
+    <h1 class="korean-font">🌸 Episode 4: Your Ideal Birthday Day 🌸</h1>
+
+    <form id="quizForm">
+      <section class="question">
+        <p>1. Pick a morning vibe:</p>
+        <label><input type="radio" name="q1" value="Sunny with tea"> ☀️ Sunny with tea</label>
+        <label><input type="radio" name="q1" value="Rainy lo‑fi"> 🌧 Rainy with lo‑fi</label>
+        <label><input type="radio" name="q1" value="Spring breeze"> 🌸 Spring breeze & flowers</label>
+        <label><input type="radio" name="q1" value="Snuggled in bed"> 🧸 Snuggled in bed & dramas</label>
+      </section>
+
+      <section class="question">
+        <p>2. Pick a birthday outfit:</p>
+        <label><input type="radio" name="q2" value="Pastel dress"> 🎀 Cute pastel dress</label>
+        <label><input type="radio" name="q2" value="Oversized hoodie"> 🧥 Oversized hoodie</label>
+        <label><input type="radio" name="q2" value="PJs"> 😴 Pajamas & hair bun</label>
+        <label><input type="radio" name="q2" value="Stylish black"> 🖤 Stylish black fit</label>
+      </section>
+
+      <section class="question">
+        <p>3. Pick the perfect gift:</p>
+        <label><input type="radio" name="q3" value="Letter"> 💌 Hand‑written letter</label>
+        <label><input type="radio" name="q3" value="Rest day"> 💤 A whole day of rest</label>
+        <label><input type="radio" name="q3" value="Drama marathon"> 🎬 Drama marathon</label>
+        <label><input type="radio" name="q3" value="Surprise"> 🎁 Unexpected surprise</label>
+      </section>
+
+      <section class="question">
+        <p>4. Pick a dessert:</p>
+        <label><input type="radio" name="q4" value="Strawberry cake"> 🍓 Strawberry cake</label>
+        <label><input type="radio" name="q4" value="Ice cream"> 🍨 Ice cream</label>
+        <label><input type="radio" name="q4" value="Chocolate fudge"> 🍫 Chocolate fudge</label>
+        <label><input type="radio" name="q4" value="Mochi"> 🥺 Mochi</label>
+      </section>
+
+      <section class="question">
+        <p>5. Pick the style of message you’d love:</p>
+        <label><input type="radio" name="q5" value="Funny"> 😏 Funny & sarcastic</label>
+        <label><input type="radio" name="q5" value="Emotional"> 🥲 Deep & emotional</label>
+        <label><input type="radio" name="q5" value="Chaos"> 🤪 Pure chaos</label>
+        <label><input type="radio" name="q5" value="All"> 💗 All of the above</label>
+      </section>
+
+      <button type="submit" class="submit-btn korean-font">✨ Show me my day ✨</button>
+    </form>
+
+    <p id="result" class="korean-font"></p>
+
+    <!-- nav back / forward if you like -->
+    <div class="nav">
+      <a href="ep3.html" class="nav-btn korean-font">⬅️ Episode 3</a>
+      <!-- <a href="ep5.html" class="nav-btn korean-font">➡️ Episode 5</a> -->
+    </div>
+  </main>
+
+  <script src="ep4.js"></script>
+</body>
+</html>
