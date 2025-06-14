@@ -191,6 +191,29 @@
     sound.play();
   });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+
+  /* close popup */
+  document.getElementById('closePopup').onclick = () =>
+      document.getElementById('popup').style.display='none';
+
+  /* local text save (works instantly) */
+  const reply   = document.getElementById('replyText');
+  const msgArea = document.getElementById('savedMsg');
+
+  document.getElementById('saveReply').onclick = ()=>{
+    const txt = reply.value.trim();
+    if(!txt){alert("Write something first 😊");return;}
+    localStorage.setItem('hrumReply',txt);
+    msgArea.textContent="✅ Saved in this browser.";
+    reply.value='';
+  };
+
+  const stored = localStorage.getItem('hrumReply');
+  if(stored) msgArea.textContent = "📌 You already wrote: “"+stored+"”";
+});
+</script>
 
 </body>
 </html>
