@@ -53,5 +53,8 @@ body.starry .card{background:rgba(20,20,30,0.9);border-color:#6a5fff;}
 .controls{margin-bottom:16px;}
 #audio-btn{font-size:1.4rem;background:none;border:none;cursor:pointer;}
 
+/*EP 2 Button*/
+<a href="ep2.html" class="episode-btn korean-font">🎞️ Episode 2 – Memory Lane</a>
+
 /* Bubbles */
 #bubbles{position:fixed;inset:0;z-index:0;}
