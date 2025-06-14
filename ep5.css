@@ -203,3 +203,38 @@ html.starry::before, body.starry::before{
 @keyframes shoot{
   to{transform:translate(800px,600px) rotate(45deg);opacity:0}
 }
+
+/* star‑field (covers everything) */
+html.starry::before, body.starry::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(#fff 1px, transparent 1px) 0 0/80px 80px,
+    radial-gradient(#fff 1px, transparent 1px) 40px 40px/80px 80px;
+  animation:starField 90s linear infinite;
+  z-index:0;opacity:.35;pointer-events:none;
+}
+@keyframes starField{
+  to{background-position:4000px 4000px,4040px 4040px}
+}
+
+/* shooting star */
+.shooting-star{
+  position:fixed;top:-60px;left:-120px;width:3px;height:3px;
+  background:#fff;border-radius:50%;
+  box-shadow:0 0 8px 4px #fff;transform:rotate(45deg);
+  animation:shoot 1.4s linear forwards;pointer-events:none;z-index:3;
+}
+@keyframes shoot{
+  to{transform:translate(900px,700px) rotate(45deg);opacity:0}
+}
+
+/* darken timeline card in starry mode */
+body.starry .card, html.starry .card{
+  background:rgba(20,20,35,.9);
+}
+
+/* darken each event too */
+body.starry .event{
+  background:rgba(35,35,55,.85);
+}
