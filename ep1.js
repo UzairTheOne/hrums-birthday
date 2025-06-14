@@ -1,19 +1,19 @@
-let typingIndex = 0;
-let typingText = '';
-let typingInterval;
 let isTyping = false;
+let typingIndex = 0;
+let currentText = '';
+let typingInterval;
 
 function typeText(text) {
-  const textElement = document.getElementById('result-text');
+  const output = document.getElementById('typed-output');
   clearInterval(typingInterval);
-  typingText = text;
   typingIndex = 0;
-  textElement.innerText = '';
+  currentText = text;
+  output.innerText = '';
   isTyping = true;
 
   typingInterval = setInterval(() => {
-    if (typingIndex < typingText.length) {
-      textElement.innerText += typingText.charAt(typingIndex);
+    if (typingIndex < currentText.length) {
+      output.innerText += currentText.charAt(typingIndex);
       typingIndex++;
     } else {
       clearInterval(typingInterval);
@@ -22,19 +22,22 @@ function typeText(text) {
   }, 40);
 }
 
-function chooseOption(option) {
+function choose(option) {
   if (isTyping) {
     clearInterval(typingInterval);
-    document.getElementById('result-text').innerText = typingText;
+    document.getElementById('typed-output').innerText = currentText;
     isTyping = false;
     return;
   }
 
-  if (option === 'coffee') {
-    typeText("☕ You chose coffee — the fuel of legends!");
-  } else if (option === 'juice') {
-    typeText("🍹 You chose your favorite drink! Refreshing!");
-  } else {
-    typeText("🌟 A surprise? You're full of mystery and sparkle!");
+  let text = '';
+  if (option === 'ramen') {
+    text = "🍜 You chose ramen! A classic choice — just like you: warm, comforting, and unforgettable.";
+  } else if (option === 'bubbletea') {
+    text = "🧋 Bubble tea? Sweet, cool, and a little bouncy — just like our friendship!";
+  } else if (option === 'surprise') {
+    text = "🎁 You love surprises, don’t you? There might be more hidden treasures waiting ahead!";
   }
+
+  typeText(text);
 }
