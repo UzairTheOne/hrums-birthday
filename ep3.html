@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Episode 3 – What I Love About You</title>
+
+  <link rel="stylesheet" href="ep3.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet"/>
+
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- sparkle layer -->
+  <div id="sparkles"></div>
+  <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
+
+  <!-- secret heart poem trigger -->
+  <div id="secretHeart" onclick="revealPoem()">💖</div>
+
+  <main class="card">
+    <h1 class="korean-font title">🎀 Episode 3 – 내가 사랑하는 10가지 🎀</h1>
+
+    <!-- flip‑card grid -->
+    <div class="grid" id="loveGrid">
+      <!-- 12 cards → edit text later -->
+      <div class="flip">
+        <div class="front korean-font">1</div>
+        <div class="back korean-font">Your endless kindness</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">2</div>
+        <div class="back korean-font">Your study hustle 💪</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">3</div>
+        <div class="back korean-font">Your K‑drama commentary</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">4</div>
+        <div class="back korean-font">That contagious laugh 😆</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">5</div>
+        <div class="back korean-font">Your honest advice</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">6</div>
+        <div class="back korean-font">The way you hype friends</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">7</div>
+        <div class="back korean-font">Your sleepy face 😴</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">8</div>
+        <div class="back korean-font">Your creative mind</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">9</div>
+        <div class="back korean-font">Your courage to try</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">10</div>
+        <div class="back korean-font">Your loyalty and love 💖</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">11</div>
+        <div class="back korean-font">Your silly memes 🤣</div>
+      </div>
+
+      <div class="flip">
+        <div class="front korean-font">12</div>
+        <div class="back korean-font">Everything that is you ✨</div>
+      </div>
+    </div>
+
+    <!-- back / next nav -->
+    <div class="nav">
+      <a href="ep2.html" class="nav-btn korean-font">⬅️ Episode 2</a>
+      <!-- (future Episode 4 button placeholder) -->
+    </div>
+  </main>
+
+  <script src="ep3.js"></script>
+</body>
+</html>
