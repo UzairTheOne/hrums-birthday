@@ -2,9 +2,15 @@
 let moonClicks=0;
 function toggleTheme(){
   document.body.classList.toggle('dark');
+  document.documentElement.classList.toggle('dark');
   moonClicks++;
-  if(moonClicks===2){document.body.classList.toggle('starry');moonClicks=0;}
+  if(moonClicks===2){
+    document.body.classList.toggle('starry');
+    document.documentElement.classList.toggle('starry');
+    moonClicks=0;
+  }
 }
+
 
 /* SPARKLES */
 tsParticles.load("sparkles",{
