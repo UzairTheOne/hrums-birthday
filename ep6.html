@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Episode 6 – Special Messages</title>
+  <link rel="stylesheet" href="ep6.css" />
+</head>
+<body>
+  <div class="theme-toggle">
+    <button onclick="toggleTheme()">🌙 Toggle Theme</button>
+    <button onclick="revealEasterEgg()">🎁 Secret Gift</button>
+  </div>
+
+  <h1 class="title">🎀 Special Messages for You 🎀</h1>
+  <div class="gift-container">
+    <div class="gift" onclick="openGift(0)">🎁 A Message from Rina</div>
+    <div class="gift" onclick="openGift(1)">🎁 A Message from Jun</div>
+    <div class="gift" onclick="openGift(2)">🎁 A Message from Saba</div>
+    <div class="gift" onclick="openGift(3)">🎁 A Message from Hana</div>
+    <div class="gift hidden" id="easterGift" onclick="openGift(4)">🌌 A Secret Message</div>
+  </div>
+
+  <div class="message-box" id="message0">
+    <h2>From Rina</h2>
+    <p>Happy Birthday! You're one of the kindest souls I’ve ever met 🩷</p>
+    <audio controls><source src="voice1.mp3" type="audio/mpeg" /></audio>
+  </div>
+
+  <div class="message-box" id="message1">
+    <h2>From Jun</h2>
+    <p>Wishing you endless joy and sweet memories ahead 💫</p>
+    <video controls width="300"><source src="video1.mp4" type="video/mp4" /></video>
+  </div>
+
+  <div class="message-box" id="message2">
+    <h2>From Saba</h2>
+    <p>May your day be as beautiful and wonderful as you are 🌸</p>
+    <audio controls><source src="voice2.mp3" type="audio/mpeg" /></audio>
+  </div>
+
+  <div class="message-box" id="message3">
+    <h2>From Hana</h2>
+    <p>Cheers to another year of growth and happiness 🍰</p>
+    <video controls width="300"><source src="video2.mp4" type="video/mp4" /></video>
+  </div>
+
+  <!-- Your secret message -->
+  <div class="message-box" id="message4">
+    <h2>From Someone Who Cares</h2>
+    <p>I may not always say it, but you mean a lot to me. I hope this year brings you magic ✨</p>
+    <audio controls><source src="secretvoice.mp3" type="audio/mpeg" /></audio>
+  </div>
+
+  <script src="ep6.js"></script>
+</body>
+</html>
