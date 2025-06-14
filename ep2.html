@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Episode 2 – A Walk Down Memory Lane</title>
+
+  <!-- fonts & css -->
+  <link rel="stylesheet" href="ep2.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet"/>
+
+  <!-- sparkles + confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- floating petals canvas -->
+  <canvas id="petals"></canvas>
+
+  <!-- sparkles -->
+  <div id="sparkles"></div>
+
+  <!-- dark / starry toggle -->
+  <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
+
+  <main class="card">
+    <h1 class="korean-font title">🎀 Episode 2 – 기억 여행 🎀</h1>
+
+    <!-- photo gallery placeholders -->
+    <div class="gallery">
+      <img src="placeholder1.jpg" alt="Memory 1"/>
+      <img src="placeholder2.jpg" alt="Memory 2"/>
+      <img src="placeholder3.jpg" alt="Memory 3"/>
+    </div>
+
+    <p class="subtitle korean-font">Which memory do you want to revisit?</p>
+
+    <div class="choices">
+      <button onclick="showMemory(0)">🍰 Chaotic birthday</button>
+      <button onclick="showMemory(1)">🧃 Tea obsession</button>
+      <button onclick="showMemory(2)">📚 All‑nighter streak</button>
+      <button onclick="showMemory(3)">😂 Inside joke</button>
+    </div>
+
+    <p id="typed-out" class="typed korean-font"></p>
+
+    <!-- mute/unmute -->
+    <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">🔊</button>
+
+    <!-- secret heart for poem -->
+    <div id="heartPoem" onclick="revealPoem()">💖</div>
+  </main>
+
+  <!-- background music -->
+  <audio id="bgMusic" loop>
+    <source src="song2.mp3" type="audio/mpeg"/>
+  </audio>
+
+  <script src="ep2.js"></script>
+</body>
+</html>
