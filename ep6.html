@@ -125,11 +125,27 @@
 
   <button class="easter-egg-btn" id="secretMessageBtn">🎇 Secret Message 🎇</button>
 
-  <div class="popup sparkle-popup" id="popup">
+  <!-- ⭐ Secret popup (sparkles + Close) -->
+<div class="popup sparkle-popup" id="popup">
   <h2>💖 My Message to You 💖</h2>
-  <p>You're not just a friend, you're a whole blessing. If love had a face, it’d look like you.</p>
+  <p>You’re not just a friend, you’re a whole blessing. If love had a face, it’d look like you.</p>
   <button id="closePopup">Close</button>
 </div>
+
+<!-- ✉️  Reply section -->
+<h2 style="margin-top:60px;text-align:center;">Leave a reply for me 😊</h2>
+
+<div class="reply-box">
+  <textarea id="replyText" placeholder="Type something sweet…"></textarea>
+  <button id="saveReply">💾 Save</button>
+  <p id="savedMsg"></p>
+
+  <h3>—or—</h3>
+  <button id="recBtn">🎙️ Record Voice Note</button>
+  <button id="stopBtn" disabled>Stop</button>
+  <a id="downloadLink" style="display:none">Download your note</a>
+</div>
+
 
 
 
