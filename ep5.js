@@ -1,35 +1,34 @@
-let clickCount = 0;
+let clicks = 0;
 const btn   = document.getElementById('themeBtn');
-const sound = document.getElementById('starSound');
+const audio = document.getElementById('starSound');
 
 btn.addEventListener('click', () => {
   document.body.classList.toggle('dark');
   document.documentElement.classList.toggle('dark');
 
-  clickCount++;
-  if (clickCount === 2) {                // 2nd click → Starry mode
+  clicks++;
+  if (clicks === 2) {
+    // activate starry mode
     document.body.classList.toggle('starry');
     document.documentElement.classList.toggle('starry');
-    clickCount = 0;
+    clicks = 0;
 
-    // play whoosh sound
-    sound.currentTime = 0;
-    sound.play().catch(()=>{ /* autoplay blocked – ignore */ });
+    // play whoosh
+    audio.currentTime = 0;
+    audio.play().catch(()=>{});
 
-    // fun popup
-    setTimeout(() => {
-      alert("🌌  Starry‑Sky mode unlocked! \nHidden memories revealed…");
-    }, 150);
+    // popup
+    setTimeout(()=>alert("🌌  Starry‑Sky mode unlocked! Hidden memories revealed…"),150);
 
-    // spawn shooting star
-    createShootingStar();
+    // shooting star
+    shootStar();
   }
 });
 
-/* ---- shooting‑star generator ---- */
-function createShootingStar(){
-  const star = document.createElement('div');
-  star.className = 'shooting-star';
-  document.body.appendChild(star);
-  star.addEventListener('animationend', () => star.remove());
+/* shooting‑star element */
+function shootStar(){
+  const s = document.createElement('div');
+  s.className = 'shooting-star';
+  document.body.appendChild(s);
+  s.addEventListener('animationend', ()=>s.remove());
 }
