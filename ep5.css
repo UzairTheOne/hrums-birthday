@@ -51,4 +51,7 @@ body.starry .secret{display:block}
 .nav{text-align:center;margin-top:28px}
 .nav-btn{
   display:inline-block;padding:.7rem 1.4rem;margin:0 .5rem;
-  background:var(--a
+  background:var(--accent);color:#fff;text-decoration:none;border-radius:14px;
+  transition:.3s;font-weight:bold;
+}
+.nav-btn:hover{transform:scale(1.05)}
