@@ -14,3 +14,8 @@ function revealEasterEgg() {
   gift.scrollIntoView({ behavior: "smooth" });
   gift.style.animation = "pop 0.5s ease";
 }
+
+document.getElementById("closePopup").addEventListener("click", () => {
+  document.getElementById("popup").style.display = "none";
+});
+
