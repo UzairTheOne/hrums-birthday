@@ -1,236 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Episode 6: Special Messages</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Gowun Dodum', sans-serif;
-      background: linear-gradient(to bottom, #ffeefc, #fff);
-      color: #333;
-      overflow-x: hidden;
-    }
-
-    .container {
-      padding: 30px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2.2em;
-      color: #d63384;
-    }
-
-    .gift-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-      margin-top: 40px;
-    }
-
-    .gift-box {
-      width: 150px;
-      height: 150px;
-      background: url('gift.png') no-repeat center center;
-      background-size: contain;
-      border: none;
-      animation: bounce 2s infinite;
-      cursor: pointer;
-      position: relative;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .message-box {
-      display: none;
-      margin-top: 15px;
-      font-size: 1em;
-      background: #fff0fa;
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    #popup {
-      display: none;
-      position: fixed;
-      top: 20%;
-      left: 50%;
-      transform: translate(-50%, -20%);
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 15px;
-      padding: 25px;
-      box-shadow: 0 0 20px #ff69b4;
-      z-index: 999;
-      animation: popupGlow 1.5s infinite alternate;
-    }
-
-    @keyframes popupGlow {
-      from { box-shadow: 0 0 10px #ff8ec6; }
-      to { box-shadow: 0 0 30px #ff69b4; }
-    }
-
-    #popup button {
-      margin-top: 20px;
-      padding: 8px 20px;
-      background: #ff80ab;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .toggle-theme {
-      position: fixed;
-      top: 15px;
-      right: 20px;
-      background: #ffcdf3;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      pointer-events: none;
-    }
-  </style>
+  <meta charset="UTF-8"/>
+  <title>Episode 6: Special Messages 🎁</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="ep6.css"/>
 </head>
 <body>
 
-<button class="toggle-theme" onclick="toggleTheme()">🌙 Starry Mode</button>
+<!-- Loading overlay -->
+<div id="loader"><h2>Loading your surprise…</h2></div>
+
+<!-- Theme toggle -->
+<button id="themeToggle" class="toggle-theme">🌙 Theme</button>
 
 <div class="container">
-  <h1>Episode 6: Special Messages 🎁</h1>
+  <h1>Special Messages for Hrum 🎀</h1>
   <div class="gift-grid">
-    <div class="gift-box" onclick="openGift(0)"></div>
-    <div class="gift-box" onclick="openGift(1)"></div>
-    <div class="gift-box" onclick="openGift(2)"></div>
-    <div class="gift-box" onclick="openGift(3)"></div>
-    <div class="gift-box" onclick="openGift(4)"></div>
+    <div class="gift-box" data-id="0"></div>
+    <div class="gift-box" data-id="1"></div>
+    <div class="gift-box" data-id="2"></div>
+    <div class="gift-box" data-id="3"></div>
+    <div class="gift-box" data-id="4"></div>
   </div>
 
-  <div id="messages">
-    <div class="message-box" id="msg0">🌟 A message from Areeba: "You’re a star in every way!"</div>
-    <div class="message-box" id="msg1">💌 A message from Sana: "You make every moment magical!"</div>
-    <div class="message-box" id="msg2">🎵 A voice from Zara: (placeholder voice note 🎧)</div>
-    <div class="message-box" id="msg3">🎥 A video from Hira: (placeholder video 🎬)</div>
-    <div class="message-box" id="msg4">📝 A note from Alina: "Happy birthday my sunshine!"</div>
+  <div class="message-box" id="msg0">
+    <h2>From Aiman 💌</h2><p>You inspire me every day!</p>
+    <audio controls src="audio1.mp3"></audio>
+  </div>
+
+  <div class="message-box" id="msg1">
+    <h2>From Sana 🎥</h2><p>You light up every room!</p>
+    <video controls src="video1.mp4"></video>
+  </div>
+
+  <div class="message-box" id="msg2">
+    <h2>From Zoya 💌</h2><p>Your kindness is legendary.</p>
+    <audio controls src="audio2.mp3"></audio>
+  </div>
+
+  <div class="message-box" id="msg3">
+    <h2>From Hafsa 🎥</h2><p>Grateful for you, always!</p>
+    <video controls src="video2.mp4"></video>
+  </div>
+
+  <div class="message-box" id="msg4">
+    <h2>From Ayra 💌</h2><p>You’re a treasure to everyone.</p>
+    <audio controls src="audio3.mp3"></audio>
   </div>
 </div>
 
-<div id="popup">
-  <h3>💖 Secret Message 💖</h3>
-  <p>You’ve unlocked my hidden message... I hope this little website made you smile 🥹💫</p>
-  <button id="closePopup">Close</button>
+<!-- Secret popup Easter Egg #1 -->
+<div class="popup sparkle-popup" id="secretPopup">
+  <h2>💖 Hidden Message 💖</h2>
+  <p>This is my little secret, just for you! Hope it makes your heart smile.</p>
+  <button id="closeSecret">Close</button>
 </div>
 
-<canvas id="stars"></canvas>
+<!-- Easter Egg #2 unlocked after all gifts -->
+<div class="popup sparkle-popup" id="viewedAllPopup">
+  <h2>🎇 Surprise 🎇</h2>
+  <p>You discovered all the gifts! Here’s something extra just for you. 😊</p>
+  <button id="closeViewed">Close</button>
+</div>
 
-<!-- JS SECTION -->
-<script>
-  let opened = [false,false,false,false,false];
+<!-- Hidden secret button -->
+<div id="secretBtn"></div>
 
-  function openGift(index){
-    // hide others
-    document.querySelectorAll('.message-box').forEach(m=>m.style.display='none');
+<!-- Particle background -->
+<div id="particles-js"></div>
+<canvas id="shootingStar"></canvas>
 
-    // show selected
-    document.getElementById('msg'+index).style.display = 'block';
-    opened[index] = true;
-
-    // if all opened, show secret
-    if(opened.every(v=>v)){
-      document.getElementById('popup').style.display = 'block';
-    }
-
-    // confetti
-    runConfetti();
-  }
-
-  document.getElementById('closePopup').onclick = () => {
-    document.getElementById('popup').style.display = 'none';
-  };
-
-  function toggleTheme(){
-    document.body.style.background = "radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)";
-    document.body.style.color = "#fff";
-    document.querySelectorAll('.message-box').forEach(box=>{
-      box.style.background = '#222';
-      box.style.color = '#fff';
-    });
-  }
-
-  // Confetti
-  function runConfetti(){
-    const duration = 1 * 1000;
-    const end = Date.now() + duration;
-    const colors = ['#ff69b4', '#fcdfff', '#fbcce7'];
-
-    (function frame() {
-      confetti({
-        particleCount: 3,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors: colors
-      });
-      confetti({
-        particleCount: 3,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors: colors
-      });
-      if (Date.now() < end) requestAnimationFrame(frame);
-    })();
-  }
-
-  // Starry background
-  const canvas = document.getElementById('stars');
-  const ctx = canvas.getContext('2d');
-  let w = canvas.width = window.innerWidth;
-  let h = canvas.height = window.innerHeight;
-
-  let stars = [];
-  for (let i = 0; i < 150; i++) {
-    stars.push({
-      x: Math.random()*w,
-      y: Math.random()*h,
-      radius: Math.random()*1.5,
-      alpha: Math.random(),
-      dx: Math.random()*0.5
-    });
-  }
-
-  function drawStars(){
-    ctx.clearRect(0,0,w,h);
-    for(let s of stars){
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
-      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-      ctx.fill();
-      s.x += s.dx;
-      if(s.x > w) s.x = 0;
-    }
-    requestAnimationFrame(drawStars);
-  }
-  drawStars();
-</script>
-
-<!-- Confetti library -->
+<script src="https://cdn.jsdelivr.net/gh/VincentGarreau/particles.js/particles.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="ep6.js"></script>
 </body>
 </html>
