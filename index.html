@@ -5,78 +5,45 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Happy Birthday Haru 💖</title>
 
-  <!-- Main CSS -->
+  <!-- shared css & korean font -->
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 
-  <!-- Particles + Confetti libraries-->
+  <!-- sparkles + confetti libraries -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
+  <!-- sparkle layer -->
+  <div id="sparkles"></div>
+
+  <!-- dark‑mode / starry‑easter‑egg toggle -->
+  <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
+
   <!-- PRELOADER -->
   <div id="preloader"><div class="loader">🎉</div></div>
 
-  <!-- SPARKLE LAYER -->
-  <div id="sparkles"></div>
-
-  <!-- THEME TOGGLE / EASTER‑EGG ICON -->
-  <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
-
-  <!-- MAIN CARD -->
+  <!-- main card -->
   <main class="card">
-      <h1>Happy Birthday Hrum 💕</h1>
-      <h3 class="korean">해피버스데이 하루짱 💐</h3>
-      <h2>To: Noona • Haru • Haru‑chan</h2>
+    <h1 class="korean-font">🎂 하루짱에게 – 해피버스데이! 🎂</h1>
+    <img src="art.png" alt="Digital art" class="hero-img" />
 
-      <!-- your image -->
-      <img src="art.png" alt="Digital art of Hrum" class="portrait">
+    <p class="message">
+      Step into your own pastel K‑drama universe.<br>
+      Each episode is a surprise made just for you.
+    </p>
 
-      <p class="message">
-        I built you a tiny K‑drama universe because you’re the star today.  
-        Smile wide — the next episodes are full of surprises 🎬✨
-      </p>
+    <!-- click‑to‑play playlist (already working in your repo) -->
+    <!-- <audio ...>  (leave your existing audio code here) -->
 
+    <!-- link to ep1 -->
+    <a href="ep1.html" class="episode-btn korean-font">🎬 Episode 1 시작!</a>
 
-      <button class="confetti-btn" onclick="runConfetti()">🎊 Celebrate!</button>
-      <a href="ep1.html" class="ep1-button">🎬 Start Episode 1</a>
-
-
-
-
+    <!-- big confetti button -->
+    <button class="confetti-btn" onclick="runConfetti()">🎊 Celebrate!</button>
   </main>
 
-  <!-- MAIN JS -->
-  <script src="script.js"></script>
-
-  <audio id="audioPlayer"></audio>
-
-<script>
-  const playlist = ['Song1.mp3', 'Song2.mp3', 'Song3.mp3'];
-  let currentTrack = 0;
-  const audio = document.getElementById('audioPlayer');
-
-  function playPlaylist() {
-    audio.src = playlist[currentTrack];
-    audio.load();
-    audio.play();
-
-    audio.addEventListener('ended', () => {
-      currentTrack = (currentTrack + 1) % playlist.length;
-      audio.src = playlist[currentTrack];
-      audio.load();
-      audio.play();
-    });
-  }
-
-  // Play when user clicks anywhere
-  document.addEventListener('click', () => {
-    if (audio.paused) {
-      playPlaylist();
-    }
-  });
-</script>
-
-
+  <script src="main.js"></script>
 </body>
 </html>
