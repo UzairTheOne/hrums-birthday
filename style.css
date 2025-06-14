@@ -1,117 +1,68 @@
-/* Google handwriting font */
-@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
-
-/* ---------- Base ---------- */
+/* Google handwriting already linked in HTML */
 *{box-sizing:border-box;margin:0;padding:0}
+
 body{
-  font-family:'Gowun Dodum',sans-serif;
+  font-family: Arial, sans-serif;
   height:100vh;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(145deg,#ffe6f0,#e0f7ff);
-  cursor:url("https://cur.cursors-4u.net/nature/nat-11/nat1016.cur"),auto;
+  background:linear-gradient(135deg,#ffe4f0,#e0f7ff);
   transition:background .4s,color .4s;
 }
 
-/* ---------- Sparkles layer ---------- */
-#sparkles{
-  position:fixed;inset:0;
-  z-index:1;pointer-events:none;
+/* sparkle canvas */
+#sparkles{position:fixed;inset:0;pointer-events:none;z-index:1}
+
+/* dark‑mode / starry‑egg */
+body.dark{background:linear-gradient(135deg,#1f1f1f,#383838);color:#eee}
+body.starry{background:#000;color:#f0f0f0}
+
+/* toggle icon */
+.toggle-theme{
+  position:fixed;top:18px;right:24px;font-size:1.8rem;
+  cursor:pointer;user-select:none;z-index:3;
 }
 
-/* ---------- Card ---------- */
+/* preload */
+#preloader{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:999}
+.loader{font-size:3rem;animation:pop 1s ease-in-out infinite}
+@keyframes pop{0%,100%{opacity:0;transform:scale(.7)}50%{opacity:1;transform:scale(1.2)}}
+
+/* card wrapper */
 .card{
   position:relative;z-index:2;
-  width:90%;max-width:640px;
   background:rgba(255,255,255,.9);
-  border:2px dashed #ffc0cb;
-  border-radius:30px;
-  padding:2.5rem;
+  width:90%;max-width:700px;padding:32px 26px;
+  border:2px dashed #ffc0cb;border-radius:28px;
   text-align:center;
-  box-shadow:0 0 25px rgba(255,192,203,.5);
-  animation:floaty 5s ease-in-out infinite;
+  box-shadow:0 0 25px rgba(255,192,203,.45);
 }
-@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+body.dark .card{background:rgba(45,45,45,.9);border-color:#ff8dc7}
+body.starry .card{background:rgba(20,20,30,.9);border-color:#6a5fff}
 
-h1{font-size:2.8rem;color:#ff69b4;margin-bottom:.2em}
-.korean{font-size:1.25rem;color:#a189bd;margin-bottom:1em}
-h2{font-size:1.2rem;color:#a189bd;margin-bottom:1.4em}
+/* hero image */
+.hero-img{width:220px;border-radius:20px;margin:16px 0 24px;box-shadow:0 6px 14px rgba(0,0,0,.15)}
 
-.portrait{
-  width:70%;max-width:320px;
-  border-radius:1.2rem;border:5px solid #ffd5ec;
-  box-shadow:0 0 20px #ffc5e2;
-  margin-bottom:1.5rem;
-  transition:transform .3s
-}
-.portrait:hover{transform:scale(1.03)}
-
-.message{font-size:1.15rem;line-height:1.6;margin-bottom:1.8rem;color:#555}
-
-audio{width:100%;border-radius:10px;margin-bottom:1.2rem}
-
-.confetti-btn{
-  padding:.8rem 1.6rem;font-size:1rem;
-  background:#ffb6c1;border:none;border-radius:20px;
-  cursor:pointer;transition:transform .2s;
-  box-shadow:0 2px 5px rgba(0,0,0,.15)
-}
-.confetti-btn:hover{transform:scale(1.06)}
-
-/* ---------- Theme Toggle Icon ---------- */
-.toggle-theme{
-  position:fixed;top:20px;right:25px;
-  font-size:1.7rem;color:#666;z-index:3;
-  cursor:pointer;user-select:none
-}
-
-/* ---------- Preloader ---------- */
-#preloader{
-  position:fixed;inset:0;background:#fff;
-  display:flex;align-items:center;justify-content:center;
-  z-index:999
-}
-.loader{font-size:3rem;animation:pop 1s ease-in-out infinite}
-@keyframes pop{0%,100%{opacity:0;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-
-/* ---------- Dark mode ---------- */
-body.dark{
-  background:linear-gradient(145deg,#1b1b1b,#2c2c2c);
-  color:#eee
-}
-body.dark .card{
-  background:rgba(40,40,40,.9);
-  border-color:#ff99cc;
-  box-shadow:0 0 25px rgba(255,105,180,.3)
-}
-body.dark .message{color:#ddd}
+/* copy */
+.korean-font{font-family:'Nanum Pen Script',cursive}
+h1{font-size:34px;color:#ff69b4;margin-bottom:8px}
 body.dark h1{color:#ffaad4}
-body.dark .korean,body.dark h2{color:#ccbbed}
-body.dark .portrait{border-color:#ffaad4;box-shadow:0 0 20px #ff8ecb}
+.subtitle{font-size:22px;color:#704f7c;margin:12px 0 18px}
+.message{font-size:20px;margin:20px 0 26px;color:#444}
+body.dark .message{color:#ddd}
 
-/* ---------- Starry‑night easter egg ---------- */
-body.starry{background:#000}
-body.starry .card{
-  background:rgba(20,20,30,.88);
-  border-color:#6655ff;
-  box-shadow:0 0 25px rgba(102,102,255,.4)
+/* buttons */
+.choices, .episode-btn-wrap{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:24px}
+.choices button, .episode-btn, .confetti-btn{
+  background:#ffd1dc;border:none;border-radius:14px;
+  padding:12px 26px;font-size:19px;cursor:pointer;
+  transition:.25s;box-shadow:0 3px 8px rgba(0,0,0,.12)
 }
-body.starry .portrait{border-color:#8d8dff;box-shadow:0 0 20px #8d8dff}
+.choices button:hover, .episode-btn:hover, .confetti-btn:hover{
+  background:#ffb6c1;transform:translateY(-2px)
+}
+.confetti-btn{margin-top:10px}
+.episode-btn{display:inline-block;margin-top:14px;text-decoration:none;color:#5e2d79;font-weight:bold}
 
-.ep1-button {
-  background-color: #f8bfe6;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  display: inline-block;
-  margin-top: 30px;
-}
-
-.ep1-button:hover {
-  background-color: #f49fcf;
-  transform: scale(1.05);
-}
+/* typed output */
+.typed{font-size:22px;min-height:66px;color:#333}
+body.dark .typed, body.starry .typed{color:#e8e8e8}
