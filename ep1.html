@@ -5,42 +5,33 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Episode 1 – Choose Your Birthday Treat</title>
 
-  <!-- Korean‑style font -->
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="ep1.css">
-
-  <!-- Sparkles + Confetti libraries -->
+  <!-- libs (sparkles & confetti) -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-
-  <!-- sparkle layer -->
   <div id="sparkles"></div>
-
-  <!-- dark‑mode / easter‑egg toggle -->
   <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
 
-  <!-- content -->
-  <div class="card">
-      <h1 class="korean-font">🎀 하루짱의 생일 – 에피소드 1 🎀</h1>
-      <img src="hrum_image.png" alt="Hrum" class="hero-img">
+  <main class="card">
+    <h1 class="korean-font">🎀 에피소드 1 – 생일 간식 고르기 🎀</h1>
+    <img src="hrum_image.png" class="hero-img" alt="Hrum" />
 
-      <p class="subtitle korean-font">Choose your birthday treat!</p>
+    <p class="subtitle korean-font">Pick your birthday treat!</p>
 
-      <div class="choices">
-        <button onclick="choose('ramen')">🍜 Ramen</button>
-        <button onclick="choose('bubble')">🧋 Bubble Tea</button>
-        <button onclick="choose('cake')">🍰 Strawberry Cake</button>
-        <button onclick="choose('surprise')">🎁 Mystery Box</button>
-      </div>
+    <div class="choices">
+      <button onclick="choose('ramen')">🍜 Ramen</button>
+      <button onclick="choose('bubble')">🧋 Bubble Tea</button>
+      <button onclick="choose('cake')">🍰 Strawberry Cake</button>
+      <button onclick="choose('surprise')">🎁 Mystery Box</button>
+    </div>
 
-      <p id="typed-text" class="typed korean-font"></p>
-  </div>
+    <p id="typed-text" class="typed korean-font"></p>
+  </main>
 
-  <!-- main JS -->
-  <script src="ep1.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
