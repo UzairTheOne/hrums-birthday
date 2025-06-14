@@ -66,3 +66,16 @@ body.dark .message{color:#ddd}
 /* typed output */
 .typed{font-size:22px;min-height:66px;color:#333}
 body.dark .typed, body.starry .typed{color:#e8e8e8}
+
+.episode-btn {
+  background:linear-gradient(135deg,#ffd1dc,#ffb6c1);
+  color:#5e2d79;padding:14px 28px;border-radius:18px;
+  font-size:20px;border:none;cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  transition:all .3s;
+}
+.episode-btn:hover{
+  background:linear-gradient(135deg,#ffb6c1,#f9a8d4);
+  transform:scale(1.05);
+}
+
