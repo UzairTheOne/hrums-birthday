@@ -1,162 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Episode 6 – Special Messages</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>Episode 6: The Final Surprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-<!-- Confetti (hosted CDN) -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    body {
+      font-family: 'Nanum Pen Script', cursive;
+      background: #fff0f6;
+      overflow-x: hidden;
+      text-align: center;
+      transition: background 1s, color 1s;
+    }
 
-<!-- Hand‑written font for finale -->
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+    .starry {
+      background: radial-gradient(ellipse at top, #0d0d2b, #1c1c3c);
+      color: white;
+    }
 
-<style>
-/* ---------- basic page ---------- */
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#ffeefc,#edf9ff);
-  color:#333;overflow-x:hidden;
-}
+    h1 {
+      font-size: 3em;
+      margin: 30px 0;
+    }
 
-/* ---------- heading ---------- */
-h1{margin:40px 0 20px;text-align:center;color:#ff5f9f}
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-family: inherit;
+      cursor: pointer;
+      z-index: 9999;
+    }
 
-/* ---------- gift grid ---------- */
-.gift-grid{
-  display:flex;flex-wrap:wrap;justify-content:center;gap:28px;
-  padding:0 20px 40px;
-}
-.gift{
-  width:130px;height:130px;cursor:pointer;
-  border-radius:18px;background:#ffd1dc url('giftbox.png') center/contain no-repeat;
-  animation:bounce 2s infinite;
-}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    .gifts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
 
-/* fallback if image missing */
-.gift img{width:100%;height:100%;object-fit:contain}
+    .gift {
+      width: 120px;
+      height: 120px;
+      background: url('https://i.imgur.com/pH2uwVW.png') no-repeat center/contain;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      position: relative;
+    }
 
-/* ---------- message card ---------- */
-#msgCard{
-  display:none;max-width:520px;margin:20px auto;
-  background:#fffafa;padding:20px;border-radius:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,.1);
-  text-align:center;
-}
-#msgCard h2{margin-bottom:10px;color:#d63384}
-.closeBtn{
-  margin-top:14px;padding:8px 18px;border:none;border-radius:8px;
-  background:#ff79b0;color:#fff;cursor:pointer
-}
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
 
-/* ---------- finale line ---------- */
-#finale{display:none;font-family:'Nanum Brush Script',cursive;
-  font-size:2rem;text-align:center;color:#d63384;margin:60px 15px}
+    .message {
+      display: none;
+      background: #fffafc;
+      border-radius: 15px;
+      padding: 15px;
+      max-width: 300px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      position: absolute;
+      top: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: sparklePop 0.5s ease;
+      z-index: 2;
+    }
 
-/* ---------- theme toggle ---------- */
-#theme{position:fixed;top:15px;right:18px;
-  background:#ffd1dc;border:none;border-radius:8px;padding:6px 12px;cursor:pointer}
-body.starry{background:#070a19;color:#eee}
-body.starry .gift{background-color:#333}
+    .starry .message {
+      background: #2e235a;
+      color: white;
+    }
 
-/* small rainbow star overlay just for starry mode */
-body.starry::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;
-  background:radial-gradient(#fff 1px,transparent 1px) 0 0/70px 70px,
-             radial-gradient(#fff 1px,transparent 1px) 35px 35px/70px 70px;
-  animation:starMove 40s linear infinite
-}
-@keyframes starMove{to{background-position:4000px 0,4040px 35px}}
-</style>
+    @keyframes sparklePop {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .cursor {
+      width: 18px;
+      height: 18px;
+      background: pink;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 10000;
+      mix-blend-mode: multiply;
+    }
+
+    .trail {
+      width: 6px;
+      height: 6px;
+      background: hotpink;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      animation: fade 1s forwards;
+    }
+
+    @keyframes fade {
+      to {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+    }
+
+    .easter-egg {
+      display: none;
+      margin-top: 40px;
+      font-size: 1.5em;
+      animation: glow 2s infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { color: #ff6eb4; }
+      50% { color: gold; }
+    }
+
+    /* Particles */
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: pink;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: float 8s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-120vh); }
+    }
+  </style>
 </head>
 <body>
+  <div class="cursor" id="cursor"></div>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+  <h1>🎁 Episode 6: The Final Surprise</h1>
 
-<button id="theme">🌙</button>
-
-<h1>🎁 Special Messages 🎁</h1>
-
-<div class="gift-grid">
-  <div class="gift" data-id="0"></div>
-  <div class="gift" data-id="1"></div>
-  <div class="gift" data-id="2"></div>
-  <div class="gift" data-id="3"></div>
-</div>
-
-<div id="msgCard">
-  <h2 id="from"></h2>
-  <p id="text"></p>
-  <button class="closeBtn" onclick="closeMsg()">Close</button>
-</div>
-
-<div id="finale">🌟 You opened every gift! Thank you for being amazing 🌟</div>
-
-<script>
-/* ---- data ---- */
-const data=[
-  {from:'Aiman',msg:'You inspire me every single day!'},
-  {from:'Sana', msg:'Your laughter is contagious 💖'},
-  {from:'Zoya', msg:'Thanks for being my study buddy 📚'},
-  {from:'Hyeri',msg:'Never change – you’re perfect!'}
-];
-
-/* ---- open gift ---- */
-const opened=new Set();
-document.querySelectorAll('.gift').forEach(g=>{
-  g.addEventListener('click',()=>{
-    const id=parseInt(g.dataset.id);
-    const d=data[id];
-    document.getElementById('from').textContent="From "+d.from;
-    document.getElementById('text').textContent=d.msg;
-    document.getElementById('msgCard').style.display='block';
-    sparkle();
-    opened.add(id);
-    if(opened.size===data.length){
-      document.getElementById('finale').style.display='block';
-      sparkle(150);
-    }
-  });
-});
-
-function closeMsg(){document.getElementById('msgCard').style.display='none'}
-
-/* ---- confetti sparkle ---- */
-function sparkle(count=60){
-  confetti({particleCount:count,spread:70,origin:{y:.6},
-            colors:['#ff99cc','#ffd1e8','#e0b3ff']});
-}
-
-/* ---- theme toggle ---- */
-document.getElementById('theme').onclick=()=>{
-  document.body.classList.toggle('starry');
-};
-</script>
-  
-
-<script>
-// Second Easter Egg
-document.getElementById("easterTrigger").addEventListener("click", ()=>{
-  document.getElementById("easterPopup").style.display = "flex";
-  sparkle(100); // optional: if you have sparkle function
-});
-
-function closeEaster(){
-  document.getElementById("easterPopup").style.display = "none";
-}
-</script>
-
-    <!-- Second Easter Egg trigger (tiny star) -->
-<div id="easterTrigger" title="shhh 🤫">✨</div>
-
-<!-- Hidden popup message -->
-<div id="easterPopup">
-  <div class="popup-inner">
-    <h2>You found the hidden star!</h2>
-    <p>This moment, like you, is rare and beautiful ✨💜</p>
-    <button onclick="closeEaster()">Close</button>
+  <div class="gifts">
+    <!-- 6 Gift Boxes -->
+    <div class="gift" onclick="revealMessage(this, 0)"><div class="message">You light up even my darkest days 🌟</div></div>
+    <div class="gift" onclick="revealMessage(this, 1)"><div class="message">Every chat, every laugh — unforgettable 💬</div></div>
+    <div class="gift" onclick="revealMessage(this, 2)"><div class="message">You’re more magical than any K-drama ✨</div></div>
+    <div class="gift" onclick="revealMessage(this, 3)"><div class="message">I’m grateful for your presence in my life 💖</div></div>
+    <div class="gift" onclick="revealMessage(this, 4)"><div class="message">Your kindness inspires me everyday 🌸</div></div>
+    <div class="gift" onclick="revealMessage(this, 5)"><div class="message">Noona, you’re irreplaceable 💫</div></div>
   </div>
-</div>
 
+  <!-- Easter Egg Reveal -->
+  <div class="easter-egg" id="finalMessage">
+    🌠 “This entire journey was my gift to you... Thank you for being part of my story.” 💌
+  </div>
+
+  <!-- Background Music -->
+  <audio autoplay loop id="bgMusic">
+    <source src="your-song.mp3" type="audio/mp3">
+    Your browser does not support audio.
+  </audio>
+
+  <script>
+    // Cursor + Trail
+    const cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", e => {
+      cursor.style.left = e.pageX + "px";
+      cursor.style.top = e.pageY + "px";
+
+      let trail = document.createElement("div");
+      trail.className = "trail";
+      trail.style.left = e.pageX + "px";
+      trail.style.top = e.pageY + "px";
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 500);
+    });
+
+    // Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle("starry");
+    }
+
+    // Reveal gift messages
+    let opened = [false, false, false, false, false, false];
+    function revealMessage(el, index) {
+      const msg = el.querySelector('.message');
+      msg.classList.toggle('hidden');
+      msg.style.display = 'block';
+      opened[index] = true;
+
+      // Confetti burst
+      for (let i = 0; i < 20; i++) {
+        let p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random() * window.innerWidth + "px";
+        p.style.top = window.scrollY + Math.random() * window.innerHeight + "px";
+        p.style.animationDuration = (4 + Math.random() * 4) + "s";
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 4000);
+      }
+
+      // Reveal final message if all opened
+      if (opened.every(Boolean)) {
+        document.getElementById("finalMessage").style.display = "block";
+      }
+    }
+
+    // Initial particles
+    window.onload = () => {
+      for (let i = 0; i < 30; i++) {
+        let p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random() * window.innerWidth + "px";
+        p.style.top = Math.random() * window.innerHeight + "px";
+        p.style.animationDuration = (6 + Math.random() * 6) + "s";
+        document.body.appendChild(p);
+      }
+    }
+  </script>
 </body>
 </html>
