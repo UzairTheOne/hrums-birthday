@@ -22,10 +22,24 @@ h1 {font-size:2.2em;color:#d63384}
   margin-top:30px;
 }
 .gift-box {
-  width:140px;height:140px;
-  background:url('https://w7.pngwing.com/pngs/84/146/png-transparent-gift-christmas-animaatio-dessin-anime-gift-miscellaneous-gift-box-flower.png')no-repeat center/contain;
-  animation:bounce 2s infinite;cursor:pointer;
+  cursor: pointer;
+  display: inline-block;
+  margin: 20px;
+  animation: bounce 2s infinite;
 }
+.gift-icon {
+  width: 120px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+.gift-icon:hover {
+  transform: scale(1.05);
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
 @keyframes bounce {0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .message-box {
   display:none;margin:20px auto;
