@@ -1,62 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Hrum | Birthday Adventure</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Hrum – Birthday Adventure</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- Korean handwritten font -->
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+<!-- Korean handwriting font -->
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 
-  <!-- Styles & Confetti -->
-  <link rel="stylesheet" href="main.css" />
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+/* ---------- palette & font ---------- */
+:root{
+  --bg-light:#fff0f6;
+  --bg-dark:#0d0d26;
+  --accent:#ff6da9;
+  --accent2:#ffa3cb;
+}
+html,body{margin:0;min-height:100%;font-family:'Nanum Pen Script',cursive;transition:.5s}
+body{background:var(--bg-light);color:#333;display:flex;flex-direction:column;align-items:center}
+
+/* ---------- theme toggle ---------- */
+#themeBtn{
+  position:fixed;top:16px;right:16px;
+  padding:8px 14px;border:none;border-radius:22px;
+  background:var(--accent);color:#fff;cursor:pointer;font-size:18px;
+}
+
+/* ---------- hero card ---------- */
+.hero{
+  margin-top:100px;text-align:center;width:90%;max-width:480px;
+}
+.hero img{
+  width:100%;max-width:220px;height:auto;border-radius:14px;
+  box-shadow:0 6px 16px rgba(0,0,0,.15)
+}
+.hero h1{
+  font-size:46px;color:var(--accent);margin:18px 0 8px;
+}
+.hero p{font-size:20px;margin-bottom:26px}
+
+/* ---------- primary button ---------- */
+.main-btn{
+  display:inline-block;padding:12px 34px;font-size:20px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;border:none;border-radius:32px;cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);transition:.3s;
+}
+.main-btn:hover{transform:translateY(-4px)}
+
+/* ---------- episode nav ---------- */
+nav{margin:60px 0 40px;text-align:center}
+nav h2{font-size:32px;color:var(--accent);margin-bottom:20px}
+.nav-grid{
+  display:flex;flex-wrap:wrap;gap:14px;justify-content:center
+}
+.nav-btn{
+  padding:10px 24px;border-radius:24px;
+  background:#ffe3f3;color:#c2336c;text-decoration:none;font-size:18px;
+  transition:.25s;border:2px solid transparent
+}
+.nav-btn:hover{background:#ffd0eb;border-color:#ffb4d6}
+
+/* ---------- dark mode styles ---------- */
+body.dark{background:var(--bg-dark);color:#eee}
+body.dark #themeBtn{background:#7c54ff}
+body.dark .hero h1{color:#ff99d4}
+body.dark .nav-btn{background:#24244a;color:#ff9cd5}
+body.dark .nav-btn:hover{background:#333366;border-color:#5050a0}
+</style>
 </head>
 <body>
 
-  <!-- pre‑loader -->
-  <div id="loader"><div class="spinner"></div></div>
+<button id="themeBtn">🌙</button>
 
-  <!-- theme toggle -->
-  <button id="themeToggle" class="toggle">🌙</button>
+<section class="hero">
+  <img src="hrum.png" alt="Hrum">
+  <h1>하루누나</h1>
+  <p>Welcome to your birthday K‑drama adventure!</p>
+  <button class="main-btn" onclick="location.href='ep1.html'">Start Episode 1</button>
+</section>
 
-  <!-- secret star -->
-  <div id="secretStar" class="star" title="Shh… click me!">✨</div>
-
-  <main class="hero-card">
-    <img src="hrum_image.png" alt="Hrum" class="hero-img" />
-
-    <h1 class="korean">하루누나</h1>
-    <p id="type" class="typing"></p>
-
-    <button id="startBtn" class="main-btn">🎬 Begin Adventure</button>
-  </main>
-
-  <!-- episode nav -->
-  <section class="nav-area">
-    <h2 class="korean">에피소드 목록</h2>
-    <div class="nav-grid">
-      <a href="ep1.html" class="nav-btn">EP 1</a>
-      <a href="ep2.html" class="nav-btn">EP 2</a>
-      <a href="ep3.html" class="nav-btn">EP 3</a>
-      <a href="ep4.html" class="nav-btn">EP 4</a>
-      <a href="ep5.html" class="nav-btn">EP 5</a>
-      <a href="ep6.html" class="nav-btn">EP 6</a>
-    </div>
-  </section>
-
-  <!-- hidden popup -->
-  <div id="popup">
-    <div class="popup-inner">
-      <h3>💖 Secret Message 💖</h3>
-      <p>In every sparkle, I see a reason to smile—and that reason is you.</p>
-      <button id="closePop">Close</button>
-    </div>
+<nav>
+  <h2>Episode List</h2>
+  <div class="nav-grid">
+    <a class="nav-btn" href="ep1.html">EP 1</a>
+    <a class="nav-btn" href="ep2.html">EP 2</a>
+    <a class="nav-btn" href="ep3.html">EP 3</a>
+    <a class="nav-btn" href="ep4.html">EP 4</a>
+    <a class="nav-btn" href="ep5.html">EP 5</a>
+    <a class="nav-btn" href="ep6.html">EP 6</a>
   </div>
+</nav>
 
-  <!-- sparkle canvas -->
-  <canvas id="cursorSpark"></canvas>
-
-  <script src="main.js"></script>
+<script>
+/* simple day ↔ night toggle */
+document.getElementById('themeBtn').onclick=()=>{
+  document.body.classList.toggle('dark');
+  document.getElementById('themeBtn').textContent=
+    document.body.classList.contains('dark')?'☀️':'🌙';
+};
+</script>
 </body>
 </html>
