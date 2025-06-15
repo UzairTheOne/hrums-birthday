@@ -1,62 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Episode 6: Special Messages</title>
+<meta charset="UTF-8">
+<title>Episode 6 – Special Messages</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- Confetti & Sparkles -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<!-- Confetti (hosted CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- Handwritten Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+<!-- Hand‑written font for finale -->
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom right, #ffe6f0, #f0faff);
-      font-family: 'Segoe UI', sans-serif;
-      overflow-x: hidden;
+<style>
+/* ---------- basic page ---------- */
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#ffeefc,#edf9ff);
+  color:#333;overflow-x:hidden;
+}
+
+/* ---------- heading ---------- */
+h1{margin:40px 0 20px;text-align:center;color:#ff5f9f}
+
+/* ---------- gift grid ---------- */
+.gift-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:28px;
+  padding:0 20px 40px;
+}
+.gift{
+  width:130px;height:130px;cursor:pointer;
+  border-radius:18px;background:#ffd1dc url('giftbox.png') center/contain no-repeat;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* fallback if image missing */
+.gift img{width:100%;height:100%;object-fit:contain}
+
+/* ---------- message card ---------- */
+#msgCard{
+  display:none;max-width:520px;margin:20px auto;
+  background:#fffafa;padding:20px;border-radius:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.1);
+  text-align:center;
+}
+#msgCard h2{margin-bottom:10px;color:#d63384}
+.closeBtn{
+  margin-top:14px;padding:8px 18px;border:none;border-radius:8px;
+  background:#ff79b0;color:#fff;cursor:pointer
+}
+
+/* ---------- finale line ---------- */
+#finale{display:none;font-family:'Nanum Brush Script',cursive;
+  font-size:2rem;text-align:center;color:#d63384;margin:60px 15px}
+
+/* ---------- theme toggle ---------- */
+#theme{position:fixed;top:15px;right:18px;
+  background:#ffd1dc;border:none;border-radius:8px;padding:6px 12px;cursor:pointer}
+body.starry{background:#070a19;color:#eee}
+body.starry .gift{background-color:#333}
+
+/* small rainbow star overlay just for starry mode */
+body.starry::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:radial-gradient(#fff 1px,transparent 1px) 0 0/70px 70px,
+             radial-gradient(#fff 1px,transparent 1px) 35px 35px/70px 70px;
+  animation:starMove 40s linear infinite
+}
+@keyframes starMove{to{background-position:4000px 0,4040px 35px}}
+</style>
+</head>
+<body>
+
+<button id="theme">🌙</button>
+
+<h1>🎁 Special Messages 🎁</h1>
+
+<div class="gift-grid">
+  <div class="gift" data-id="0"></div>
+  <div class="gift" data-id="1"></div>
+  <div class="gift" data-id="2"></div>
+  <div class="gift" data-id="3"></div>
+</div>
+
+<div id="msgCard">
+  <h2 id="from"></h2>
+  <p id="text"></p>
+  <button class="closeBtn" onclick="closeMsg()">Close</button>
+</div>
+
+<div id="finale">🌟 You opened every gift! Thank you for being amazing 🌟</div>
+
+<script>
+/* ---- data ---- */
+const data=[
+  {from:'Aiman',msg:'You inspire me every single day!'},
+  {from:'Sana', msg:'Your laughter is contagious 💖'},
+  {from:'Zoya', msg:'Thanks for being my study buddy 📚'},
+  {from:'Hyeri',msg:'Never change – you’re perfect!'}
+];
+
+/* ---- open gift ---- */
+const opened=new Set();
+document.querySelectorAll('.gift').forEach(g=>{
+  g.addEventListener('click',()=>{
+    const id=parseInt(g.dataset.id);
+    const d=data[id];
+    document.getElementById('from').textContent="From "+d.from;
+    document.getElementById('text').textContent=d.msg;
+    document.getElementById('msgCard').style.display='block';
+    sparkle();
+    opened.add(id);
+    if(opened.size===data.length){
+      document.getElementById('finale').style.display='block';
+      sparkle(150);
     }
+  });
+});
 
-    h1 {
-      text-align: center;
-      color: #ff6699;
-      margin-top: 40px;
-    }
+function closeMsg(){document.getElementById('msgCard').style.display='none'}
 
-    .gift-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 40px 20px;
-      gap: 30px;
-    }
+/* ---- confetti sparkle ---- */
+function sparkle(count=60){
+  confetti({particleCount:count,spread:70,origin:{y:.6},
+            colors:['#ff99cc','#ffd1e8','#e0b3ff']});
+}
 
-    .gift-box {
-      width: 120px;
-      height: 120px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      animation: bounce 2s infinite;
-    }
-
-    .gift-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: transparent;
-      border-radius: 10px;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .message-box {
-      display: none;
-      background: #fff0f5;
-      border
+/* ---- theme toggle ---- */
+document.getElementById('theme').onclick=()=>{
+  document.body.classList.toggle('starry');
+};
+</script>
+</body>
+</html>
