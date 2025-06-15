@@ -1,202 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Episode 3 – What I Love About You</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet"/>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Nanum Pen Script', cursive;
-      background: #fffafc;
-      overflow-x: hidden;
-      transition: background 0.5s, color 0.5s;
-    }
-    .starry {
-      background: radial-gradient(#0d1b2a, #000000);
-      color: #f0f0f0;
-    }
-    .header {
-      text-align: center;
-      font-size: 2.5rem;
-      margin: 20px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .card {
-      perspective: 1000px;
-      cursor: pointer;
-    }
-    .card-inner {
-      position: relative;
-      width: 100%;
-      padding-top: 100%;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-    }
-    .card:hover .card-inner {
-      transform: rotateY(180deg);
-    }
-    .card-front,
-    .card-back {
-      position: absolute;
-      backface-visibility: hidden;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      background: #ffdee9;
-    }
-    .card-back {
-      background: #b5ead7;
-      transform: rotateY(180deg);
-    }
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      background: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .music-control {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: #fff;
-      border: none;
-      padding: 10px;
-      border-radius: 10px;
-      z-index: 1000;
-    }
-    .easter-egg {
-      position: fixed;
-      bottom: 15px;
-      right: 15px;
-      font-size: 2rem;
-      color: transparent;
-      cursor: pointer;
-      z-index: 1000;
-    }
-    .easter-egg::after {
-      content: '💖';
-    }
-    .easter-popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: #fff0f5;
-      border: 2px solid #ff69b4;
-      padding: 30px;
-      border-radius: 20px;
-      font-size: 1.5rem;
-      z-index: 2000;
-      transition: transform 0.4s ease;
-      box-shadow: 0 0 20px pink;
-    }
-    .easter-popup.show {
-      transform: translate(-50%, -50%) scale(1);
-    }
-    .cursor {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: hotpink;
-      position: fixed;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      z-index: 10000;
-    }
-    .trail {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 20, 147, 0.6);
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Episode 3 – What I Love About You</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fffafc;      --text:#333;      --accent:#f979b9;
+  --cardA:#ffdee9;   --cardB:#c2edff;
+}
+body.starry{
+  --bg:#0d0d26;      --text:#f0f0f0;   --accent:#9a85ff;
+  --cardA:#2e2e4e;   --cardB:#48486a;
+}
+/* ------ base ------ */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Nanum Pen Script',cursive;
+  background:var(--bg);color:var(--text);overflow:hidden;
+  cursor:none;transition:background .5s,color .5s;
+}
+h1{text-align:center;margin:22px 0 12px;font-size:2.4rem;color:var(--accent)}
+/* ------ grid cards ------ */
+.grid{
+  display:grid;gap:20px;padding:20px;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  max-width:1100px;margin:auto;
+}
+.card{perspective:900px;height:240px;cursor:pointer;position:relative}
+.card-inner{
+  position:absolute;inset:0;transition:transform .7s;
+  transform-style:preserve-3d;border-radius:16px;
+}
+.card:hover .card-inner{transform:rotateY(180deg)}
+.face{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;padding:14px;border-radius:16px;box-shadow:0 4px 14px rgba(0,0,0,.2);
+  backface-visibility:hidden;
+}
+.front{background:var(--cardA)}
+.back {background:var(--cardB);transform:rotateY(180deg)}
+/* night-only cards hidden in day */
+.night-card{display:none}
+body.starry .night-card{display:block}
+/* ------ buttons ------ */
+.btn{position:fixed;z-index:1000;border:none;border-radius:16px;padding:8px 16px;cursor:pointer}
+#themeBtn{top:16px;right:16px;background:var(--accent);color:#fff}
+#musicBtn{top:16px;left:16px;background:#fff}
+/* ------ custom cursor + trail ------ */
+#cursor{position:fixed;width:22px;height:22px;border-radius:50%;background:var(--accent);
+  pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+.trail{position:fixed;width:9px;height:9px;border-radius:50%;
+  background:var(--accent);pointer-events:none;z-index:9998;animation:fade .6s forwards}
+@keyframes fade{to{transform:scale(0);opacity:0}}
+/* ------ floating hearts ------ */
+.heart{
+  position:fixed;bottom:-60px;border-radius:50%;opacity:.65;pointer-events:none;
+  animation:float linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(0) rotate(0deg)}
+  100%{transform:translateY(-120vh) rotate(360deg);opacity:0}
+}
+/* ------ easter egg ------ */
+#secret{position:fixed;bottom:18px;right:18px;font-size:32px;cursor:pointer;opacity:.4;z-index:1000}
+#secret:hover{opacity:1;transform:scale(1.2)}
+#popup{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;justify-content:center;align-items:center;z-index:2000}
+.inner{background:#fff;border-radius:18px;padding:28px;font-size:1.5rem;max-width:320px;box-shadow:0 0 25px rgba(255,105,180,.4)}
+body.starry .inner{background:#2d2950;color:#f0f0f0}
+.close{margin-top:18px;padding:6px 18px;border:none;border-radius:10px;background:var(--accent);color:#fff;cursor:pointer}
+</style>
 </head>
 <body>
+<button id="themeBtn" class="btn">🌙 Theme</button>
+<button id="musicBtn" class="btn">🎵</button>
+<div id="secret">💖</div>
+<div id="cursor"></div>
 
-  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-  <button class="music-control" onclick="toggleMusic()">🎵</button>
+<h1>What I Love About You</h1>
 
-  <div class="header">What I Love About You</div>
+<div class="grid" id="cardGrid">
+  <!-- 12 day cards -->
+  <div class="card"><div class="card-inner"><div class="face front">Your laugh 💫</div><div class="face back">It’s the most contagious thing ever!</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your kindness 🌸</div><div class="face back">You always think about others.</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your smile ☀️</div><div class="face back">It lights up my whole day!</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your voice 🎶</div><div class="face back">It's calming and sweet.</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your loyalty 🐾</div><div class="face back">You're always there for me.</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your silliness 🤪</div><div class="face back">Life’s fun with you.</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your wisdom 📚</div><div class="face back">Best advice giver!</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your creativity 🎨</div><div class="face back">You see beauty everywhere.</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your support 🤝</div><div class="face back">I can always count on you.</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your heart ❤️</div><div class="face back">Pure and beautiful.</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your dreams 🌠</div><div class="face back">You inspire me.</div></div></div>
+  <div class="card"><div class="card-inner"><div class="face front">Your friendship 🤍</div><div class="face back">Lucky to have you.</div></div></div>
 
-  <div class="grid">
-    <div class="card"><div class="card-inner"><div class="card-front">Your laugh 💫</div><div class="card-back">It’s the most contagious thing ever!</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your kindness 🌸</div><div class="card-back">You always think about others.</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your smile ☀️</div><div class="card-back">It lights up my whole day!</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your voice 🎶</div><div class="card-back">It's calming and sweet.</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your loyalty 🐾</div><div class="card-back">You're always there when it matters most.</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your silliness 🐒</div><div class="card-back">You make life fun and silly!</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your wisdom 📚</div><div class="card-back">You always give the best advice.</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your creativity 🎨</div><div class="card-back">You see the world in a beautiful way.</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your support 🤝</div><div class="card-back">I can always count on you.</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your heart ❤️</div><div class="card-back">It’s pure and beautiful.</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your dreams 🌠</div><div class="card-back">You inspire me to dream big.</div></div></div>
-    <div class="card"><div class="card-inner"><div class="card-front">Your friendship 🤍</div><div class="card-back">I’m so lucky to have you in my life.</div></div></div>
-  </div>
+  <!-- 4 night‑only bonus cards -->
+  <div class="card night-card"><div class="card-inner"><div class="face front">Night Secret ✨</div><div class="face back">You are my midnight muse.</div></div></div>
+  <div class="card night-card"><div class="card-inner"><div class="face front">Starlight 💫</div><div class="face back">Your eyes outshine the Milky Way.</div></div></div>
+  <div class="card night-card"><div class="card-inner"><div class="face front">Moon Whisper 🌙</div><div class="face back">Every late chat with you is magic.</div></div></div>
+  <div class="card night-card"><div class="card-inner"><div class="face front">Constellation 🪐</div><div class="face back">Together, we make our own galaxy.</div></div></div>
+</div>
 
-  <div class="easter-egg" onclick="showEaster()"> </div>
-  <div class="easter-popup" id="easterMessage">You found my hidden heart 💗 You're incredibly loved, always.</div>
+<!-- popup -->
+<div id="popup"><div class="inner">
+  You found my hidden heart! 💗 <br> Always remember you are loved more than words can say.
+  <button class="close" onclick="popup.style.display='none'">Close</button>
+</div></div>
 
-  <div class="cursor" id="cursor"></div>
+<!-- music -->
+<audio id="bgm" loop><source src="episode3-music.mp3" type="audio/mpeg"></audio>
 
-  <audio id="bgMusic" loop>
-    <source src="your-episode3-music.mp3" type="audio/mp3">
-  </audio>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+/* theme toggle */
+themeBtn.onclick=()=>document.body.classList.toggle('starry');
 
-  <script>
-    let dark = false;
-    function toggleTheme() {
-      document.body.classList.toggle('starry');
-      dark = !dark;
-    }
+/* music toggle (autoplay after first click) */
+musicBtn.onclick=()=>{bgm.paused?bgm.play():bgm.pause();}
+document.body.addEventListener('click',()=>bgm.play(),{once:true});
 
-    const music = document.getElementById("bgMusic");
-    function toggleMusic() {
-      if (music.paused) music.play();
-      else music.pause();
-    }
+/* custom cursor & trail */
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{
+  cursor.style.top=e.clientY+'px';
+  cursor.style.left=e.clientX+'px';
+  const t=document.createElement('div');
+  t.className='trail';t.style.top=e.clientY+'px';t.style.left=e.clientX+'px';
+  document.body.appendChild(t);setTimeout(()=>t.remove(),600);
+});
 
-    function showEaster() {
-      document.getElementById("easterMessage").classList.add("show");
-      setTimeout(() => {
-        document.getElementById("easterMessage").classList.remove("show");
-      }, 4000);
-    }
+/* floating hearts */
+setInterval(()=>{
+  const h=document.createElement('span');
+  const size=25+Math.random()*35;
+  h.className='heart';h.style.width=h.style.height=size+'px';
+  h.style.left=Math.random()*100+'vw';
+  h.style.background=['#ffd6e8','#ffc7f1','#ffebf7','#e8f2ff'][Math.floor(Math.random()*4)];
+  h.style.animationDuration=8+Math.random()*6+'s';
+  document.body.appendChild(h);setTimeout(()=>h.remove(),16000);
+},500);
 
-    // Custom Cursor and Trail
-    const cursor = document.getElementById("cursor");
-    document.addEventListener("mousemove", (e) => {
-      cursor.style.top = e.clientY + "px";
-      cursor.style.left = e.clientX + "px";
+/* easter egg */
+secret.onclick=()=>popup.style.display='flex';
 
-      const trail = document.createElement("div");
-      trail.className = "trail";
-      trail.style.top = e.clientY + "px";
-      trail.style.left = e.clientX + "px";
-      document.body.appendChild(trail);
-      setTimeout(() => trail.remove(), 400);
-    });
-  </script>
+/* confetti on first flip of each card */
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('click',()=>confetti({particleCount:40,spread:70}));
+});
+</script>
 </body>
 </html>
