@@ -21,11 +21,13 @@ h1 {font-size:2.2em;color:#d63384}
   display:flex;flex-wrap:wrap;gap:25px;justify-content:center;
   margin-top:30px;
 }
-.gift-box {
-  cursor: pointer;
-  display: inline-block;
-  margin: 20px;
-  animation: bounce 2s infinite;
+.gift {
+  width:130px;
+  height:130px;
+  cursor:pointer;
+  border-radius:18px;
+  background:transparent url('giftbox.png') center/contain no-repeat;
+  animation:bounce 2s infinite;
 }
 .gift-icon {
   width: 120px;
