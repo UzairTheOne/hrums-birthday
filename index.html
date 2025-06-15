@@ -106,59 +106,58 @@
   }
 
   /* Hidden trigger (you can place it anywhere) */
-#easter-trigger {
-  position: absolute;
-  top: 5%;
-  left: 85%;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  background-color: transparent;
-}
+  #easter-trigger {
+    position: absolute;
+    top: 5%;
+    left: 85%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: transparent;
+  }
 
-/* Easter egg popup styling */
-#easter-egg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 9999;
-}
+  /* Easter egg popup styling */
+  #easter-egg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+  }
 
-#easter-egg .easter-content {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  text-align: center;
-  animation: pop 0.5s ease-out;
-  box-shadow: 0 0 20px pink;
-}
+  #easter-egg .easter-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    animation: pop 0.5s ease-out;
+    box-shadow: 0 0 20px pink;
+  }
 
-@keyframes pop {
-  0% { transform: scale(0.3); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
+  @keyframes pop {
+    0% { transform: scale(0.3); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
 
-/* Optional sparkle on the content */
-#easter-egg .easter-content::after {
-  content: '✨';
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  font-size: 2rem;
-  animation: sparkle 1s infinite;
-}
+  /* Optional sparkle on the content */
+  #easter-egg .easter-content::after {
+    content: '✨';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 2rem;
+    animation: sparkle 1s infinite;
+  }
 
-@keyframes sparkle {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(20deg); }
-}
-
+  @keyframes sparkle {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(20deg); }
+  }
 
   </style>
 </head>
