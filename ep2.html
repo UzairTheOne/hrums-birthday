@@ -1,67 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Episode 2 – A Walk Down Memory Lane</title>
-
-  <!-- fonts & css -->
-  <link rel="stylesheet" href="ep2.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet"/>
-
-  <!-- sparkles + confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<meta charset="UTF-8">
+<title>Episode 2 – Puzzle of Memories</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff8fb;
+  --text:#333;
+  --accent:#ff77a9;
+}
+body.starry{
+  --bg:#0d0d26;
+  --text:#f0f0f0;
+  --accent:#8d7bff;
+}
+/* ------------ base ------------ */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Nanum Pen Script',cursive;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+  cursor:url('https://cur.cursors-4u.net/holidays/hol-7/hol687.cur'),auto;
+  transition:background .5s,color .5s;
+}
+h1{text-align:center;margin:20px 0 10px;font-size:2.4rem;color:var(--accent)}
+/* ------------ toggle ------------ */
+#themeBtn{
+  position:fixed;top:15px;right:15px;z-index:100;
+  background:var(--accent);color:#fff;border:none;border-radius:22px;
+  padding:8px 16px;font-size:14px;cursor:pointer
+}
+body.starry #themeBtn{background:#6b59ff}
+/* ------------ puzzle board ------------ */
+#board{
+  width:480px;height:360px;
+  margin:10px auto;position:relative;
+  border:3px dashed var(--accent);border-radius:12px;
+  background:#fff;overflow:hidden;
+}
+/* each piece */
+.piece{
+  width:120px;height:120px;position:absolute;
+  background-image:url('puzzle.jpg'); /* replace with your image */
+  background-size:480px 360px;
+  border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.25);
+  cursor:grab;
+  transition:box-shadow .2s;
+}
+.piece.grabbing{cursor:grabbing;box-shadow:0 8px 18px rgba(0,0,0,.35)}
+/* ------------ message ------------ */
+#msg{margin-top:18px;text-align:center;font-size:1.6rem;min-height:40px}
+/* ------------ nav button ------------ */
+#nextBtn{
+  display:none;margin:26px auto;padding:12px 32px;
+  background:var(--accent);color:#fff;border:none;border-radius:30px;
+  font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+#nextBtn:hover{transform:translateY(-3px)}
+/* ------------ sparkle trail ------------ */
+.spark{
+  position:fixed;width:9px;height:9px;border-radius:50%;
+  background:var(--accent);pointer-events:none;z-index:9999;
+  animation:fade .6s forwards
+}
+@keyframes fade{to{transform:scale(0);opacity:0}}
+/* ------------ floating particles ------------ */
+.bubble{
+  position:fixed;bottom:-80px;border-radius:50%;opacity:.6;pointer-events:none;
+  animation:rise linear infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0) rotate(0deg)}
+  100%{transform:translateY(-120vh) rotate(360deg);opacity:0}
+}
+/* ------------ easter egg ------------ */
+#secret{position:fixed;bottom:18px;left:18px;font-size:24px;cursor:pointer;opacity:.4;transition:.3s;z-index:100}
+#secret:hover{opacity:1;transform:scale(1.2)}
+#popup{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);
+  justify-content:center;align-items:center;z-index:200}
+.inner{
+  background:#fff;padding:30px;border-radius:16px;text-align:center;
+  max-width:360px;animation:pop .4s ease;font-size:1.4rem}
+body.starry .inner{background:#2a2a4a;color:#fff}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1)}
+.close{margin-top:18px;padding:6px 16px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer}
+</style>
 </head>
 <body>
+<button id="themeBtn">🌙 Theme</button>
+<div id="secret" title="secret star">✨</div>
 
-  <!-- floating petals canvas -->
-  <canvas id="petals"></canvas>
+<h1>Puzzle of Memories</h1>
+<div id="board"></div>
+<div id="msg"></div>
+<button id="nextBtn" onclick="location.href='ep3.html'">Go to Episode 3 ➡️</button>
 
-  <!-- sparkles -->
-  <div id="sparkles"></div>
+<!-- easter egg popup -->
+<div id="popup"><div class="inner">
+  <p>🌟 Secret Thought 🌟<br>“Pieces fit together, just like the moments that made us.”</p>
+  <button class="close" onclick="popup.style.display='none'">Close</button>
+</div></div>
 
-  <!-- dark / starry toggle -->
-  <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
+<!-- music -->
+<audio id="bgm" src="bg-music.mp3" loop></audio>
 
-  <main class="card">
-    <h1 class="korean-font title">🎀 Episode 2 – 기억 여행 🎀</h1>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+/* ---------- music resume ---------- */
+window.addEventListener('DOMContentLoaded',()=>{
+  const t=localStorage.getItem('musicTime');if(t)bgm.currentTime=parseFloat(t);
+});
+window.addEventListener('beforeunload',()=>localStorage.setItem('musicTime',bgm.currentTime));
+document.body.addEventListener('click',()=>bgm.play(),{once:true});
 
-    <!-- photo gallery placeholders -->
-    <div class="gallery">
-      <img src="placeholder1.jpg" alt="Memory 1"/>
-      <img src="placeholder2.jpg" alt="Memory 2"/>
-      <img src="placeholder3.jpg" alt="Memory 3"/>
-    </div>
+/* ---------- theme toggle ---------- */
+themeBtn.onclick=()=>{document.body.classList.toggle('starry');};
 
-    <p class="subtitle korean-font">Which memory do you want to revisit?</p>
+/* ---------- cursor trail ---------- */
+document.addEventListener('mousemove',e=>{
+  const s=document.createElement('div');
+  s.className='spark';s.style.left=e.pageX+'px';s.style.top=e.pageY+'px';
+  document.body.appendChild(s);setTimeout(()=>s.remove(),600);
+});
 
-    <div class="choices">
-      <button onclick="showMemory(0)">🍰 Chaotic birthday</button>
-      <button onclick="showMemory(1)">🧃 Tea obsession</button>
-      <button onclick="showMemory(2)">📚 All‑nighter streak</button>
-      <button onclick="showMemory(3)">😂 Inside joke</button>
-    </div>
+/* ---------- bubbles ---------- */
+setInterval(()=>{
+  const b=document.createElement('span');
+  b.className='bubble';
+  const size=30+Math.random()*60;
+  b.style.width=b.style.height=size+'px';
+  b.style.left=Math.random()*100+'vw';
+  b.style.background=['#ffd6e8','#ffc7f1','#ffebf7','#e8f2ff'][Math.floor(Math.random()*4)];
+  b.style.animationDuration=10+Math.random()*8+'s';
+  document.body.appendChild(b);setTimeout(()=>b.remove(),18000);
+},600);
 
-    <p id="typed-out" class="typed korean-font"></p>
+/* ---------- easter egg ---------- */
+secret.onclick=()=>popup.style.display='flex';
 
-    <!-- mute/unmute -->
-    <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">🔊</button>
-
-    <!-- secret heart for poem -->
-    <div id="heartPoem" onclick="revealPoem()">💖</div>
-
-    <div class="nav">
-  <a href="ep3.html" class="nav-btn korean-font">➡️ Episode 3</a>
-</div>
-
-  </main>
-
-  <!-- background music -->
-  <audio id="bgMusic" loop>
-    <source src="song2.mp3" type="audio/mpeg"/>
-  </audio>
-
-  <script src="ep2.js"></script>
+/* ---------- puzzle setup ---------- */
+const board=document.getElementById('board');
+const rows=3,cols=4,tile=120;
+let placed=0;
+const pieces=[];
+for(let r=0;r<rows;r++){
+ for(let c=0;c<cols;c++){
+   const div=document.createElement('div');
+   div.className='piece';
+   div.style.backgroundPosition=`-${c*tile}px -${r*tile}px`;
+   div.correctX=c*tile;div.correctY=r*tile;
+   /* random start */
+   div.style.left=Math.random()*(board.clientWidth - tile)+'px';
+   div.style.top= (board.clientHeight + 80) +'px';
+   board.appendChild(div);
+   pieces.push(div);
+   drag(div);
+ }
+}
+function drag(el){
+  let offsetX,offsetY,grab=false;
+  el.addEventListener('mousedown',e=>{
+    grab=true;el.classList.add('grabbing');
+    offsetX=e.offsetX;offsetY=e.offsetY;
+  });
+  document.addEventListener('mousemove',e=>{
+    if(!grab)return;
+    el.style.left=e.pageX-board.offsetLeft-offsetX+'px';
+    el.style.top=e.pageY-board.offsetTop-offsetY+'px';
+  });
+  document.addEventListener('mouseup',()=>{
+    if(!grab)return;grab=false;el.classList.remove('grabbing');
+    const dx=parseInt(el.style.left),dy=parseInt(el.style.top);
+    if(Math.abs(dx-el.correctX)<20 && Math.abs(dy-el.correctY)<20){
+      el.style.left=el.correctX+'px';
+      el.style.top=el.correctY+'px';
+      el.style.pointerEvents='none';
+      placed++;confetti({particleCount:50,spread:60});
+      if(placed===rows*cols)finishPuzzle();
+    }
+  });
+}
+/* ---------- finish ---------- */
+function finishPuzzle(){
+  msg.textContent="✨ Puzzle complete! ✨";
+  nextBtn.style.display='block';
+  confetti({particleCount:180,spread:100});
+}
+</script>
 </body>
 </html>
