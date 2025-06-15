@@ -133,6 +133,7 @@ document.getElementById('theme').onclick=()=>{
 };
 </script>
 
+  
   <!-- Second Easter Egg trigger (tiny star) -->
 <div id="easterTrigger" title="shhh 🤫">✨</div>
 
@@ -144,6 +145,19 @@ document.getElementById('theme').onclick=()=>{
     <button onclick="closeEaster()">Close</button>
   </div>
 </div>
+<!-- Your HTML content -->
+
+<script>
+// Second Easter Egg
+document.getElementById("easterTrigger").addEventListener("click", ()=>{
+  document.getElementById("easterPopup").style.display = "flex";
+  sparkle(100); // optional: if you have sparkle function
+});
+
+function closeEaster(){
+  document.getElementById("easterPopup").style.display = "none";
+}
+</script>
 
 </body>
 </html>
