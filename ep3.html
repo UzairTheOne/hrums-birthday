@@ -2,100 +2,180 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Episode 3 – What I Love About You</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Episode 3: What I Love About You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Nanum Pen Script', cursive;
+    }
 
-  <link rel="stylesheet" href="ep3.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet"/>
+    body {
+      background: #fff;
+      overflow-x: hidden;
+      transition: background 0.5s ease;
+    }
 
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    .container {
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .card {
+      width: 200px;
+      height: 250px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      background: #ffe0f0;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      background: #ffccdd;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 0;
+      color: #ff69b4;
+      font-size: 2.5rem;
+    }
+
+    .toggle-theme {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 10px 15px;
+      background: #ffd1dc;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .theme-starry {
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      color: white;
+    }
+
+    /* Cursor */
+    .cursor {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      background-color: rgba(255, 192, 203, 0.7);
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- sparkle layer -->
-  <div id="sparkles"></div>
-  <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
+  <div class="cursor" id="cursor"></div>
 
-  <!-- secret heart poem trigger -->
-  <div id="secretHeart" onclick="revealPoem()">💖</div>
+  <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+  <h1>What I Love About You</h1>
 
-  <main class="card">
-    <h1 class="korean-font title">🎀 Episode 3 – 내가 사랑하는 10가지 🎀</h1>
+  <div class="container">
+    <!-- 12 Flip Cards -->
+    <div class="card"><div class="card-inner"><div class="card-front">Your Smile</div><div class="card-back">It brightens even my darkest days.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Laugh</div><div class="card-back">It’s my favorite sound in the world.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Kindness</div><div class="card-back">You're always there for others.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Voice</div><div class="card-back">It's calm, comforting, and lovely.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Creativity</div><div class="card-back">You make magic from nothing.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Eyes</div><div class="card-back">They sparkle like stars.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Support</div><div class="card-back">You lift me up when I fall.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Passion</div><div class="card-back">You chase your dreams bravely.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Goofiness</div><div class="card-back">It makes every moment fun.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Presence</div><div class="card-back">Just being near you makes me happy.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Your Heart</div><div class="card-back">It's pure and golden.</div></div></div>
+    <div class="card"><div class="card-inner"><div class="card-front">Everything</div><div class="card-back">Because you’re simply you 💖</div></div></div>
+  </div>
 
-    <!-- flip‑card grid -->
-    <div class="grid" id="loveGrid">
-      <!-- 12 cards → edit text later -->
-      <div class="flip">
-        <div class="front korean-font">1</div>
-        <div class="back korean-font">Your endless kindness</div>
-      </div>
+  <!-- Audio -->
+  <audio id="bg-music" autoplay loop>
+    <source src="your-music.mp3" type="audio/mpeg">
+  </audio>
 
-      <div class="flip">
-        <div class="front korean-font">2</div>
-        <div class="back korean-font">Your study hustle 💪</div>
-      </div>
+  <!-- Easter Egg -->
+  <div id="easterEgg" style="display:none; position:fixed; bottom:20px; left:20px; background:#fff0f5; padding:15px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
+    <strong>🌟 Hidden Message 🌟</strong><br>
+    "You found the secret! That means you’re really someone special 💫"
+  </div>
 
-      <div class="flip">
-        <div class="front korean-font">3</div>
-        <div class="back korean-font">Your K‑drama commentary</div>
-      </div>
+  <script>
+    // Cursor Trail
+    const cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", (e) => {
+      cursor.style.left = e.pageX + "px";
+      cursor.style.top = e.pageY + "px";
+    });
 
-      <div class="flip">
-        <div class="front korean-font">4</div>
-        <div class="back korean-font">That contagious laugh 😆</div>
-      </div>
+    // Theme toggle
+    function toggleTheme() {
+      document.body.classList.toggle("theme-starry");
+    }
 
-      <div class="flip">
-        <div class="front korean-font">5</div>
-        <div class="back korean-font">Your honest advice</div>
-      </div>
+    // Show Easter Egg if all cards hovered
+    let cardsFlipped = new Set();
+    document.querySelectorAll(".card").forEach((card, index) => {
+      card.addEventListener("mouseenter", () => {
+        cardsFlipped.add(index);
+        if (cardsFlipped.size === 12) {
+          document.getElementById("easterEgg").style.display = "block";
+        }
+      });
+    });
 
-      <div class="flip">
-        <div class="front korean-font">6</div>
-        <div class="back korean-font">The way you hype friends</div>
-      </div>
-
-      <div class="flip">
-        <div class="front korean-font">7</div>
-        <div class="back korean-font">Your sleepy face 😴</div>
-      </div>
-
-      <div class="flip">
-        <div class="front korean-font">8</div>
-        <div class="back korean-font">Your creative mind</div>
-      </div>
-
-      <div class="flip">
-        <div class="front korean-font">9</div>
-        <div class="back korean-font">Your courage to try</div>
-      </div>
-
-      <div class="flip">
-        <div class="front korean-font">10</div>
-        <div class="back korean-font">Your loyalty and love 💖</div>
-      </div>
-
-      <div class="flip">
-        <div class="front korean-font">11</div>
-        <div class="back korean-font">Your silly memes 🤣</div>
-      </div>
-
-      <div class="flip">
-        <div class="front korean-font">12</div>
-        <div class="back korean-font">Everything that is you ✨</div>
-      </div>
-    </div>
-
-    <!-- back / next nav -->
-    <div class="nav">
-      <a href="ep2.html" class="nav-btn korean-font">⬅️ Episode 2</a>
-      <!-- (future Episode 4 button placeholder) -->
-    </div>
-    <a href="ep4.html" class="nav-btn korean-font">➡️ Episode 4</a>
-
-  </main>
-
-  <script src="ep3.js"></script>
+    // Confetti burst on page load
+    window.onload = () => {
+      // Simple burst effect using canvas-confetti
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
+      script.onload = () => confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      document.body.appendChild(script);
+    };
+  </script>
 </body>
 </html>
