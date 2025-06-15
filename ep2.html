@@ -1,194 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Episode 2 – Puzzle of Memories</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#fff8fb;
-  --text:#333;
-  --accent:#ff77a9;
-}
-body.starry{
-  --bg:#0d0d26;
-  --text:#f0f0f0;
-  --accent:#8d7bff;
-}
-/* ------------ base ------------ */
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'Nanum Pen Script',cursive;
-  background:var(--bg);
-  color:var(--text);
-  overflow:hidden;
-  cursor:url('https://cur.cursors-4u.net/holidays/hol-7/hol687.cur'),auto;
-  transition:background .5s,color .5s;
-}
-h1{text-align:center;margin:20px 0 10px;font-size:2.4rem;color:var(--accent)}
-/* ------------ toggle ------------ */
-#themeBtn{
-  position:fixed;top:15px;right:15px;z-index:100;
-  background:var(--accent);color:#fff;border:none;border-radius:22px;
-  padding:8px 16px;font-size:14px;cursor:pointer
-}
-body.starry #themeBtn{background:#6b59ff}
-/* ------------ puzzle board ------------ */
-#board{
-  width:480px;height:360px;
-  margin:10px auto;position:relative;
-  border:3px dashed var(--accent);border-radius:12px;
-  background:#fff;overflow:hidden;
-}
-/* each piece */
-.piece{
-  width:120px;height:120px;position:absolute;
-  background-image:url('hrum.png'); /* replace with your image */
-  background-size:480px 360px;
-  border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.25);
-  cursor:grab;
-  transition:box-shadow .2s;
-}
-.piece.grabbing{cursor:grabbing;box-shadow:0 8px 18px rgba(0,0,0,.35)}
-/* ------------ message ------------ */
-#msg{margin-top:18px;text-align:center;font-size:1.6rem;min-height:40px}
-/* ------------ nav button ------------ */
-#nextBtn{
-  display:none;margin:26px auto;padding:12px 32px;
-  background:var(--accent);color:#fff;border:none;border-radius:30px;
-  font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2)}
-#nextBtn:hover{transform:translateY(-3px)}
-/* ------------ sparkle trail ------------ */
-.spark{
-  position:fixed;width:9px;height:9px;border-radius:50%;
-  background:var(--accent);pointer-events:none;z-index:9999;
-  animation:fade .6s forwards
-}
-@keyframes fade{to{transform:scale(0);opacity:0}}
-/* ------------ floating particles ------------ */
-.bubble{
-  position:fixed;bottom:-80px;border-radius:50%;opacity:.6;pointer-events:none;
-  animation:rise linear infinite;
-}
-@keyframes rise{
-  0%{transform:translateY(0) rotate(0deg)}
-  100%{transform:translateY(-120vh) rotate(360deg);opacity:0}
-}
-/* ------------ easter egg ------------ */
-#secret{position:fixed;bottom:18px;left:18px;font-size:24px;cursor:pointer;opacity:.4;transition:.3s;z-index:100}
-#secret:hover{opacity:1;transform:scale(1.2)}
-#popup{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);
-  justify-content:center;align-items:center;z-index:200}
-.inner{
-  background:#fff;padding:30px;border-radius:16px;text-align:center;
-  max-width:360px;animation:pop .4s ease;font-size:1.4rem}
-body.starry .inner{background:#2a2a4a;color:#fff}
-@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1)}
-.close{margin-top:18px;padding:6px 16px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer}
-</style>
+  <meta charset="UTF-8">
+  <title>Episode 2 – Puzzle of Memories</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fffafc;
+      --text: #333;
+      --accent: #f979b9;
+    }
+    body.starry {
+      --bg: #0d0d26;
+      --text: #f0f0f0;
+      --accent: #9a85ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Nanum Pen Script', cursive;
+      background: var(--bg);
+      color: var(--text);
+      text-align: center;
+      overflow: hidden;
+      cursor: url('https://cur.cursors-4u.net/symbols/sym-2/sym198.cur'), auto;
+      transition: background 0.5s, color 0.5s;
+    }
+    h1 {
+      margin: 20px 0 10px;
+      font-size: 2.2rem;
+      color: var(--accent);
+    }
+    #themeBtn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 6px 16px;
+      border: none;
+      border-radius: 20px;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      z-index: 10;
+    }
+    #board {
+      width: 480px;
+      height: 360px;
+      margin: 10px auto;
+      position: relative;
+      border: 3px dashed var(--accent);
+      border-radius: 12px;
+      background-color: white;
+    }
+    .piece {
+      width: 120px;
+      height: 120px;
+      position: absolute;
+      background-image: url('puzzle.png');
+      background-size: 480px 360px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: grab;
+    }
+    .piece:active {
+      cursor: grabbing;
+    }
+    #msg {
+      font-size: 1.5rem;
+      margin: 20px;
+    }
+    #nextBtn {
+      display: none;
+      padding: 10px 24px;
+      font-size: 1.2rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    .spark {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      pointer-events: none;
+      z-index: 9999;
+      animation: fade 0.6s forwards;
+    }
+    @keyframes fade {
+      to {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+    #secret {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 0.4;
+      z-index: 10;
+    }
+    #secret:hover {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    #popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+    .inner {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      font-size: 1.3rem;
+      color: #333;
+      max-width: 320px;
+      animation: popup 0.4s ease;
+    }
+    body.starry .inner {
+      background: #2c2c4a;
+      color: #f0f0f0;
+    }
+    @keyframes popup {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .close {
+      margin-top: 16px;
+      padding: 6px 16px;
+      background: var(--accent);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-<button id="themeBtn">🌙 Theme</button>
-<div id="secret" title="secret star">✨</div>
+  <button id="themeBtn">🌙 Theme</button>
+  <div id="secret" title="Secret Star">✨</div>
 
-<h1>Puzzle of Memories</h1>
-<div id="board"></div>
-<div id="msg"></div>
-<button id="nextBtn" onclick="location.href='ep3.html'">Go to Episode 3 ➡️</button>
+  <h1>Puzzle of Memories</h1>
+  <div id="board"></div>
+  <div id="msg"></div>
+  <button id="nextBtn" onclick="alert('Go to Episode 3!')">Go to Episode 3 ➡️</button>
 
-<!-- easter egg popup -->
-<div id="popup"><div class="inner">
-  <p>🌟 Secret Thought 🌟<br>“Pieces fit together, just like the moments that made us.”</p>
-  <button class="close" onclick="popup.style.display='none'">Close</button>
-</div></div>
+  <div id="popup"><div class="inner">
+    🌟 Hidden Thought 🌟<br>
+    “Some memories only make sense when all the pieces are together.”<br>
+    <button class="close" onclick="popup.style.display='none'">Close</button>
+  </div></div>
 
-<!-- music -->
-<audio id="bgm" src="Song1.mp3" loop></audio>
+  <audio id="bgm" src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Morning_Garden_%28ID_1452%29_-_Lobo_Loco.mp3" loop></audio>
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<script>
-/* ---------- music resume ---------- */
-window.addEventListener('DOMContentLoaded',()=>{
-  const t=localStorage.getItem('musicTime');if(t)bgm.currentTime=parseFloat(t);
-});
-window.addEventListener('beforeunload',()=>localStorage.setItem('musicTime',bgm.currentTime));
-document.body.addEventListener('click',()=>bgm.play(),{once:true});
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    // Music resume
+    window.addEventListener("DOMContentLoaded", () => {
+      const t = localStorage.getItem("musicTime");
+      if (t) bgm.currentTime = parseFloat(t);
+    });
+    window.addEventListener("beforeunload", () => localStorage.setItem("musicTime", bgm.currentTime));
+    document.body.addEventListener("click", () => bgm.play(), { once: true });
 
-/* ---------- theme toggle ---------- */
-themeBtn.onclick=()=>{document.body.classList.toggle('starry');};
+    // Sparkle trail
+    document.addEventListener("mousemove", e => {
+      const s = document.createElement("div");
+      s.className = "spark";
+      s.style.left = e.pageX + "px";
+      s.style.top = e.pageY + "px";
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 600);
+    });
 
-/* ---------- cursor trail ---------- */
-document.addEventListener('mousemove',e=>{
-  const s=document.createElement('div');
-  s.className='spark';s.style.left=e.pageX+'px';s.style.top=e.pageY+'px';
-  document.body.appendChild(s);setTimeout(()=>s.remove(),600);
-});
+    // Theme toggle
+    themeBtn.onclick = () => document.body.classList.toggle("starry");
 
-/* ---------- bubbles ---------- */
-setInterval(()=>{
-  const b=document.createElement('span');
-  b.className='bubble';
-  const size=30+Math.random()*60;
-  b.style.width=b.style.height=size+'px';
-  b.style.left=Math.random()*100+'vw';
-  b.style.background=['#ffd6e8','#ffc7f1','#ffebf7','#e8f2ff'][Math.floor(Math.random()*4)];
-  b.style.animationDuration=10+Math.random()*8+'s';
-  document.body.appendChild(b);setTimeout(()=>b.remove(),18000);
-},600);
+    // Secret
+    secret.onclick = () => popup.style.display = "flex";
 
-/* ---------- easter egg ---------- */
-secret.onclick=()=>popup.style.display='flex';
+    // Puzzle logic
+    const board = document.getElementById("board");
+    const rows = 3, cols = 4, tile = 120;
+    let placed = 0;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const piece = document.createElement("div");
+        piece.className = "piece";
+        piece.style.backgroundPosition = `-${c * tile}px -${r * tile}px`;
+        piece.correctX = c * tile;
+        piece.correctY = r * tile;
+        piece.style.left = Math.random() * (board.clientWidth - tile) + "px";
+        piece.style.top = Math.random() * (board.clientHeight - tile) + "px";
+        board.appendChild(piece);
 
-/* ---------- puzzle setup ---------- */
-const board=document.getElementById('board');
-const rows=3,cols=4,tile=120;
-let placed=0;
-const pieces=[];
-for(let r=0;r<rows;r++){
- for(let c=0;c<cols;c++){
-   const div=document.createElement('div');
-   div.className='piece';
-   div.style.backgroundPosition=`-${c*tile}px -${r*tile}px`;
-   div.correctX=c*tile;div.correctY=r*tile;
-   /* random start */
-   div.style.left=Math.random()*(board.clientWidth - tile)+'px';
-   div.style.top= (board.clientHeight + 80) +'px';
-   board.appendChild(div);
-   pieces.push(div);
-   drag(div);
- }
-}
-function drag(el){
-  let offsetX,offsetY,grab=false;
-  el.addEventListener('mousedown',e=>{
-    grab=true;el.classList.add('grabbing');
-    offsetX=e.offsetX;offsetY=e.offsetY;
-  });
-  document.addEventListener('mousemove',e=>{
-    if(!grab)return;
-    el.style.left=e.pageX-board.offsetLeft-offsetX+'px';
-    el.style.top=e.pageY-board.offsetTop-offsetY+'px';
-  });
-  document.addEventListener('mouseup',()=>{
-    if(!grab)return;grab=false;el.classList.remove('grabbing');
-    const dx=parseInt(el.style.left),dy=parseInt(el.style.top);
-    if(Math.abs(dx-el.correctX)<20 && Math.abs(dy-el.correctY)<20){
-      el.style.left=el.correctX+'px';
-      el.style.top=el.correctY+'px';
-      el.style.pointerEvents='none';
-      placed++;confetti({particleCount:50,spread:60});
-      if(placed===rows*cols)finishPuzzle();
+        // Drag
+        let offsetX, offsetY, dragging = false;
+        piece.addEventListener("mousedown", e => {
+          dragging = true;
+          offsetX = e.offsetX;
+          offsetY = e.offsetY;
+          piece.style.zIndex = 10;
+        });
+        document.addEventListener("mousemove", e => {
+          if (!dragging) return;
+          piece.style.left = e.pageX - board.offsetLeft - offsetX + "px";
+          piece.style.top = e.pageY - board.offsetTop - offsetY + "px";
+        });
+        document.addEventListener("mouseup", () => {
+          if (!dragging) return;
+          dragging = false;
+          const dx = parseInt(piece.style.left), dy = parseInt(piece.style.top);
+          if (Math.abs(dx - piece.correctX) < 15 && Math.abs(dy - piece.correctY) < 15) {
+            piece.style.left = piece.correctX + "px";
+            piece.style.top = piece.correctY + "px";
+            piece.style.pointerEvents = "none";
+            placed++;
+            confetti({ particleCount: 40, spread: 70 });
+            if (placed === rows * cols) {
+              document.getElementById("msg").textContent = "🎉 You completed the puzzle!";
+              nextBtn.style.display = "inline-block";
+              confetti({ particleCount: 200, spread: 90 });
+            }
+          }
+        });
+      }
     }
-  });
-}
-/* ---------- finish ---------- */
-function finishPuzzle(){
-  msg.textContent="✨ Puzzle complete! ✨";
-  nextBtn.style.display='block';
-  confetti({particleCount:180,spread:100});
-}
-</script>
+  </script>
 </body>
 </html>
