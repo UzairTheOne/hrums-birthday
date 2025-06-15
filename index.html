@@ -38,11 +38,11 @@ class Sakura {
   constructor(selector = 'body', options = {}) {
     this.selector = document.querySelector(selector);
     this.options = Object.assign({
-      emoji: '*', // fallback symbol if emoji fails
-      colors: ['#FFC0CB', '#FFB6C1', '#FF69B4'],
+      emoji: '🌸',
+      colors: ['#FFC0CB', '#FF69B4', '#FFB6C1'],
       delay: 300,
       speed: 1,
-      size: 20
+      size: 24
     }, options);
     this.start();
   }
@@ -51,16 +51,17 @@ class Sakura {
     this.interval = setInterval(() => {
       const petal = document.createElement('div');
       petal.classList.add('sakura-petal');
-      petal.style.left = Math.random() * 100 + 'vw';
-      petal.style.animationDuration = (3 + Math.random() * 5) * this.options.speed + 's';
+      petal.style.left = Math.random() * window.innerWidth + 'px';
+      petal.style.animationDuration = (5 + Math.random() * 5) * this.options.speed + 's';
       petal.style.fontSize = this.options.size + 'px';
       petal.style.color = this.options.colors[Math.floor(Math.random() * this.options.colors.length)];
       petal.innerText = this.options.emoji;
+
       this.selector.appendChild(petal);
 
       setTimeout(() => {
         petal.remove();
-      }, 8000);
+      }, 10000); // Remove after fall
     }, this.options.delay);
   }
 
@@ -69,14 +70,10 @@ class Sakura {
   }
 }
 
-// Start Sakura Effect
-new Sakura('body', {
-  emoji: '🌸',
-  delay: 300,
-  speed: 1,
-  size: 24
-});
+// Start Sakura
+new Sakura('body');
 </script>
+
 
 </body>
 </html>
