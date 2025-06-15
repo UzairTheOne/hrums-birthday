@@ -203,5 +203,14 @@
 })();
 </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const music = document.getElementById('bg-music');
+    document.body.addEventListener('click', () => {
+      if (music.paused) music.play();
+    }, { once: true });
+  });
+</script>
+
 </body>
 </html>
