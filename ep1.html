@@ -1,201 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Episode 1 - Choose Your Birthday</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: #fff;
-      overflow-x: hidden;
-      transition: background 0.5s;
-    }
-    body.starry {
-      background: radial-gradient(#0d0d2b, #000);
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<title>Episode 1 – Choose Your Birthday Adventure</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 
-    .container {
-      text-align: center;
-      padding: 50px 20px;
-    }
+<style>
+/* ---------- VARIABLES ---------- */
+:root{
+  --bg:#fff7fc;
+  --text:#333;
+  --accent:#ff77a9;
+}
+body.starry{
+  --bg:#0d0d26;
+  --text:#f3f3f3;
+  --accent:#8d7bff;
+}
 
-    img {
-      max-width: 300px;
-      height: auto;
-      margin-bottom: 20px;
-      border-radius: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-    }
+/* ---------- BASE ---------- */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family: "Nanum Pen Script", cursive;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:url('https://cur.cursors-4u.net/holidays/hol-7/hol687.cur'),auto;
+  transition:background .5s,color .5s;
+}
+.container{text-align:center;padding:60px 18px}
 
-    h1 {
-      font-size: 2.5rem;
-    }
+/* ---------- HERO ---------- */
+h1{font-size:2.4rem;color:var(--accent);margin-bottom:14px}
+img.hero{width:260px;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,.15);margin-bottom:24px}
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-top: 30px;
-    }
+/* ---------- CHOICE BUTTONS ---------- */
+.choices{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:24px 0}
+.btn{
+  background:var(--accent);
+  color:#fff;border:none;border-radius:30px;
+  padding:12px 26px;font-size:1.05rem;cursor:pointer;
+  transition:.25s;box-shadow:0 4px 10px rgba(0,0,0,.2)
+}
+.btn:hover{transform:translateY(-3px);background:rgba(255,119,169,.85)}
+.btn:disabled{opacity:.45;cursor:default}
 
-    .btn {
-      padding: 12px 24px;
-      background: #ff77a9;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s ease;
-      text-decoration: none;
-    }
+/* ---------- OUTPUT ---------- */
+#output{margin-top:28px;font-size:1.2rem;min-height:36px}
 
-    .btn:hover {
-      background: #ff5191;
-    }
+/* ---------- THEME TOGGLE ---------- */
+#themeToggle{
+  position:fixed;top:16px;right:18px;z-index:50;
+  background:var(--accent);color:#fff;border:none;border-radius:22px;
+  padding:8px 16px;font-size:14px;cursor:pointer}
+body.starry #themeToggle{background:#6d5bff}
 
-    .theme-toggle {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      padding: 8px 14px;
-      background: #444;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+/* ---------- CURSOR TRAIL ---------- */
+.spark{
+  position:fixed;width:9px;height:9px;border-radius:50%;
+  background:var(--accent);pointer-events:none;z-index:9999;
+  animation:fade .7s ease forwards}
+@keyframes fade{to{transform:translateY(15px)scale(0);opacity:0}}
 
-    #easterEggPopup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      z-index: 999;
-      text-align: center;
-      animation: fadeIn 0.5s ease;
-    }
+/* ---------- FLOATING BUBBLES ---------- */
+.bubble{
+  position:fixed;
+  bottom:-80px;border-radius:50%;opacity:.8;pointer-events:none;
+  animation:rise linear infinite;
+}
+@keyframes rise{
+  from{transform:translateY(0) rotate(0deg)}
+  to  {transform:translateY(-120vh) rotate(360deg);opacity:0}
+}
 
-    #easterEggPopup.starry {
-      background: rgba(30, 30, 50, 0.95);
-      color: white;
-    }
+/* ---------- EASTER EGG POPUP ---------- */
+#popup{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:200}
+.popup-inner{
+  background:#fff;padding:34px;border-radius:18px;text-align:center;
+  box-shadow:0 0 25px rgba(255,105,180,.5);animation:pop .4s ease}
+body.starry .popup-inner{background:#2a2a4a;color:#fff}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.close-btn{margin-top:18px;padding:8px 20px;border:none;border-radius:8px;
+  background:var(--accent);color:#fff;cursor:pointer}
 
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
+/* ---------- SECRET STAR ---------- */
+#secretStar{
+  position:fixed;bottom:15px;left:15px;font-size:22px;
+  opacity:.4;cursor:pointer;transition:.3s;z-index:60}
+#secretStar:hover{opacity:1;transform:scale(1.2)}
 
-    #closeEaster {
-      margin-top: 20px;
-      padding: 8px 18px;
-      border: none;
-      background: #333;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+/* ---------- EPISODE NAV ---------- */
+#nextBtn{margin-top:32px}
 
-    /* Floating particle */
-    .particle {
-      position: fixed;
-      width: 6px;
-      height: 6px;
-      background: pink;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      animation: float 2s linear infinite;
-    }
-
-    @keyframes float {
-      0% {transform: translateY(0);}
-      100% {transform: translateY(-100vh);}
-    }
-
-    /* Custom cursor */
-    body.custom-cursor {
-      cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym98.ani'), auto;
-    }
-  </style>
+/* ---------- DARK MODE LINK COLORS ---------- */
+a{text-decoration:none}
+</style>
 </head>
-<body class="custom-cursor">
-  <div class="theme-toggle" onclick="toggleTheme()">Toggle Theme</div>
+<body>
+<button id="themeToggle" onclick="toggleTheme()">🌙 Theme</button>
+<div id="secretStar" title="secret">✨</div>
 
-  <div class="container">
-    <h1>Choose Your Birthday Adventure 🎂</h1>
-    <img src="your-image.jpg" alt="Hrum" />
+<div class="container">
+  <h1>Choose Your Birthday Adventure</h1>
+  <img src="hrum_image.png" alt="Hrum" class="hero">
 
-    <div class="buttons">
-      <button class="btn" onclick="handleChoice('🌸 A Flower Garden Surprise!')">Option 1</button>
-      <button class="btn" onclick="handleChoice('🍰 A Secret Cake Café!')">Option 2</button>
-      <button class="btn" onclick="handleChoice('🎁 A Mystery Gift Hunt!')">Option 3</button>
-      <button class="btn" onclick="handleChoice('🌌 A Walk Under the Stars')">Option 4</button>
-    </div>
+  <div id="typed"></div>
 
-    <div id="response" style="margin-top: 30px; font-size: 1.2rem;"></div>
+  <div class="choices">
+    <button class="btn" onclick="pick(0)">Magical Picnic</button>
+    <button class="btn" onclick="pick(1)">Rooftop Dinner</button>
+    <button class="btn" onclick="pick(2)">Jeju Trip</button>
+    <button class="btn" onclick="pick(3)">Movie Night</button>
+    <button id="secretOption" class="btn" style="display:none" onclick="pick(4)">✨ Secret Option</button>
   </div>
 
-  <div id="easterEggPopup">
-    <p>🌟 You found a hidden message!</p>
-    <p>“On this day, I’m grateful the universe brought you into my life. 💫”</p>
-    <button id="closeEaster" onclick="document.getElementById('easterEggPopup').style.display='none'">Close</button>
-  </div>
+  <div id="output"></div>
 
-  <audio id="bgMusic" src="song.mp3" loop></audio>
+  <a href="ep2.html" id="nextBtn"><button class="btn" disabled>Go to Episode 2 ➡️</button></a>
+</div>
 
-  <script>
-    // Play music after interaction
-    window.addEventListener('click', () => {
-      document.getElementById('bgMusic').play().catch(e => {});
-    });
+<!-- Popup -->
+<div id="popup"><div class="popup-inner">
+  <p>🌟 Hidden Message 🌟<br>“Under every star, I find a reason to smile—and that reason is you.”</p>
+  <button class="close-btn" onclick="popup.style.display='none'">Close</button>
+</div></div>
 
-    function toggleTheme() {
-      const body = document.body;
-      body.classList.toggle('starry');
+<!-- Background Music -->
+<audio id="bgm" src="Song1.mp3" loop></audio>
 
-      const popup = document.getElementById('easterEggPopup');
-      popup.classList.toggle('starry');
-    }
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    function handleChoice(text) {
-      const response = document.getElementById("response");
-      response.innerText = `You chose: ${text}`;
+<script>
+// ---------- Typing Intro ----------
+const intro="Where will your magical day take you?";
+let i=0;const typed=document.getElementById('typed');
+(function type(){
+  if(i<intro.length){typed.textContent+=intro.charAt(i++);setTimeout(type,45);}
+})();
 
-      if (text.includes("🌌")) {
-        document.getElementById("easterEggPopup").style.display = "block";
-        showConfetti();
-      }
-    }
+// ---------- Theme Toggle ----------
+function toggleTheme(){
+  document.body.classList.toggle('starry');
+  themeToggle.textContent=document.body.classList.contains('starry')?'☀️':'🌙';
+}
 
-    // Confetti
-    function showConfetti() {
-      for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement("div");
-        confetti.classList.add("particle");
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.top = Math.random() * 100 + "vh";
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 2000);
-      }
-    }
+// ---------- Music Autoplay ----------
+window.addEventListener('click',()=>bgm.play(),{once:true});
 
-    // Floating particles
-    setInterval(() => {
-      const p = document.createElement('div');
-      p.classList.add('particle');
-      p.style.left = Math.random() * 100 + 'vw';
-      p.style.background = ['#ffb6c1', '#ffc0cb', '#ff69b4'][Math.floor(Math.random()*3)];
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 2000);
-    }, 300);
+// ---------- Cursor Sparkle Trail ----------
+document.addEventListener('mousemove',e=>{
+  const s=document.createElement('span');
+  s.className='spark';
+  s.style.left=e.pageX+'px';s.style.top=e.pageY+'px';
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),700);
+});
 
-  </script>
+// ---------- Floating Bubbles ----------
+setInterval(()=>{
+  const b=document.createElement('span');
+  b.className='bubble';
+  const size=25+Math.random()*45; // 25‑70px bubbles
+  b.style.width=b.style.height=size+'px';
+  b.style.left=Math.random()*100+'vw';
+  b.style.background=['#ffd6e8','#ffc7f1','#ffebf7','#e8f2ff'][Math.floor(Math.random()*4)];
+  b.style.animationDuration=8+Math.random()*6+'s';
+  document.body.appendChild(b);
+  setTimeout(()=>b.remove(),15000);
+},500);
+
+// ---------- Choice Logic ----------
+const messages=[
+  '🧺 You chose a magical picnic by the river!',
+  '🌌 You chose a starlit rooftop dinner!',
+  '✈️ You whisked away to Jeju Island!',
+  '🎬 You picked a cozy movie night under the stars!',
+  '💎 You unlocked a secret treasure adventure!'
+];
+let picked=new Array(5).fill(false);
+function pick(idx){
+  output.textContent=messages[idx];
+  picked[idx]=true;
+  confetti({particleCount:120,spread:80});
+  // unlock secret option when first four choices done
+  if(picked.slice(0,4).every(Boolean)) secretOption.style.display='inline-block';
+  // enable next episode when any choice made
+  document.querySelector('#nextBtn button').disabled=false;
+}
+
+// ---------- Easter Egg Popup ----------
+secretStar.onclick=()=>popup.style.display='flex';
+
+// ---------- Resume music time across pages ----------
+window.addEventListener('beforeunload',()=>localStorage.setItem('bgTime',bgm.currentTime));
+window.addEventListener('DOMContentLoaded',()=>{
+  const t=localStorage.getItem('bgTime');
+  if(t) bgm.currentTime=parseFloat(t);
+});
+</script>
 </body>
 </html>
