@@ -23,7 +23,7 @@ h1 {font-size:2.2em;color:#d63384}
 }
 .gift-box {
   width:140px;height:140px;
-  background:url('https://cdn-icons-png.flaticon.com/512/254/254061.png')no-repeat center/contain;
+  background:url('https://i.pinimg.com/736x/d0/e4/59/d0e45966f5b1c23a5bdbb7a1b07a709b.jpg')no-repeat center/contain;
   animation:bounce 2s infinite;cursor:pointer;
 }
 @keyframes bounce {0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
