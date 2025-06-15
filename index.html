@@ -3,43 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <title>Hrum’s Birthday Surprise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
   <style>
-    /* Base Styles */
+    :root {
+      --bg: #fff0f5;
+      --text: #333;
+      --accent: #ff69b4;
+    }
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #ffeef5;
+      padding: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Poor Story', cursive;
       overflow-x: hidden;
       cursor: url('https://cur.cursors-4u.net/cursors/cur-9/cur823.cur'), auto;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .container {
+      text-align: center;
+      padding: 50px 20px;
     }
 
     h1 {
-      text-align: center;
-      margin-top: 50px;
-      color: #ff69b4;
       font-size: 3em;
+      margin-bottom: 10px;
     }
 
-    .floating-objects span {
-      position: absolute;
+    .main-img {
+      width: 250px;
+      border-radius: 15px;
+      margin: 20px auto;
       display: block;
-      background: rgba(255, 192, 203, 0.7);
-      border-radius: 50%;
-      animation: float 10s linear infinite;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
 
-    @keyframes float {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) rotate(360deg);
-        opacity: 0;
-      }
+    .btn {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      margin: 10px;
+      border-radius: 30px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: inline-block;
     }
 
-    /* Custom Cursor Trail */
+    .btn:hover {
+      background-color: #ff85c1;
+      transform: translateY(-3px);
+    }
+
     .trail {
       position: fixed;
       width: 8px;
@@ -47,8 +66,8 @@
       background: pink;
       border-radius: 50%;
       pointer-events: none;
-      z-index: 10000;
-      animation: trailFade 0.6s ease-out forwards;
+      z-index: 9999;
+      animation: trailFade 0.5s ease-out forwards;
     }
 
     @keyframes trailFade {
@@ -58,85 +77,83 @@
       }
     }
 
-    /* Button Style */
-    .btn {
-      display: inline-block;
-      background: #ff99cc;
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--accent);
       color: white;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 30px;
-      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(255,105,180,0.4);
-      transition: all 0.3s ease;
-      margin: 20px auto;
-      display: block;
+      font-size: 14px;
+      z-index: 999;
     }
-
-    .btn:hover {
-      background: #ff66b2;
-      transform: translateY(-3px);
-    }
-
   </style>
 </head>
 <body>
 
-  <h1>🎀 Happy Birthday Hrum 🎀</h1>
-  <button class="btn" onclick="runConfetti()">Celebrate!</button>
+  <div class="theme-toggle" onclick="toggleTheme()">Toggle Theme</div>
 
-  <!-- Floating Objects -->
-  <div class="floating-objects" id="floatingContainer"></div>
+  <div class="container">
+    <h1>🎀 Happy Birthday Hrum 🎀</h1>
+    <img src="hrum.png" alt="Hrum" class="main-img"> <!-- Replace with your image -->
 
-  <!-- Confetti Script -->
+    <button class="btn" onclick="runConfetti()">Celebrate!</button>
+
+    <div style="margin-top: 30px;">
+      <a href="ep1.html" class="btn">Episode 1</a>
+      <a href="ep2.html" class="btn">Episode 2</a>
+      <a href="ep3.html" class="btn">Episode 3</a>
+      <a href="ep4.html" class="btn">Episode 4</a>
+      <a href="ep5.html" class="btn">Episode 5</a>
+      <a href="ep6.html" class="btn">Episode 6</a>
+    </div>
+  </div>
+
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
     function runConfetti() {
       confetti({
         particleCount: 150,
-        spread: 100,
+        spread: 90,
         origin: { y: 0.6 }
       });
     }
   </script>
 
-  <!-- Cursor Trail Script -->
+  <!-- Cursor Trail -->
   <script>
-    document.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', function (e) {
       const trail = document.createElement('div');
-      trail.classList.add('trail');
+      trail.className = 'trail';
+      trail.style.left = e.pageX + 'px';
+      trail.style.top = e.pageY + 'px';
       document.body.appendChild(trail);
-      trail.style.left = `${e.pageX}px`;
-      trail.style.top = `${e.pageY}px`;
       setTimeout(() => {
         trail.remove();
-      }, 500);
+      }, 400);
     });
   </script>
 
-  <!-- Floating Background Objects Script -->
+  <!-- Theme Toggle -->
   <script>
-    const container = document.getElementById('floatingContainer');
-    const colors = ['#ffd6e8', '#ffb3dd', '#ffcce6', '#fff0f5'];
+    let currentTheme = 'light';
 
-    function createFloatingObject() {
-      const span = document.createElement('span');
-      const size = Math.random() * 20 + 10;
-      span.style.width = size + 'px';
-      span.style.height = size + 'px';
-      span.style.left = Math.random() * window.innerWidth + 'px';
-      span.style.bottom = '-50px';
-      span.style.background = colors[Math.floor(Math.random() * colors.length)];
-      span.style.animationDuration = (5 + Math.random() * 5) + 's';
-      container.appendChild(span);
-
-      setTimeout(() => {
-        span.remove();
-      }, 10000);
+    function toggleTheme() {
+      if (currentTheme === 'light') {
+        document.documentElement.style.setProperty('--bg', '#0e0e2c');
+        document.documentElement.style.setProperty('--text', '#fefefe');
+        document.documentElement.style.setProperty('--accent', '#6b5b95');
+        currentTheme = 'dark';
+      } else {
+        document.documentElement.style.setProperty('--bg', '#fff0f5');
+        document.documentElement.style.setProperty('--text', '#333');
+        document.documentElement.style.setProperty('--accent', '#ff69b4');
+        currentTheme = 'light';
+      }
     }
-
-    setInterval(createFloatingObject, 300);
   </script>
 
 </body>
