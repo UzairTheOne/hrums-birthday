@@ -1,80 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Hrum – Birthday Adventure</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Hrum’s Birthday Surprise</title>
+  <style>
+    /* Base Styles */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #ffeef5;
+      overflow-x: hidden;
+      cursor: url('https://cur.cursors-4u.net/cursors/cur-9/cur823.cur'), auto;
+    }
 
-<!-- Korean handwriting font -->
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+      color: #ff69b4;
+      font-size: 3em;
+    }
 
+    .floating-objects span {
+      position: absolute;
+      display: block;
+      background: rgba(255, 192, 203, 0.7);
+      border-radius: 50%;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Custom Cursor Trail */
+    .trail {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: pink;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      animation: trailFade 0.6s ease-out forwards;
+    }
+
+    @keyframes trailFade {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    /* Button Style */
+    .btn {
+      display: inline-block;
+      background: #ff99cc;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255,105,180,0.4);
+      transition: all 0.3s ease;
+      margin: 20px auto;
+      display: block;
+    }
+
+    .btn:hover {
+      background: #ff66b2;
+      transform: translateY(-3px);
+    }
+
+  </style>
 </head>
 <body>
 
-<button id="themeBtn">🌙</button>
+  <h1>🎀 Happy Birthday Hrum 🎀</h1>
+  <button class="btn" onclick="runConfetti()">Celebrate!</button>
 
-<section class="hero">
-  <h1>하루누나</h1>
-  <img src="hrum.png" alt="Hrum">
-  <p>Welcome to your birthday K‑drama adventure!</p>
-  <button class="main-btn" onclick="location.href='ep1.html'">Start Episode 1</button>
-</section>
+  <!-- Floating Objects -->
+  <div class="floating-objects" id="floatingContainer"></div>
 
-<nav>
-  <h2>Episode List</h2>
-  <div class="nav-grid">
-    <a class="nav-btn" href="ep1.html">EP 1</a>
-    <a class="nav-btn" href="ep2.html">EP 2</a>
-    <a class="nav-btn" href="ep3.html">EP 3</a>
-    <a class="nav-btn" href="ep4.html">EP 4</a>
-    <a class="nav-btn" href="ep5.html">EP 5</a>
-    <a class="nav-btn" href="ep6.html">EP 6</a>
-  </div>
-</nav>
+  <!-- Confetti Script -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    function runConfetti() {
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+    }
+  </script>
 
-<script>
-class Sakura {
-  constructor(selector = 'body', options = {}) {
-    this.selector = document.querySelector(selector);
-    this.options = Object.assign({
-      emoji: '🌸',
-      colors: ['#FFC0CB', '#FF69B4', '#FFB6C1'],
-      delay: 300,
-      speed: 1,
-      size: 24
-    }, options);
-    this.start();
-  }
+  <!-- Cursor Trail Script -->
+  <script>
+    document.addEventListener('mousemove', function(e) {
+      const trail = document.createElement('div');
+      trail.classList.add('trail');
+      document.body.appendChild(trail);
+      trail.style.left = `${e.pageX}px`;
+      trail.style.top = `${e.pageY}px`;
+      setTimeout(() => {
+        trail.remove();
+      }, 500);
+    });
+  </script>
 
-  start() {
-    this.interval = setInterval(() => {
-      const petal = document.createElement('div');
-      petal.classList.add('sakura-petal');
-      petal.style.left = Math.random() * window.innerWidth + 'px';
-      petal.style.animationDuration = (5 + Math.random() * 5) * this.options.speed + 's';
-      petal.style.fontSize = this.options.size + 'px';
-      petal.style.color = this.options.colors[Math.floor(Math.random() * this.options.colors.length)];
-      petal.innerText = this.options.emoji;
+  <!-- Floating Background Objects Script -->
+  <script>
+    const container = document.getElementById('floatingContainer');
+    const colors = ['#ffd6e8', '#ffb3dd', '#ffcce6', '#fff0f5'];
 
-      this.selector.appendChild(petal);
+    function createFloatingObject() {
+      const span = document.createElement('span');
+      const size = Math.random() * 20 + 10;
+      span.style.width = size + 'px';
+      span.style.height = size + 'px';
+      span.style.left = Math.random() * window.innerWidth + 'px';
+      span.style.bottom = '-50px';
+      span.style.background = colors[Math.floor(Math.random() * colors.length)];
+      span.style.animationDuration = (5 + Math.random() * 5) + 's';
+      container.appendChild(span);
 
       setTimeout(() => {
-        petal.remove();
-      }, 10000); // Remove after fall
-    }, this.options.delay);
-  }
+        span.remove();
+      }, 10000);
+    }
 
-  stop() {
-    clearInterval(this.interval);
-  }
-}
-
-// Start Sakura
-new Sakura('body');
-</script>
-
+    setInterval(createFloatingObject, 300);
+  </script>
 
 </body>
 </html>
-<script src="main.js"></script>
