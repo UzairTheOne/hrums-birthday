@@ -33,20 +33,45 @@
   </div>
 </nav>
 
-  <script src="https://cdn.jsdelivr.net/gh/jhammann/sakura@1.0.3/sakura.min.js"></script>
 <script>
-  const sakura = new Sakura('body', {
-    colors: [
-      {
-        gradientColorStart: "rgba(255, 183, 197, 0.9)",
-        gradientColorEnd: "rgba(255, 197, 208, 0.9)",
-        gradientColorDegree: 120,
-      }
-    ],
-    speed: 1,
-    delay: 500,
-  });
-</script>
+// Sakura petal script (no CDN)
+class Sakura {
+    constructor(selector = 'body', options = {}) {
+        this.selector = document.querySelector(selector);
+        this.options = Object.assign({
+            colors: ['#FFC0CB', '#FFB6C1', '#FF69B4'],
+            delay: 500,
+            speed: 1,
+            size: 12
+        }, options);
+        this.start();
+    }
+
+    start() {
+        this.interval = setInterval(() => {
+            const petal = document.createElement('div');
+            petal.classList.add('sakura-petal');
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = (3 + Math.random() * 5) * this.options.speed + 's';
+            petal.style.fontSize = this.options.size + 'px';
+            petal.style.color = this.options.colors[Math.floor(Math.random() * this.options.colors.length)];
+            petal.innerHTML = '🌸';
+            this.selector.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 8000);
+        }, this.options.delay);
+    }
+
+    stop() {
+        clearInterval(this.interval);
+    }
+}
+
+// Start sakura effect
+new Sakura('body', {
+    colors: ['#FFB]()
 
 </body>
 </html>
