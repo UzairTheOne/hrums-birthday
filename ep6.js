@@ -74,3 +74,13 @@ document.getElementById('closeSecret').addEventListener('click', () => {
 document.getElementById('closeViewed').addEventListener('click', () => {
   document.getElementById('viewedAllPopup').style.display = 'none';
 });
+
+// Second Easter Egg
+document.getElementById("easterTrigger").addEventListener("click", ()=>{
+  document.getElementById("easterPopup").style.display = "flex";
+  sparkle(100);
+});
+function closeEaster(){
+  document.getElementById("easterPopup").style.display = "none";
+}
+
