@@ -186,6 +186,20 @@
     </div>
   </div>
 
+    <!-- Hidden Easter Egg Message -->
+  <div id="easter-egg" class="easter-hidden">
+    <div class="easter-content">
+      <h2>🌟 Secret Surprise 🌟</h2>
+      <p>This is a secret message just for you! 💖</p>
+      <button onclick="closeEaster()">Close</button>
+    </div>
+  </div>
+
+<!-- Trigger element (could be hidden or subtle) -->
+<div id="easter-trigger" title="Click me if you can find me 😏"></div>
+<!-- Other HTML content ends above -->
+
+
   <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
@@ -266,21 +280,7 @@
   });
 </script>
 
-  <!-- Hidden Easter Egg Message -->
-<div id="easter-egg" class="easter-hidden">
-  <div class="easter-content">
-    <h2>🌟 Secret Surprise 🌟</h2>
-    <p>This is a secret message just for you! 💖</p>
-    <button onclick="closeEaster()">Close</button>
-  </div>
-</div>
-
-<!-- Trigger element (could be hidden or subtle) -->
-<div id="easter-trigger" title="Click me if you can find me 😏"></div>
-
-</body>
-</html>
-
+<!-- Easter Egg Script -->
 <script>
   const trigger = document.getElementById('easter-trigger');
   const egg = document.getElementById('easter-egg');
@@ -293,3 +293,9 @@
     egg.style.display = 'none';
   }
 </script>
+
+</body>
+</html>
+
+</body>
+</html>
