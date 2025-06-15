@@ -1,74 +1,58 @@
-/* ---------- base ---------- */
-*{margin:0;padding:0;box-sizing:border-box}
-body,html{height:100%;overflow-x:hidden;font-family:'Nanum Pen Script',cursive;
-  background:linear-gradient(135deg,#fff1f8,#e8f6ff);transition:.6s}
-body.night{background:#0d0d26;color:#eee}
-
-/* cute moving pastel blobs (day only) */
-body::before{
-  content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:radial-gradient(circle at 10% 20%,rgba(255,200,230,.5) 0,transparent 50%),
-             radial-gradient(circle at 80% 30%,rgba(200,225,255,.5) 0,transparent 55%),
-             radial-gradient(circle at 50% 80%,rgba(255,240,210,.5) 0,transparent 50%);
-  animation:blob 25s linear infinite;
+/* ---------- palette & font ---------- */
+:root{
+  --bg-light:#fff0f6;
+  --bg-dark:#0d0d26;
+  --accent:#ff6da9;
+  --accent2:#ffa3cb;
 }
-@keyframes blob{to{background-position:200% 200%,150% 0%,-100% -100%}}
+html,body{margin:0;min-height:100%;font-family:'Nanum Pen Script',cursive;transition:.5s}
+body{background:var(--bg-light);color:#333;display:flex;flex-direction:column;align-items:center}
 
-body.night::before{display:none}
-
-/* starry overlay night mode */
-body.night::after{
-  content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:radial-gradient(#fff 1px,transparent 1px) 0 0/60px 60px,
-             radial-gradient(#fff 1px,transparent 1px) 30px 30px/60px 60px;
-  animation:starMove 80s linear infinite;
+/* ---------- theme toggle ---------- */
+#themeBtn{
+  position:fixed;top:16px;right:16px;
+  padding:8px 14px;border:none;border-radius:22px;
+  background:var(--accent);color:#fff;cursor:pointer;font-size:18px;
 }
-@keyframes starMove{to{background-position:4000px 0,4040px 30px}}
-
-/* ---------- loader ---------- */
-#loader{position:fixed;inset:0;background:#fff;display:flex;
-  align-items:center;justify-content:center;z-index:9999}
-.spinner{width:45px;height:45px;border:6px solid #f7c0d8;
-  border-top-color:#ff69b4;border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ---------- hero card ---------- */
-.hero-card{text-align:center;padding:120px 20px}
-.hero-img{width:180px;height:auto;border-radius:14px;
-  box-shadow:0 8px 18px rgba(0,0,0,.15);transition:.3s}
-.hero-img:hover{transform:translateY(-6px)}
-h1{font-size:48px;color:#ff4f8b;margin-top:18px}
-.typing{font-size:20px;margin:12px auto;width:90%;max-width:600px;min-height:28px}
-.main-btn{margin-top:28px;font-size:18px;padding:12px 38px;border:none;
-  border-radius:30px;background:linear-gradient(135deg,#ff78b0,#ffa1d6);
-  color:#fff;cursor:pointer;transition:.3s;font-family:inherit}
-.main-btn:hover{transform:scale(1.05)}
+.hero{
+  margin-top:100px;text-align:center;width:90%;max-width:480px;
+}
+.hero img{
+  width:100%;max-width:220px;height:auto;border-radius:14px;
+  box-shadow:0 6px 16px rgba(0,0,0,.15)
+}
+.hero h1{
+  font-size:46px;color:var(--accent);margin:18px 0 8px;
+}
+.hero p{font-size:20px;margin-bottom:26px}
 
-/* ---------- nav ---------- */
-.nav-area{text-align:center;padding:40px 20px}
-.nav-area h2{font-size:32px;color:#ff4f8b;margin-bottom:18px}
-.nav-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
-.nav-btn{display:inline-block;padding:10px 22px;border-radius:26px;
-  background:#ffe3f3;color:#d63384;font-size:18px;text-decoration:none;
-  transition:.3s;font-weight:bold}
-.nav-btn:hover{background:#ffc7e8;transform:translateY(-3px)}
+/* ---------- primary button ---------- */
+.main-btn{
+  display:inline-block;padding:12px 34px;font-size:20px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;border:none;border-radius:32px;cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);transition:.3s;
+}
+.main-btn:hover{transform:translateY(-4px)}
 
-/* ---------- toggle & star ---------- */
-.toggle{position:fixed;top:15px;right:15px;z-index:20;background:#ffe3f3;
-  border:none;border-radius:30px;padding:8px 14px;cursor:pointer}
-.star{position:fixed;bottom:14px;left:14px;font-size:22px;cursor:pointer;
-  opacity:.5;transition:.3s;z-index:20}
-.star:hover{opacity:1;transform:scale(1.2)}
+/* ---------- episode nav ---------- */
+nav{margin:60px 0 40px;text-align:center}
+nav h2{font-size:32px;color:var(--accent);margin-bottom:20px}
+.nav-grid{
+  display:flex;flex-wrap:wrap;gap:14px;justify-content:center
+}
+.nav-btn{
+  padding:10px 24px;border-radius:24px;
+  background:#ffe3f3;color:#c2336c;text-decoration:none;font-size:18px;
+  transition:.25s;border:2px solid transparent
+}
+.nav-btn:hover{background:#ffd0eb;border-color:#ffb4d6}
 
-/* ---------- secret popup ---------- */
-#popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);
-  align-items:center;justify-content:center;z-index:100}
-.popup-inner{background:#fff9fc;padding:32px;border-radius:16px;
-  box-shadow:0 0 25px rgba(255,105,180,.4);text-align:center;max-width:360px}
-.popup-inner button{margin-top:18px;padding:8px 20px;border:none;
-  background:#ff7fb0;color:#fff;border-radius:10px;cursor:pointer}
-
-/* ---------- sparkle trail ---------- */
-.spark{position:fixed;width:6px;height:6px;border-radius:50%;
-  background:#fff;pointer-events:none;opacity:.8;animation:fade .6s forwards}
-@keyframes fade{to{opacity:0;transform:translateY(20px)scale(0)}}
+/* ---------- dark mode styles ---------- */
+body.dark{background:var(--bg-dark);color:#eee}
+body.dark #themeBtn{background:#7c54ff}
+body.dark .hero h1{color:#ff99d4}
+body.dark .nav-btn{background:#24244a;color:#ff9cd5}
+body.dark .nav-btn:hover{background:#333366;border-color:#5050a0}
