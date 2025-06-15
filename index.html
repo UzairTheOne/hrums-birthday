@@ -2,58 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hrum’s Birthday Surprise</title>
+  <title>Hrum | Birthday Adventure</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
-  <!-- Korean handwritten fonts -->
+  <!-- Korean handwritten font -->
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="main.css">
+  <!-- Styles & Confetti -->
+  <link rel="stylesheet" href="main.css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-  <!-- Pre‑loader -->
-  <div id="preloader"><div class="loader"></div></div>
+  <!-- pre‑loader -->
+  <div id="loader"><div class="spinner"></div></div>
 
-  <!-- Theme toggle -->
-  <button id="themeBtn" class="theme-toggle">🌙</button>
+  <!-- theme toggle -->
+  <button id="themeToggle" class="toggle">🌙</button>
 
-  <!-- Hidden star easter‑egg -->
-  <div id="secretStar" class="hidden-star" title="Pssst 🤫">★</div>
+  <!-- secret star -->
+  <div id="secretStar" class="star" title="Shh… click me!">✨</div>
 
-  <!-- Secret popup -->
-  <div id="secretPopup" class="popup">
-    <p>🌟 “You found my hidden message!<br>
-    You’re the plot twist that made my life a K‑drama.”</p>
-    <button id="closeSecret">Close</button>
+  <main class="hero-card">
+    <img src="hrum.png" alt="Hrum" class="hero-img" />
+
+    <h1 class="korean">하루누나</h1>
+    <p id="type" class="typing"></p>
+
+    <button id="startBtn" class="main-btn">🎬 Begin Adventure</button>
+  </main>
+
+  <!-- episode nav -->
+  <section class="nav-area">
+    <h2 class="korean">에피소드 목록</h2>
+    <div class="nav-grid">
+      <a href="ep1.html" class="nav-btn">EP 1</a>
+      <a href="ep2.html" class="nav-btn">EP 2</a>
+      <a href="ep3.html" class="nav-btn">EP 3</a>
+      <a href="ep4.html" class="nav-btn">EP 4</a>
+      <a href="ep5.html" class="nav-btn">EP 5</a>
+      <a href="ep6.html" class="nav-btn">EP 6</a>
+    </div>
+  </section>
+
+  <!-- hidden popup -->
+  <div id="popup">
+    <div class="popup-inner">
+      <h3>💖 Secret Message 💖</h3>
+      <p>In every sparkle, I see a reason to smile—and that reason is you.</p>
+      <button id="closePop">Close</button>
+    </div>
   </div>
 
-  <!-- Hero & intro -->
-  <section class="container">
-    <img src="hrum.png" alt="Hrum" class="hero">
-    <h1 class="korean-title">하루누나 🌸</h1>
-    <div id="typing" class="typing"></div>
-    <button id="beginBtn" class="btn">Begin Adventure</button>
-  </section>
+  <!-- sparkle canvas -->
+  <canvas id="cursorSpark"></canvas>
 
-  <!-- Episode navigation -->
-  <section class="episode-nav">
-    <a href="ep1.html">Episode 1 – Birthday Treat</a>
-    <a href="ep2.html">Episode 2 – Memory Lane</a>
-    <a href="ep3.html">Episode 3 – Things I Love</a>
-    <a href="ep4.html">Episode 4 – Ideal Day Quiz</a>
-    <a href="ep5.html">Episode 5 – Timeline of Us</a>
-    <a href="ep6.html">Episode 6 – Messages From Friends</a>
-  </section>
-
-  <!-- Sparkles container (cursor trail) -->
-  <div id="sparkleTrail"></div>
-
-  <!-- Confetti library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-  <!-- Main JS -->
   <script src="main.js"></script>
 </body>
 </html>
