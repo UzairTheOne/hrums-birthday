@@ -1,45 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Episode 1 – Birthday Treat</title>
+  <meta charset="UTF-8">
+  <title>Episode 1 – Choose Your Birthday Adventure</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Gowun Dodum', sans-serif;
+      background: linear-gradient(to right, #fffafc, #ffe4f2);
+      overflow-x: hidden;
+      transition: background 0.5s ease;
+    }
 
-  <link rel="stylesheet" href="ep1.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet"/>
+    .container {
+      text-align: center;
+      padding: 60px 20px;
+    }
 
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    h1 {
+      font-size: 36px;
+      color: #b6006b;
+      margin-bottom: 30px;
+    }
+
+    #typed-text {
+      font-size: 20px;
+      color: #333;
+      min-height: 60px;
+      margin-bottom: 40px;
+    }
+
+    .choices {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .choice-btn {
+      padding: 14px 24px;
+      background-color: #ffd5ec;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #880046;
+      transition: transform 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .choice-btn:hover {
+      transform: scale(1.05);
+      background-color: #ffc2e6;
+    }
+
+    #output {
+      margin-top: 40px;
+      font-size: 18px;
+      color: #4a004e;
+      max-width: 600px;
+      margin-inline: auto;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 8px 12px;
+      background: #ffcef0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* Starry Mode */
+    body.starry {
+      background: #0d0d1a url('https://i.imgur.com/1jYprSB.gif') repeat top center;
+      color: #f3f3f3;
+    }
+
+    body.starry h1,
+    body.starry #typed-text,
+    body.starry #output {
+      color: #f3f3f3;
+    }
+
+    /* Easter egg popup */
+    #easter-egg {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #easter-egg .popup {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      font-size: 18px;
+      text-align: center;
+      color: #222;
+      animation: popup 0.4s ease;
+    }
+
+    @keyframes popup {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .close-btn {
+      margin-top: 20px;
+      padding: 6px 14px;
+      background: #f58dbe;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    #music {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <div id="sparkles"></div>
-  <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
 
-  <main class="card">
-    <h1 class="korean-font">🎀 에피소드 1 – 생일 간식 고르기 🎀</h1>
-    <img src="hrum_image.png" alt="Hrum" class="hero-img"/>
+<button class="theme-toggle" onclick="toggleTheme()">🌙 Toggle Theme</button>
 
-    <p class="subtitle korean-font">Pick your birthday treat!</p>
+<div class="container">
+  <h1>🎂 Choose Your Birthday Adventure</h1>
+  <div id="typed-text"></div>
 
-    <div class="choices">
-      <button onclick="choose('ramen')">🍜 Ramen</button>
-      <button onclick="choose('bubble')">🧋 Bubble Tea</button>
-      <button onclick="choose('cake')">🍰 Strawberry Cake</button>
-      <button onclick="choose('surprise')">🎁 Mystery Box</button>
-    </div>
+  <div class="choices">
+    <button class="choice-btn" onclick="showOutput('You picked a magical picnic by the river! 🧺')">Magical Picnic</button>
+    <button class="choice-btn" onclick="showOutput('You went to a starlit rooftop dinner! 🌌')">Rooftop Dinner</button>
+    <button class="choice-btn" onclick="showOutput('You took a surprise trip to Jeju Island! 🛫')">Jeju Trip</button>
+    <button class="choice-btn" onclick="showOutput('You had a cozy movie night under the stars! 🎥')">Movie Night</button>
+  </div>
 
-    <p id="typed-text" class="typed korean-font"></p>
+  <div id="output"></div>
 
-    <!-- Go to Episode 2 -->
-    <a href="ep2.html" class="next-btn korean-font">➡️ Episode 2</a>
+  <!-- Link to Episode 2 -->
+  <div style="margin-top: 40px;">
+    <a href="ep2.html">
+      <button class="choice-btn">Go to Episode 2 🌸</button>
+    </a>
+  </div>
+</div>
 
-    <button class="audio-btn" onclick="toggleAudio()" id="audioBtn">🔊</button>
-  </main>
+<!-- Hidden Easter Egg -->
+<div id="easter-egg">
+  <div class="popup">
+    <p>🌠 “Under starlit skies, where memories bloom, I’ll always find my way back to you.”</p>
+    <button class="close-btn" onclick="closeEaster()">Close</button>
+  </div>
+</div>
 
-  <audio id="bgMusic" loop>
-    <source src="song1.mp3" type="audio/mpeg"/>
-  </audio>
+<audio id="music" autoplay loop>
+  <source src="song1.mp3" type="audio/mpeg">
+</audio>
 
-  <script src="ep1.js"></script>
+<!-- Sparkle JS -->
+<script src="https://unpkg.com/sparkle-js"></script>
+
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+  // Typing animation
+  const intro = "Today, you get to choose your own birthday adventure. Where will this magical day take you?";
+  let index = 0;
+
+  function typeText() {
+    if (index < intro.length) {
+      document.getElementById("typed-text").innerHTML += intro.charAt(index);
+      index++;
+      setTimeout(typeText, 40);
+    }
+  }
+  typeText();
+
+  function showOutput(text) {
+    document.getElementById("output").innerHTML = text;
+    confetti();
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('starry');
+  }
+
+  // Sparkles
+  new Sparkle({
+    color: "random",
+    size: 15,
+    minSize: 6,
+    maxSize: 20,
+    zIndex: 9999
+  });
+
+  // Easter egg trigger (secret key combo: E + P)
+  document.addEventListener('keydown', function(e) {
+    if (e.key.toLowerCase() === 'e') {
+      document.addEventListener('keydown', function(e2) {
+        if (e2.key.toLowerCase() === 'p') {
+          document.getElementById('easter-egg').style.display = 'flex';
+        }
+      }, { once: true });
+    }
+  });
+
+  function closeEaster() {
+    document.getElementById('easter-egg').style.display = 'none';
+  }
+</script>
+
 </body>
 </html>
