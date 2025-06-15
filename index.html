@@ -41,8 +41,9 @@
     }
 
     .btn {
-      background-color: var(--accent);
-      color: white;
+      text-decoration: none;         /* removes underline */
+      color: #fff;                   /* or any color */
+      background: #f9a;
       border: none;
       padding: 24px 50px;
       margin: 20px;
@@ -107,6 +108,11 @@
   </style>
 </head>
 <body>
+
+  <audio id="bg-music" autoplay loop>
+    <source src="your-music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
   <div class="theme-toggle" onclick="toggleTheme()">Toggle Theme</div>
 
