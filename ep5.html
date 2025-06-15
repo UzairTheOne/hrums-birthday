@@ -1,81 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Episode 5 – A Timeline of Us</title>
-  <link rel="stylesheet" href="ep5.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Episode 5: A Timeline of Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Nanum Pen Script', cursive;
+      background-color: #fff0f6;
+      color: #333;
+      overflow-x: hidden;
+      transition: background 1s;
+    }
+
+    .starry {
+      background: linear-gradient(to bottom, #0d0d2b, #1c1c3c);
+      color: #fff;
+    }
+
+    .container {
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3em;
+    }
+
+    .timeline-wrapper {
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 20px;
+    }
+
+    .timeline-event {
+      display: inline-block;
+      vertical-align: top;
+      background: #ffe4ec;
+      padding: 20px;
+      margin: 10px;
+      border-radius: 20px;
+      width: 250px;
+      height: 200px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .timeline-event:hover {
+      transform: scale(1.05);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      border: 2px solid #ccc;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .cursor {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: pink;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: multiply;
+      opacity: 0.6;
+    }
+
+    .trail {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: hotpink;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: fade 1s forwards;
+    }
+
+    @keyframes fade {
+      to {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+    }
+
+    .easter-egg {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      animation: twinkle 2s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff0f6;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 1000;
+    }
+
+    .popup.show {
+      display: block;
+    }
+
+    .close-btn {
+      background: #ff69b4;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      font-family: inherit;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    /* Shooting star background (starry mode) */
+    .shooting-star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      animation: shooting 2s ease-out infinite;
+      border-radius: 50%;
+    }
+
+    @keyframes shooting {
+      0% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(500px, 200px);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
-  <!-- Starry‑sky sound effect (replace with your own mp3 if you like) -->
-<audio id="starSound">
-  <source src="star-whoosh.mp3" type="audio/mpeg">
-</audio>
-
-
 <body>
-
-  <!-- Sparkle Background -->
-  <div id="sparkles"></div>
-
-  <!-- Theme Toggle -->
-  <button class="toggle" id="themeBtn">🌙</button>
-
-  <main class="card">
-    <h1 class="korean-font title">📅 Episode 5 – 우리의 시간들</h1>
-
-    <!-- HORIZONTAL TIMELINE -->
-    <section class="timeline-wrapper">
-      <div class="timeline-scroll">
-
-        <div class="event">
-          <span class="year">2019</span>
-          <p>Our awkward but cute first meeting 🥺</p>
-        </div>
-
-        <div class="event">
-          <span class="year">2020</span>
-          <p>Late-night talks during lockdown 📱</p>
-        </div>
-
-        <div class="event">
-          <span class="year">2021</span>
-          <p>Movie marathons and rant sessions 🍿</p>
-        </div>
-
-        <div class="event">
-          <span class="year">2022</span>
-          <img src="images/birthday.png" style="width:100%;margin-top:10px;border-radius:8px"/>
-          <p>Birthday chaos and confetti attacks 🎂</p>
-        </div>
-
-        <div class="event">
-          <span class="year">2023</span>
-          <img src="images/birthday.png" style="width:100%;margin-top:10px;border-radius:8px"/>
-          <p>Roadtrip with endless karaoke 🚗🎶</p>
-        </div>
-
-        <div class="event">
-          <span class="year">2024</span>
-          <img src="images/birthday.png" style="width:100%;margin-top:10px;border-radius:8px"/>
-          <p>This site was born 💻✨</p>
-        </div>
-
-        <!-- Hidden Easter Egg Event -->
-        <div class="event secret-egg">
-          <span class="year">🌌</span>
-          <p>“You’ve found a hidden star. 🌠”</p>
-        </div>
-
-      </div>
-    </section>
-
-    <div class="nav">
-      <a href="ep4.html" class="nav-btn korean-font">⬅️ Episode 4</a>
-      <a href="ep6.html" class="nav-btn korean-font">➡️ Episode 6</a>
+  <div class="cursor" id="cursor"></div>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+  <div class="container">
+    <h1>Episode 5: A Timeline of Us</h1>
+    <div class="timeline-wrapper" id="timeline">
+      <div class="timeline-event">📸 First Day We Met<br><br>It all started with a smile...</div>
+      <div class="timeline-event">🎂 Your Birthday<br><br>I made that special website for you 💖</div>
+      <div class="timeline-event">🎧 Shared Songs<br><br>Remember that playlist?</div>
+      <div class="timeline-event">✈️ Trip Plans<br><br>Even if imaginary ones 😉</div>
+      <div class="timeline-event">📞 Deep Talks<br><br>Those late-night convos...</div>
+      <!-- Add more timeline cards here -->
     </div>
-  </main>
+  </div>
 
-  <script src="ep5.js"></script>
+  <!-- Easter Egg Star -->
+  <div class="easter-egg" onclick="revealEaster()">⭐</div>
+
+  <!-- Easter Egg Message -->
+  <div class="popup" id="easterMessage">
+    <p>This hidden star holds a message from my heart 🌠<br>You're the timeline I never want to end.</p>
+    <button class="close-btn" onclick="closeEaster()">Close</button>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="your-music.mp3" type="audio/mp3">
+    Your browser does not support audio.
+  </audio>
+
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      document.body.classList.toggle("starry");
+    }
+
+    // Cursor + trail effect
+    const cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", (e) => {
+      cursor.style.left = e.pageX + "px";
+      cursor.style.top = e.pageY + "px";
+
+      let trail = document.createElement("div");
+      trail.className = "trail";
+      trail.style.left = e.pageX + "px";
+      trail.style.top = e.pageY + "px";
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 500);
+    });
+
+    // Easter egg popup
+    function revealEaster() {
+      document.getElementById("easterMessage").classList.add("show");
+    }
+
+    function closeEaster() {
+      document.getElementById("easterMessage").classList.remove("show");
+    }
+
+    // Shooting stars if starry mode
+    setInterval(() => {
+      if (document.body.classList.contains("starry")) {
+        let star = document.createElement("div");
+        star.className = "shooting-star";
+        star.style.top = Math.random() * window.innerHeight + "px";
+        star.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(star);
+        setTimeout(() => star.remove(), 2000);
+      }
+    }, 1500);
+  </script>
 </body>
 </html>
