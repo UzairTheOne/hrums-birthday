@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Episode 5: A Timeline of Us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Nanum Pen Script', cursive;
-      background-color: #fff0f6;
+      background: #fff0f6;
       color: #333;
       overflow-x: hidden;
-      transition: background 1s;
+      transition: background 1s, color 1s;
     }
 
     .starry {
@@ -38,18 +38,31 @@
     .timeline-event {
       display: inline-block;
       vertical-align: top;
-      background: #ffe4ec;
       padding: 20px;
       margin: 10px;
       border-radius: 20px;
       width: 250px;
       height: 200px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
+      transition: transform 0.3s, background 0.5s, color 0.5s;
     }
 
-    .timeline-event:hover {
-      transform: scale(1.05);
+    body:not(.starry) .timeline-event {
+      background: #ffe4ec;
+      color: #333;
+    }
+
+    .starry .timeline-event {
+      background: #392f6b;
+      color: #fff;
+    }
+
+    .starry-only {
+      display: none;
+    }
+
+    .starry .starry-only {
+      display: inline-block;
     }
 
     .theme-toggle {
@@ -58,22 +71,23 @@
       right: 20px;
       background: #fff;
       border: 2px solid #ccc;
-      padding: 10px;
+      padding: 10px 20px;
       border-radius: 10px;
       cursor: pointer;
+      z-index: 999;
       font-family: inherit;
     }
 
     .cursor {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       background: pink;
       position: fixed;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 10000;
       mix-blend-mode: multiply;
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
     .trail {
@@ -101,6 +115,7 @@
       font-size: 24px;
       cursor: pointer;
       animation: twinkle 2s infinite;
+      z-index: 1000;
     }
 
     @keyframes twinkle {
@@ -118,7 +133,7 @@
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(0,0,0,0.3);
       display: none;
-      z-index: 1000;
+      z-index: 1001;
     }
 
     .popup.show {
@@ -129,14 +144,13 @@
       background: #ff69b4;
       border: none;
       color: white;
-      padding: 5px 10px;
+      padding: 6px 12px;
       font-family: inherit;
       border-radius: 10px;
       cursor: pointer;
       margin-top: 20px;
     }
 
-    /* Shooting star background (starry mode) */
     .shooting-star {
       position: absolute;
       width: 3px;
@@ -144,6 +158,7 @@
       background: white;
       animation: shooting 2s ease-out infinite;
       border-radius: 50%;
+      z-index: 0;
     }
 
     @keyframes shooting {
@@ -152,31 +167,49 @@
         opacity: 1;
       }
       100% {
-        transform: translate(500px, 200px);
+        transform: translate(400px, 200px);
         opacity: 0;
       }
+    }
+
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: pink;
+      border-radius: 50%;
+      opacity: 0.7;
+      z-index: 0;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-100vh); }
     }
   </style>
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
   <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+
   <div class="container">
     <h1>Episode 5: A Timeline of Us</h1>
     <div class="timeline-wrapper" id="timeline">
       <div class="timeline-event">📸 First Day We Met<br><br>It all started with a smile...</div>
       <div class="timeline-event">🎂 Your Birthday<br><br>I made that special website for you 💖</div>
       <div class="timeline-event">🎧 Shared Songs<br><br>Remember that playlist?</div>
-      <div class="timeline-event">✈️ Trip Plans<br><br>Even if imaginary ones 😉</div>
+      <div class="timeline-event">✈️ Trip Dreams<br><br>Even if imaginary ones 😉</div>
       <div class="timeline-event">📞 Deep Talks<br><br>Those late-night convos...</div>
-      <!-- Add more timeline cards here -->
+      <div class="timeline-event starry-only">🌌 Stargazing Night<br><br>That deep call we had under the stars.</div>
+      <div class="timeline-event starry-only">🌠 You Made My Night<br><br>One unexpected message changed my whole day.</div>
     </div>
   </div>
 
-  <!-- Easter Egg Star -->
+  <!-- Easter Egg Trigger -->
   <div class="easter-egg" onclick="revealEaster()">⭐</div>
 
-  <!-- Easter Egg Message -->
+  <!-- Easter Egg Popup -->
   <div class="popup" id="easterMessage">
     <p>This hidden star holds a message from my heart 🌠<br>You're the timeline I never want to end.</p>
     <button class="close-btn" onclick="closeEaster()">Close</button>
@@ -189,12 +222,7 @@
   </audio>
 
   <script>
-    // Theme toggle
-    function toggleTheme() {
-      document.body.classList.toggle("starry");
-    }
-
-    // Cursor + trail effect
+    // Custom cursor and trailing sparkles
     const cursor = document.getElementById("cursor");
     document.addEventListener("mousemove", (e) => {
       cursor.style.left = e.pageX + "px";
@@ -208,16 +236,24 @@
       setTimeout(() => trail.remove(), 500);
     });
 
-    // Easter egg popup
-    function revealEaster() {
-      document.getElementById("easterMessage").classList.add("show");
+    // Theme toggle
+    function toggleTheme() {
+      document.body.classList.toggle("starry");
     }
 
-    function closeEaster() {
-      document.getElementById("easterMessage").classList.remove("show");
+    // Floating particles in light mode
+    function createParticles() {
+      for (let i = 0; i < 30; i++) {
+        let p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random() * window.innerWidth + "px";
+        p.style.top = Math.random() * window.innerHeight + "px";
+        p.style.animationDuration = 5 + Math.random() * 10 + "s";
+        document.body.appendChild(p);
+      }
     }
 
-    // Shooting stars if starry mode
+    // Shooting stars in dark theme
     setInterval(() => {
       if (document.body.classList.contains("starry")) {
         let star = document.createElement("div");
@@ -227,7 +263,21 @@
         document.body.appendChild(star);
         setTimeout(() => star.remove(), 2000);
       }
-    }, 1500);
+    }, 2000);
+
+    // Easter Egg Popup
+    function revealEaster() {
+      document.getElementById("easterMessage").classList.add("show");
+    }
+
+    function closeEaster() {
+      document.getElementById("easterMessage").classList.remove("show");
+    }
+
+    // Initialize on load
+    window.onload = () => {
+      createParticles();
+    }
   </script>
 </body>
 </html>
