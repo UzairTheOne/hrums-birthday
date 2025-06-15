@@ -60,19 +60,20 @@ body.dark .nav-btn:hover{background:#333366;border-color:#5050a0}
 
 
 .sakura-petal {
-    position: fixed;
-    top: -2em;
-    z-index: 1000;
-    pointer-events: none;
-    animation-name: fall;
-    animation-timing-function: linear;
-    animation-iteration-count: 1;
+  position: fixed;
+  top: -2em;
+  z-index: 9999;
+  pointer-events: none;
+  animation-name: sakuraFall;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
+@keyframes sakuraFall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
