@@ -89,6 +89,21 @@
       font-size: 14px;
       z-index: 999;
     }
+    
+    /* floating pastel bubbles */
+  .float-container { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
+  .float-bubble {
+    position: absolute;
+    bottom: -60px;
+    border-radius: 50%;
+    opacity: .7;
+    animation: rise 18s linear infinite;
+  }
+  @keyframes rise {
+    0%   { transform: translateY(0)   rotate(0deg);   }
+    100% { transform: translateY(-120vh) rotate(360deg); opacity:0; }
+  }
+
   </style>
 </head>
 <body>
@@ -155,6 +170,32 @@
       }
     }
   </script>
+
+  <!-- floating object script -->
+<script>
+(function makeBubbles(){
+  const container = document.createElement('div');
+  container.className = 'float-container';
+  document.body.appendChild(container);
+
+  const colors = ['#ffd6e8','#ffc7f1','#ffebf7','#e8f2ff'];
+
+  function spawn(){
+    const bubble = document.createElement('span');
+    bubble.className = 'float-bubble';
+    const size = 20 + Math.random()*30;        // 20–50px
+    bubble.style.width = bubble.style.height = size + 'px';
+    bubble.style.left  = Math.random()*100 + 'vw';
+    bubble.style.background = colors[Math.floor(Math.random()*colors.length)];
+    bubble.style.animationDuration = 12 + Math.random()*10 + 's';
+    container.appendChild(bubble);
+    setTimeout(()=>bubble.remove(),18000);     // matches @keyframes time
+  }
+
+  /* create one every 400 ms */
+  setInterval(spawn, 400);
+})();
+</script>
 
 </body>
 </html>
