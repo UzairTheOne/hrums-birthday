@@ -1,58 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Happy Birthday Haru 💖</title>
+  <meta charset="UTF-8">
+  <title>Hrum’s Birthday Surprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Reset + Fonts */
+    @font-face {
+      font-family: 'KDramaFont';
+      src: url('Sunflower-Bold.ttf');
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: 'KDramaFont', sans-serif;
+      background-color: #fff0f5;
+      transition: background 1s ease;
+    }
 
-  <!-- shared css & korean font -->
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #fef4f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #ff69b4;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
 
-  <!-- sparkles + confetti libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    /* Hero */
+    .container {
+      text-align: center;
+      padding: 100px 20px;
+    }
+    .container img {
+      width: 250px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+    .container img:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #ff4f8b;
+      margin-top: 20px;
+    }
+
+    .typing {
+      font-size: 1.2em;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    .btn {
+      margin-top: 30px;
+      background: linear-gradient(to right, #ff6b9c, #ffa1c4);
+      padding: 12px 30px;
+      color: white;
+      font-size: 1em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: #ffdee9;
+      border: none;
+      padding: 10px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    .hidden-star {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0.5;
+    }
+
+    /* Starry mode */
+    body.night {
+      background: radial-gradient(#0d0d26, #1a1a40);
+      color: #eee;
+    }
+
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #fff;
+      animation: sparkle 1s linear infinite;
+    }
+    @keyframes sparkle {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0); }
+    }
+
+    #secret {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 10%;
+      right: 10%;
+      background: #fff0f5;
+      padding: 20px;
+      border: 2px dashed #ff69b4;
+      border-radius: 10px;
+      z-index: 10000;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+    }
+  </style>
 </head>
-
 <body>
-  <!-- sparkle layer -->
-  <div id="sparkles"></div>
+  <div id="preloader"><div class="loader"></div></div>
 
-  <!-- dark‑mode / starry‑easter‑egg toggle -->
-  <div class="toggle-theme" onclick="toggleTheme()">🌙</div>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  <div class="hidden-star" onclick="showSecret()">★</div>
 
-  <!-- PRELOADER -->
-  <div id="preloader"><div class="loader">🎉</div></div>
+  <div class="container">
+    <img src="hrum.png" alt="Hrum">
+    <h1>하루누나 🌸</h1>
+    <div class="typing" id="typingText"></div>
+    <button class="btn" onclick="startAdventure()">Begin Adventure</button>
+  </div>
 
-  <!-- main card -->
-  <main class="card">
-    <h1 class="korean-font">🎂 하루짱에게 – 해피버스데이! 🎂</h1>
-    <img src="art.png" alt="Digital art" class="hero-img" />
+  <div id="secret">
+    🌟 You found a hidden message:  
+    <br><br>
+    “In every sparkle, in every breath of wind, I found a reason to smile — and that reason was you.”
+    <br><br>
+    <button onclick="closeSecret()">Close</button>
+  </div>
 
-    <p class="message">
-      Step into your own pastel K‑drama universe.<br>
-      Each episode is a surprise made just for you.
-    </p>
+  <script>
+    // Preloader
+    window.onload = function() {
+      setTimeout(() => {
+        document.getElementById('preloader').style.display = 'none';
+      }, 1500);
+      typeText();
+    };
 
-    <!-- click‑to‑play playlist (already working in your repo) -->
-    <!-- <audio ...>  (leave your existing audio code here) -->
+    // Typing effect
+    const text = "Hey Noona! Are you ready to begin your birthday adventure?";
+    let index = 0;
+    function typeText() {
+      const el = document.getElementById("typingText");
+      if (index < text.length) {
+        el.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeText, 50);
+      }
+    }
 
-    <!-- link to ep1 -->
-    <a href="ep1.html"><button class="episode-btn korean-font">🎬 Episode 1 시작!</button></a>
-    <a href="ep2.html" class="episode-btn korean-font">🎞️ Episode 2 – Memory Lane</a>
-    <a href="ep3.html" class="episode-btn korean-font">🎞️ Episode 3 – What I Love About You</a>
-    <a href="ep4.html" class="episode-btn korean-font">🎞️ Episode 4 – Your Ideal Birthday Day</a>
-    <a href="ep5.html" class="episode-btn korean-font">🎞️ Episode 5 – A Timeline of Us</a>
-    <a href="ep6.html" class="episode-btn korean-font">🎞️ Episode 6 – Final Wishes</a>
-</div>
+    // Navigate
+    function startAdventure() {
+      confetti(); // burst confetti
+      window.location.href = "ep1.html";
+    }
 
+    // Theme toggle
+    function toggleTheme() {
+      document.body.classList.toggle("night");
+    }
 
+    // Secret message
+    function showSecret() {
+      document.getElementById("secret").style.display = "block";
+    }
+    function closeSecret() {
+      document.getElementById("secret").style.display = "none";
+    }
 
+    // Sparkle trail
+    document.addEventListener('mousemove', function(e) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left = e.pageX + 'px';
+      sparkle.style.top = e.pageY + 'px';
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 500);
+    });
 
-    <!-- big confetti button -->
-    <button class="confetti-btn" onclick="runConfetti()">🎊 Celebrate!</button>
-  </main>
+    // Confetti script
+    function confetti() {
+      const duration = 1 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
 
-  <script src="main.js"></script>
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(interval);
+        const particleCount = 50 * (timeLeft / duration);
+        confettiLib(Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
+        }));
+      }, 250);
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </body>
 </html>
