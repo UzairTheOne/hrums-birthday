@@ -56,3 +56,23 @@ body.dark #themeBtn{background:#7c54ff}
 body.dark .hero h1{color:#ff99d4}
 body.dark .nav-btn{background:#24244a;color:#ff9cd5}
 body.dark .nav-btn:hover{background:#333366;border-color:#5050a0}
+
+
+
+.sakura-petal {
+    position: fixed;
+    top: -2em;
+    z-index: 1000;
+    pointer-events: none;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
