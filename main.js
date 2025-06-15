@@ -1,50 +1,52 @@
-/* -------- preloader fade -------- */
-window.addEventListener('load', ()=>{
-  setTimeout(()=>document.getElementById('preloader').style.display='none', 1000);
-  typeIntro();
+/* ---- Loader fade ---- */
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').style.opacity=0,600);
+  setTimeout(()=>document.getElementById('loader').style.display='none',1200);
+  typeLine();
 });
 
-/* -------- typing intro -------- */
-const intro = "Hey Noona! Ready to begin your birthday adventure?";
-let tIndex = 0;
-function typeIntro(){
-  const el = document.getElementById('typing');
-  if(tIndex < intro.length){
-    el.textContent += intro.charAt(tIndex++);
-    setTimeout(typeIntro,50);
+/* ---- Typing intro ---- */
+const msg="Ready for your own birthday K‑drama adventure?";
+let idx=0;
+function typeLine(){
+  const box=document.getElementById('type');
+  if(idx<msg.length){
+    box.textContent+=msg.charAt(idx++);
+    setTimeout(typeLine,50);
   }
 }
 
-/* -------- theme toggle -------- */
-document.getElementById('themeBtn').onclick = ()=> {
+/* ---- Theme toggle ---- */
+document.getElementById('themeToggle').onclick=()=>{
   document.body.classList.toggle('night');
 };
 
-/* -------- secret star -------- */
-document.getElementById('secretStar').onclick = ()=> {
-  document.getElementById('secretPopup').style.display = 'flex';
-};
-document.getElementById('closeSecret').onclick = ()=> {
-  document.getElementById('secretPopup').style.display = 'none';
-};
-
-/* -------- begin adventure (confetti + redirect) -------- */
-document.getElementById('beginBtn').onclick = ()=>{
-  confettiBurst();
-  setTimeout(()=>location.href='ep1.html',1200);
-};
-
-/* confetti helper */
-function confettiBurst(){
-  confetti({particleCount:120,spread:80,origin:{y:0.6},colors:['#ff99cc','#ffe6f5','#ff85c0']});
-}
-
-/* -------- sparkle cursor trail -------- */
-document.addEventListener('mousemove', e=>{
+/* ---- Sparkle cursor ---- */
+document.addEventListener('mousemove',e=>{
   const s=document.createElement('div');
-  s.className='sparkle';
+  s.className='spark';
   s.style.left=e.pageX+'px';
-  s.style.top =e.pageY+'px';
+  s.style.top=e.pageY+'px';
   document.body.appendChild(s);
-  setTimeout(()=>s.remove(),700);
+  setTimeout(()=>s.remove(),600);
 });
+
+/* ---- Secret star popup ---- */
+document.getElementById('secretStar').onclick=()=>{
+  document.getElementById('popup').style.display='flex';
+};
+document.getElementById('closePop').onclick=()=>{
+  document.getElementById('popup').style.display='none';
+};
+
+/* ---- Begin Adventure ---- */
+document.getElementById('startBtn').onclick=()=>{
+  confettiBurst();
+  setTimeout(()=>location.href='ep1.html',700);
+};
+
+/* ---- Confetti burst ---- */
+function confettiBurst(){
+  confetti({ particleCount:110, spread:90,
+    colors:['#ff8cc6','#ffd4f2','#e0c3ff']});
+}
