@@ -6,7 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      cursor: none;
+    }
 
     body {
       font-family: 'Nanum Pen Script', cursive;
@@ -50,7 +55,7 @@
     .gift {
       width: 120px;
       height: 120px;
-      background: url('https://i.imgur.com/pH2uwVW.png') no-repeat center/contain;
+      background: url('giftbox.png') no-repeat center/contain;
       animation: bounce 2s infinite;
       cursor: pointer;
       position: relative;
@@ -91,14 +96,12 @@
     }
 
     .cursor {
-      width: 18px;
-      height: 18px;
-      background: pink;
-      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      background: url('https://cdn-icons-png.flaticon.com/128/833/833472.png') no-repeat center/contain;
       position: fixed;
       pointer-events: none;
       z-index: 10000;
-      mix-blend-mode: multiply;
     }
 
     .trail {
@@ -131,7 +134,6 @@
       50% { color: gold; }
     }
 
-    /* Particles */
     .particle {
       position: absolute;
       width: 10px;
@@ -147,24 +149,42 @@
       from { transform: translateY(0); }
       to { transform: translateY(-120vh); }
     }
+
+    audio { display: none; }
   </style>
 </head>
 <body>
+  <!-- Custom Cursor -->
   <div class="cursor" id="cursor"></div>
+
+  <!-- Theme Toggle Button -->
   <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+
   <h1>🎁 Episode 6: The Final Surprise</h1>
 
   <div class="gifts">
-    <!-- 6 Gift Boxes -->
-    <div class="gift" onclick="revealMessage(this, 0)"><div class="message">You light up even my darkest days 🌟</div></div>
-    <div class="gift" onclick="revealMessage(this, 1)"><div class="message">Every chat, every laugh — unforgettable 💬</div></div>
-    <div class="gift" onclick="revealMessage(this, 2)"><div class="message">You’re more magical than any K-drama ✨</div></div>
-    <div class="gift" onclick="revealMessage(this, 3)"><div class="message">I’m grateful for your presence in my life 💖</div></div>
-    <div class="gift" onclick="revealMessage(this, 4)"><div class="message">Your kindness inspires me everyday 🌸</div></div>
-    <div class="gift" onclick="revealMessage(this, 5)"><div class="message">Noona, you’re irreplaceable 💫</div></div>
+    <!-- Gift Boxes with sender info -->
+    <div class="gift" onclick="revealMessage(this, 0)">
+      <div class="message"><strong>From: Ayesha</strong><br>You light up even my darkest days 🌟</div>
+    </div>
+    <div class="gift" onclick="revealMessage(this, 1)">
+      <div class="message"><strong>From: Zoya</strong><br>Every chat, every laugh — unforgettable 💬</div>
+    </div>
+    <div class="gift" onclick="revealMessage(this, 2)">
+      <div class="message"><strong>From: Sara</strong><br>You’re more magical than any K-drama ✨</div>
+    </div>
+    <div class="gift" onclick="revealMessage(this, 3)">
+      <div class="message"><strong>From: Noor</strong><br>I’m grateful for your presence in my life 💖</div>
+    </div>
+    <div class="gift" onclick="revealMessage(this, 4)">
+      <div class="message"><strong>From: Meher</strong><br>Your kindness inspires me everyday 🌸</div>
+    </div>
+    <div class="gift" onclick="revealMessage(this, 5)">
+      <div class="message"><strong>From: Mariam</strong><br>Noona, you’re irreplaceable 💫</div>
+    </div>
   </div>
 
-  <!-- Easter Egg Reveal -->
+  <!-- Hidden Final Message -->
   <div class="easter-egg" id="finalMessage">
     🌠 “This entire journey was my gift to you... Thank you for being part of my story.” 💌
   </div>
@@ -172,7 +192,6 @@
   <!-- Background Music -->
   <audio autoplay loop id="bgMusic">
     <source src="your-song.mp3" type="audio/mp3">
-    Your browser does not support audio.
   </audio>
 
   <script>
@@ -195,11 +214,14 @@
       document.body.classList.toggle("starry");
     }
 
-    // Reveal gift messages
-    let opened = [false, false, false, false, false, false];
+    // Reveal Messages
+    let opened = Array(6).fill(false);
+
     function revealMessage(el, index) {
+      // Close all others
+      document.querySelectorAll('.message').forEach(msg => msg.style.display = 'none');
+
       const msg = el.querySelector('.message');
-      msg.classList.toggle('hidden');
       msg.style.display = 'block';
       opened[index] = true;
 
@@ -214,13 +236,13 @@
         setTimeout(() => p.remove(), 4000);
       }
 
-      // Reveal final message if all opened
+      // Reveal Final Message
       if (opened.every(Boolean)) {
         document.getElementById("finalMessage").style.display = "block";
       }
     }
 
-    // Initial particles
+    // Floating background particles
     window.onload = () => {
       for (let i = 0; i < 30; i++) {
         let p = document.createElement("div");
