@@ -1,74 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Episode 4: A Quiz About Us</title>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Nanum Pen Script', cursive;
-      background: #ffeef4;
+      background: #fff0f5;
       color: #333;
       overflow-x: hidden;
-      transition: background 0.5s;
+      transition: background 0.5s, color 0.5s;
     }
-    .starry {
-      background: #0d1b2a url('https://i.imgur.com/UgI6q8d.jpg') repeat top center / cover;
-      color: #fff;
+
+    body.dark {
+      background: #1e1e2f;
+      color: #eee;
     }
+
     .container {
       max-width: 800px;
       margin: auto;
       padding: 30px;
       text-align: center;
+      z-index: 2;
+      position: relative;
     }
+
     h1 {
       font-size: 3em;
       margin-bottom: 20px;
     }
+
     .question {
       margin: 20px 0;
-      font-size: 1.5em;
+      font-size: 1.8em;
     }
+
     .options {
       margin: 10px 0;
     }
+
     .options button {
       font-family: 'Nanum Pen Script', cursive;
-      margin: 5px;
-      padding: 10px 20px;
+      margin: 8px;
+      padding: 12px 24px;
       font-size: 1.2em;
-      border-radius: 10px;
+      border-radius: 12px;
       border: none;
       cursor: pointer;
       background: #ffb6c1;
       color: white;
       transition: background 0.3s;
     }
+
     .options button:hover {
       background: #ff69b4;
     }
+
     .score {
       font-size: 1.5em;
-      margin-top: 20px;
+      margin-top: 30px;
     }
+
     #themeToggle {
       position: fixed;
-      top: 10px;
-      right: 10px;
-      background: #fff;
-      border-radius: 10px;
-      padding: 8px 12px;
-      cursor: pointer;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(45deg, #ffd1dc, #ffe4e1);
       border: none;
+      padding: 10px 16px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Nanum Pen Script', cursive;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 3;
     }
+
     canvas {
       position: fixed;
       top: 0;
       left: 0;
+      z-index: 0;
       pointer-events: none;
     }
+
     #easterEgg {
       display: none;
       margin-top: 30px;
@@ -78,30 +96,52 @@
       border-radius: 15px;
       animation: glow 1.5s infinite alternate;
     }
+
     @keyframes glow {
       from { box-shadow: 0 0 5px #ff69b4; }
       to { box-shadow: 0 0 20px #ffd700; }
     }
-    .custom-cursor {
-      width: 20px;
-      height: 20px;
-      background: pink;
+
+    .cursor {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ff69b4;
       border-radius: 50%;
-      position: absolute;
+      position: fixed;
       pointer-events: none;
-      z-index: 1000;
+      z-index: 9999;
+      transition: transform 0.1s ease-out;
       mix-blend-mode: difference;
+    }
+
+    .trail {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 105, 180, 0.5);
+      pointer-events: none;
+      z-index: 9998;
+      animation: fade 0.6s ease-out forwards;
+    }
+
+    @keyframes fade {
+      to {
+        opacity: 0;
+        transform: scale(1.5);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="custom-cursor" id="cursor"></div>
-  <button id="themeToggle">Toggle Theme</button>
+  <button id="themeToggle">Change Theme</button>
+  <div class="cursor" id="cursor"></div>
+
   <div class="container">
     <h1>Episode 4: A Quiz About Us 💕</h1>
     <div id="quiz"></div>
     <div class="score" id="score"></div>
-    <div id="easterEgg">🎉 You remembered everything perfectly! Here's a secret: I planned all this because you mean the world to me 💖</div>
+    <div id="easterEgg">🎉 You remembered everything perfectly! Here's a secret: You're my favorite person in the universe 💖</div>
   </div>
 
   <audio id="bgMusic" loop autoplay>
@@ -111,25 +151,33 @@
   <canvas id="particles"></canvas>
 
   <script>
-    // Cursor Trail
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.pageX + 'px';
-      cursor.style.top = e.pageY + 'px';
+    // Cursor + Trail
+    const cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", (e) => {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+
+      const trail = document.createElement("div");
+      trail.className = "trail";
+      trail.style.left = e.clientX + "px";
+      trail.style.top = e.clientY + "px";
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 600);
     });
 
-    // Theme Toggle
-    const toggle = document.getElementById('themeToggle');
-    toggle.onclick = () => document.body.classList.toggle('starry');
+    // Theme toggle
+    document.getElementById('themeToggle').onclick = () => {
+      document.body.classList.toggle('dark');
+    };
 
-    // Quiz Questions
+    // Quiz questions
     const questions = [
-      { q: "We met in which year?", options: ["2019", "2020", "2021"], answer: "2020" },
-      { q: "True or False: We both love iced coffee.", options: ["True", "False"], answer: "True" },
-      { q: "Our favorite inside joke is about?", options: ["Cats", "Food", "Anime"], answer: "Anime" },
-      { q: "True or False: You sent me a surprise on my birthday.", options: ["True", "False"], answer: "True" },
-      { q: "Which series did we binge together?", options: ["Stranger Things", "Crash Landing", "Goblin"], answer: "Crash Landing" },
-      { q: "True or False: You were the first to say 'bestie forever'", options: ["True", "False"], answer: "False" }
+      { q: "We first started talking in?", options: ["2019", "2020", "2021"], answer: "2020" },
+      { q: "True or False: We love the same K-dramas.", options: ["True", "False"], answer: "True" },
+      { q: "Where did we plan to travel someday?", options: ["Seoul", "Tokyo", "Paris"], answer: "Seoul" },
+      { q: "True or False: We both love late-night convos.", options: ["True", "False"], answer: "True" },
+      { q: "Which app do we always use to chat?", options: ["WhatsApp", "Telegram", "Instagram"], answer: "Instagram" },
+      { q: "True or False: I forgot your birthday once.", options: ["True", "False"], answer: "False" }
     ];
 
     let current = 0;
@@ -150,7 +198,7 @@
     function checkAnswer(selected) {
       if (selected === questions[current].answer) {
         score++;
-        confetti();
+        confettiEffect({ particleCount: 10, spread: 60, origin: { y: 0.6 } });
       }
       current++;
       if (current < questions.length) {
@@ -169,27 +217,15 @@
 
     showQuestion();
 
-    // Confetti
-    function confetti() {
-      const duration = 1 * 1000;
-      const end = Date.now() + duration;
-      (function frame() {
-        confettiEffect({ particleCount: 5, spread: 70, origin: { y: 0.6 } });
-        if (Date.now() < end) requestAnimationFrame(frame);
-      })();
-    }
-
-    // Confetti Effect from CDN
+    // Confetti from CDN
     function confettiEffect(opts) {
       if (window.confetti) window.confetti(opts);
     }
-
-    // Confetti script
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js';
     document.body.appendChild(script);
 
-    // Particles
+    // Background Particles
     const canvas = document.getElementById("particles");
     const ctx = canvas.getContext("2d");
     let particlesArray;
@@ -213,7 +249,7 @@
       for (let p of particlesArray) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,192,203,0.6)";
+        ctx.fillStyle = "rgba(255,182,193,0.7)";
         ctx.fill();
         p.y += p.speedY;
         if (p.y > canvas.height) p.y = 0;
