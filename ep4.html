@@ -1,85 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Episode 4 – Your Ideal Birthday Day</title>
-
-  <!-- shared pastel css for this episode -->
-  <link rel="stylesheet" href="ep4.css"/>
-
-  <!-- Korean handwriting font -->
+  <meta charset="UTF-8" />
+  <title>Episode 4: A Quiz About Us</title>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Nanum Pen Script', cursive;
+      background: #ffeef4;
+      color: #333;
+      overflow-x: hidden;
+      transition: background 0.5s;
+    }
+    .starry {
+      background: #0d1b2a url('https://i.imgur.com/UgI6q8d.jpg') repeat top center / cover;
+      color: #fff;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    .question {
+      margin: 20px 0;
+      font-size: 1.5em;
+    }
+    .options {
+      margin: 10px 0;
+    }
+    .options button {
+      font-family: 'Nanum Pen Script', cursive;
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: #ffb6c1;
+      color: white;
+      transition: background 0.3s;
+    }
+    .options button:hover {
+      background: #ff69b4;
+    }
+    .score {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+    #themeToggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border: none;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+    #easterEgg {
+      display: none;
+      margin-top: 30px;
+      font-size: 1.5em;
+      background: #ffd700;
+      padding: 20px;
+      border-radius: 15px;
+      animation: glow 1.5s infinite alternate;
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 5px #ff69b4; }
+      to { box-shadow: 0 0 20px #ffd700; }
+    }
+    .custom-cursor {
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+      position: absolute;
+      pointer-events: none;
+      z-index: 1000;
+      mix-blend-mode: difference;
+    }
+  </style>
 </head>
 <body>
+  <div class="custom-cursor" id="cursor"></div>
+  <button id="themeToggle">Toggle Theme</button>
+  <div class="container">
+    <h1>Episode 4: A Quiz About Us 💕</h1>
+    <div id="quiz"></div>
+    <div class="score" id="score"></div>
+    <div id="easterEgg">🎉 You remembered everything perfectly! Here's a secret: I planned all this because you mean the world to me 💖</div>
+  </div>
 
-  <!-- sparkle overlay -->
-  <div class="sparkle"></div>
+  <audio id="bgMusic" loop autoplay>
+    <source src="quiz-music.mp3" type="audio/mp3" />
+  </audio>
 
-  <!-- dark‑mode / starry toggle -->
-  <button id="themeToggle" class="toggle">🌙</button>
+  <canvas id="particles"></canvas>
 
-  <!-- simple pre‑loader -->
-  <div id="preloader">Loading your birthday surprise…</div>
+  <script>
+    // Cursor Trail
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.pageX + 'px';
+      cursor.style.top = e.pageY + 'px';
+    });
 
-  <!-- main content -->
-  <main class="container">
-    <h1 class="korean-font">🌸 Episode 4: Your Ideal Birthday Day 🌸</h1>
+    // Theme Toggle
+    const toggle = document.getElementById('themeToggle');
+    toggle.onclick = () => document.body.classList.toggle('starry');
 
-    <form id="quizForm">
-      <section class="question">
-        <p>1. Pick a morning vibe:</p>
-        <label><input type="radio" name="q1" value="Sunny with tea"> ☀️ Sunny with tea</label>
-        <label><input type="radio" name="q1" value="Rainy lo‑fi"> 🌧 Rainy with lo‑fi</label>
-        <label><input type="radio" name="q1" value="Spring breeze"> 🌸 Spring breeze & flowers</label>
-        <label><input type="radio" name="q1" value="Snuggled in bed"> 🧸 Snuggled in bed & dramas</label>
-      </section>
+    // Quiz Questions
+    const questions = [
+      { q: "We met in which year?", options: ["2019", "2020", "2021"], answer: "2020" },
+      { q: "True or False: We both love iced coffee.", options: ["True", "False"], answer: "True" },
+      { q: "Our favorite inside joke is about?", options: ["Cats", "Food", "Anime"], answer: "Anime" },
+      { q: "True or False: You sent me a surprise on my birthday.", options: ["True", "False"], answer: "True" },
+      { q: "Which series did we binge together?", options: ["Stranger Things", "Crash Landing", "Goblin"], answer: "Crash Landing" },
+      { q: "True or False: You were the first to say 'bestie forever'", options: ["True", "False"], answer: "False" }
+    ];
 
-      <section class="question">
-        <p>2. Pick a birthday outfit:</p>
-        <label><input type="radio" name="q2" value="Pastel dress"> 🎀 Cute pastel dress</label>
-        <label><input type="radio" name="q2" value="Oversized hoodie"> 🧥 Oversized hoodie</label>
-        <label><input type="radio" name="q2" value="PJs"> 😴 Pajamas & hair bun</label>
-        <label><input type="radio" name="q2" value="Stylish black"> 🖤 Stylish black fit</label>
-      </section>
+    let current = 0;
+    let score = 0;
+    const quizBox = document.getElementById('quiz');
+    const scoreBox = document.getElementById('score');
 
-      <section class="question">
-        <p>3. Pick the perfect gift:</p>
-        <label><input type="radio" name="q3" value="Letter"> 💌 Hand‑written letter</label>
-        <label><input type="radio" name="q3" value="Rest day"> 💤 A whole day of rest</label>
-        <label><input type="radio" name="q3" value="Drama marathon"> 🎬 Drama marathon</label>
-        <label><input type="radio" name="q3" value="Surprise"> 🎁 Unexpected surprise</label>
-      </section>
+    function showQuestion() {
+      const q = questions[current];
+      quizBox.innerHTML = `
+        <div class="question">${q.q}</div>
+        <div class="options">
+          ${q.options.map(opt => `<button onclick="checkAnswer('${opt}')">${opt}</button>`).join('')}
+        </div>
+      `;
+    }
 
-      <section class="question">
-        <p>4. Pick a dessert:</p>
-        <label><input type="radio" name="q4" value="Strawberry cake"> 🍓 Strawberry cake</label>
-        <label><input type="radio" name="q4" value="Ice cream"> 🍨 Ice cream</label>
-        <label><input type="radio" name="q4" value="Chocolate fudge"> 🍫 Chocolate fudge</label>
-        <label><input type="radio" name="q4" value="Mochi"> 🥺 Mochi</label>
-      </section>
+    function checkAnswer(selected) {
+      if (selected === questions[current].answer) {
+        score++;
+        confetti();
+      }
+      current++;
+      if (current < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
 
-      <section class="question">
-        <p>5. Pick the style of message you’d love:</p>
-        <label><input type="radio" name="q5" value="Funny"> 😏 Funny & sarcastic</label>
-        <label><input type="radio" name="q5" value="Emotional"> 🥲 Deep & emotional</label>
-        <label><input type="radio" name="q5" value="Chaos"> 🤪 Pure chaos</label>
-        <label><input type="radio" name="q5" value="All"> 💗 All of the above</label>
-      </section>
+    function showResult() {
+      scoreBox.textContent = `You got ${score} out of ${questions.length} correct! 🎊`;
+      if (score === questions.length) {
+        document.getElementById('easterEgg').style.display = 'block';
+      }
+    }
 
-      <button type="submit" class="submit-btn korean-font">✨ Show me my day ✨</button>
-    </form>
+    showQuestion();
 
-    <p id="result" class="korean-font"></p>
+    // Confetti
+    function confetti() {
+      const duration = 1 * 1000;
+      const end = Date.now() + duration;
+      (function frame() {
+        confettiEffect({ particleCount: 5, spread: 70, origin: { y: 0.6 } });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
+    }
 
-    <!-- nav back / forward if you like -->
-    <div class="nav">
-      <a href="ep3.html" class="nav-btn korean-font">⬅️ Episode 3</a>
-      <a href="ep5.html" class="nav-btn korean-font">➡️ Episode 5</a>
-      <!-- <a href="ep5.html" class="nav-btn korean-font">➡️ Episode 5</a> -->
-    </div>
-  </main>
+    // Confetti Effect from CDN
+    function confettiEffect(opts) {
+      if (window.confetti) window.confetti(opts);
+    }
 
-  <script src="ep4.js"></script>
+    // Confetti script
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js';
+    document.body.appendChild(script);
+
+    // Particles
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particlesArray;
+
+    function initParticles() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      particlesArray = [];
+      for (let i = 0; i < 100; i++) {
+        particlesArray.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 3 + 1,
+          speedY: Math.random() * 1 + 0.5
+        });
+      }
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let p of particlesArray) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,192,203,0.6)";
+        ctx.fill();
+        p.y += p.speedY;
+        if (p.y > canvas.height) p.y = 0;
+      }
+    }
+
+    function animateParticles() {
+      drawParticles();
+      requestAnimationFrame(animateParticles);
+    }
+
+    window.addEventListener('resize', initParticles);
+    initParticles();
+    animateParticles();
+  </script>
 </body>
 </html>
