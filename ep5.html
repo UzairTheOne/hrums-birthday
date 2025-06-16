@@ -2,282 +2,239 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Episode 5: A Timeline of Us</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Episode 5: Memories Album</title>
+
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
       font-family: 'Nanum Pen Script', cursive;
-      background: #fff0f6;
-      color: #333;
+      background-color: #fff0f5;
       overflow-x: hidden;
-      transition: background 1s, color 1s;
+      transition: background 0.5s;
     }
 
     .starry {
-      background: linear-gradient(to bottom, #0d0d2b, #1c1c3c);
-      color: #fff;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      color: white;
     }
 
-    .container {
-      padding: 40px;
-    }
-
-    h1 {
+    .header {
       text-align: center;
-      font-size: 3em;
-    }
-
-    .timeline-wrapper {
-      overflow-x: auto;
-      white-space: nowrap;
-      padding: 20px;
-    }
-
-    .timeline-event {
-      display: inline-block;
-      vertical-align: top;
-      padding: 20px;
-      margin: 10px;
-      border-radius: 20px;
-      width: 250px;
-      height: 200px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: transform 0.3s, background 0.5s, color 0.5s;
-    }
-
-    body:not(.starry) .timeline-event {
-      background: #ffe4ec;
-      color: #333;
-    }
-
-    .starry .timeline-event {
-      background: #392f6b;
-      color: #fff;
-    }
-
-    .starry-only {
-      display: none;
-    }
-
-    .starry .starry-only {
-      display: inline-block;
+      padding: 30px;
+      font-size: 2.5em;
     }
 
     .theme-toggle {
       position: fixed;
-      top: 20px;
+      top: 15px;
       right: 20px;
-      background: #fff;
-      border: 2px solid #ccc;
       padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 20px;
+      z-index: 1000;
+    }
+
+    .album {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      padding: 30px;
+    }
+
+    .year-section {
+      text-align: center;
+      max-width: 90%;
+    }
+
+    .year-section h2 {
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+
+    .media-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .media-grid img, .media-grid video {
+      width: 200px;
+      height: auto;
       border-radius: 10px;
       cursor: pointer;
-      z-index: 999;
-      font-family: inherit;
+      transition: transform 0.3s ease;
+    }
+
+    .media-grid img:hover, .media-grid video:hover {
+      transform: scale(1.05);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .lightbox img, .lightbox video {
+      max-width: 100%;
+      max-height: 100%;
     }
 
     .cursor {
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: pink;
       position: fixed;
       pointer-events: none;
-      z-index: 10000;
-      mix-blend-mode: multiply;
-      opacity: 0.7;
-    }
-
-    .trail {
-      position: fixed;
-      width: 6px;
-      height: 6px;
-      background: hotpink;
-      border-radius: 50%;
-      pointer-events: none;
+      transform: translate(-50%, -50%);
       z-index: 9999;
-      animation: fade 1s forwards;
     }
 
-    @keyframes fade {
-      to {
-        opacity: 0;
-        transform: scale(0.5);
-      }
-    }
-
-    .easter-egg {
+    /* Easter egg */
+    .hidden-star {
       position: fixed;
-      bottom: 20px;
+      bottom: 10px;
       left: 20px;
-      font-size: 24px;
+      font-size: 30px;
       cursor: pointer;
-      animation: twinkle 2s infinite;
-      z-index: 1000;
+      opacity: 0.3;
+      transition: opacity 0.3s;
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.2); }
+    .hidden-star:hover {
+      opacity: 1;
     }
 
-    .popup {
+    .easter-popup {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #fff0f6;
+      background: #fff;
+      border-radius: 10px;
       padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      font-size: 1.5em;
+      text-align: center;
       display: none;
-      z-index: 1001;
+      z-index: 3000;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
     }
 
-    .popup.show {
+    .easter-popup.show {
       display: block;
     }
 
-    .close-btn {
-      background: #ff69b4;
-      border: none;
-      color: white;
-      padding: 6px 12px;
-      font-family: inherit;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .shooting-star {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: white;
-      animation: shooting 2s ease-out infinite;
-      border-radius: 50%;
-      z-index: 0;
-    }
-
-    @keyframes shooting {
-      0% {
-        transform: translate(0, 0);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(400px, 200px);
-        opacity: 0;
-      }
-    }
-
-    .particle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: pink;
-      border-radius: 50%;
-      opacity: 0.7;
-      z-index: 0;
-      animation: float 10s linear infinite;
-    }
-
-    @keyframes float {
-      from { transform: translateY(0); }
-      to { transform: translateY(-100vh); }
+    a {
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <div class="cursor" id="cursor"></div>
-  <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
 
-  <div class="container">
-    <h1>Episode 5: A Timeline of Us</h1>
-    <div class="timeline-wrapper" id="timeline">
-      <div class="timeline-event">📸 First Day We Met<br><br>It all started with a smile...</div>
-      <div class="timeline-event">🎂 Your Birthday<br><br>I made that special website for you 💖</div>
-      <div class="timeline-event">🎧 Shared Songs<br><br>Remember that playlist?</div>
-      <div class="timeline-event">✈️ Trip Dreams<br><br>Even if imaginary ones 😉</div>
-      <div class="timeline-event">📞 Deep Talks<br><br>Those late-night convos...</div>
-      <div class="timeline-event starry-only">🌌 Stargazing Night<br><br>That deep call we had under the stars.</div>
-      <div class="timeline-event starry-only">🌠 You Made My Night<br><br>One unexpected message changed my whole day.</div>
-    </div>
-  </div>
-
-  <!-- Easter Egg Trigger -->
-  <div class="easter-egg" onclick="revealEaster()">⭐</div>
-
-  <!-- Easter Egg Popup -->
-  <div class="popup" id="easterMessage">
-    <p>This hidden star holds a message from my heart 🌠<br>You're the timeline I never want to end.</p>
-    <button class="close-btn" onclick="closeEaster()">Close</button>
-  </div>
-
-  <!-- Background Music -->
-  <audio id="bgMusic" autoplay loop>
-    <source src="your-music.mp3" type="audio/mp3">
-    Your browser does not support audio.
+  <audio autoplay loop id="bg-music">
+    <source src="song.mp3" type="audio/mp3">
   </audio>
 
-  <script>
-    // Custom cursor and trailing sparkles
-    const cursor = document.getElementById("cursor");
-    document.addEventListener("mousemove", (e) => {
-      cursor.style.left = e.pageX + "px";
-      cursor.style.top = e.pageY + "px";
+  <div class="cursor" id="cursor"></div>
 
-      let trail = document.createElement("div");
-      trail.className = "trail";
-      trail.style.left = e.pageX + "px";
-      trail.style.top = e.pageY + "px";
-      document.body.appendChild(trail);
-      setTimeout(() => trail.remove(), 500);
+  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+  <div class="header">📸 A Memory Album</div>
+
+  <div class="album">
+
+    <!-- Year Section -->
+    <div class="year-section">
+      <h2>2021</h2>
+      <div class="media-grid">
+        <img src="placeholder1.jpg" alt="2022 memory" onclick="openLightbox(this)">
+        <video src="placeholder1.mp4" controls onclick="openLightbox(this)"></video>
+      </div>
+    </div>
+
+    <div class="year-section">
+      <h2>2022</h2>
+      <div class="media-grid">
+        <img src="placeholder2.jpg" alt="2023 memory" onclick="openLightbox(this)">
+        <video src="placeholder2.mp4" controls onclick="openLightbox(this)"></video>
+      </div>
+    </div>
+
+    <div class="year-section">
+      <h2>2022</h2>
+      <div class="media-grid">
+        <img src="placeholder2.jpg" alt="2024 memory" onclick="openLightbox(this)">
+        <video src="placeholder2.mp4" controls onclick="openLightbox(this)"></video>
+      </div>
+    </div>
+
+    <!-- Add more years below similarly -->
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" onclick="closeLightbox()" id="lightbox">
+    <div class="lightbox-content" id="lightbox-content"></div>
+  </div>
+
+  <!-- Easter Egg -->
+  <div class="hidden-star" onclick="showEaster()">⭐</div>
+
+  <div class="easter-popup" id="easter">
+    🌟 A secret message just for you!<br>
+    You’re the reason behind all these smiles.
+    <br><br>
+    <button onclick="document.getElementById('easter').classList.remove('show')">Close</button>
+  </div>
+
+  <script>
+    // Lightbox
+    function openLightbox(element) {
+      const content = document.getElementById('lightbox-content');
+      content.innerHTML = element.outerHTML;
+      document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+    }
+
+    // Cursor trail
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.pageX + 'px';
+      cursor.style.top = e.pageY + 'px';
     });
 
     // Theme toggle
     function toggleTheme() {
-      document.body.classList.toggle("starry");
+      document.body.classList.toggle('starry');
     }
 
-    // Floating particles in light mode
-    function createParticles() {
-      for (let i = 0; i < 30; i++) {
-        let p = document.createElement("div");
-        p.className = "particle";
-        p.style.left = Math.random() * window.innerWidth + "px";
-        p.style.top = Math.random() * window.innerHeight + "px";
-        p.style.animationDuration = 5 + Math.random() * 10 + "s";
-        document.body.appendChild(p);
-      }
-    }
-
-    // Shooting stars in dark theme
-    setInterval(() => {
-      if (document.body.classList.contains("starry")) {
-        let star = document.createElement("div");
-        star.className = "shooting-star";
-        star.style.top = Math.random() * window.innerHeight + "px";
-        star.style.left = Math.random() * window.innerWidth + "px";
-        document.body.appendChild(star);
-        setTimeout(() => star.remove(), 2000);
-      }
-    }, 2000);
-
-    // Easter Egg Popup
-    function revealEaster() {
-      document.getElementById("easterMessage").classList.add("show");
-    }
-
-    function closeEaster() {
-      document.getElementById("easterMessage").classList.remove("show");
-    }
-
-    // Initialize on load
-    window.onload = () => {
-      createParticles();
+    // Easter Egg
+    function showEaster() {
+      document.getElementById('easter').classList.add('show');
     }
   </script>
+
 </body>
 </html>
