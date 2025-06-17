@@ -1,262 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Episode 6: The Final Surprise</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Episode 6 – Special Messages</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #fff5f8;
+      --text: #333;
+      --accent: #ff70a6;
+    }
+    body.dark {
+      --bg: #1a1a2e;
+      --text: #f9f9f9;
+      --accent: #9d8dff;
+    }
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      cursor: none;
     }
-
     body {
       font-family: 'Nanum Pen Script', cursive;
-      background: #fff0f6;
+      background: var(--bg);
+      color: var(--text);
       overflow-x: hidden;
-      text-align: center;
-      transition: background 1s, color 1s;
-    }
-
-    .starry {
-      background: radial-gradient(ellipse at top, #0d0d2b, #1c1c3c);
-      color: white;
+      cursor: none;
+      transition: background 0.5s, color 0.5s;
     }
 
     h1 {
-      font-size: 3em;
+      text-align: center;
       margin: 30px 0;
+      font-size: 3rem;
+      color: var(--accent);
     }
 
-    .theme-toggle {
+    #themeToggle {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      background: white;
-      border: 2px solid #ccc;
-      border-radius: 10px;
+      top: 15px;
+      right: 15px;
       padding: 8px 16px;
-      font-family: inherit;
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 20px;
       cursor: pointer;
-      z-index: 9999;
+      z-index: 1001;
     }
 
-    .gifts {
+    .container {
       display: flex;
       flex-wrap: wrap;
+      gap: 30px;
       justify-content: center;
-      gap: 20px;
-      padding: 20px;
+      padding: 40px;
     }
 
     .gift {
-      width: 120px;
-      height: 120px;
-      background: url('giftbox.png') no-repeat center/contain;
-      animation: bounce 2s infinite;
+      width: 100px;
+      height: 100px;
+      background: url('giftbox.png') no-repeat center/cover;
       cursor: pointer;
-      position: relative;
+      transition: transform 0.3s;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+    .gift:hover {
+      transform: scale(1.1);
     }
 
-    .message {
+    #messagePopup {
       display: none;
-      background: #fffafc;
-      border-radius: 15px;
-      padding: 15px;
-      max-width: 300px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      position: absolute;
-      top: 130px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: sparklePop 0.5s ease;
-      z-index: 2;
-    }
-
-    .starry .message {
-      background: #2e235a;
-      color: white;
-    }
-
-    @keyframes sparklePop {
-      0% { opacity: 0; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .cursor {
-      width: 24px;
-      height: 24px;
-      background: url('https://cdn-icons-png.flaticon.com/128/833/833472.png') no-repeat center/contain;
       position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg);
+      color: var(--text);
+      border: 3px dashed var(--accent);
+      padding: 30px;
+      max-width: 90%;
+      width: 400px;
+      text-align: center;
+      border-radius: 20px;
+      z-index: 999;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    }
+
+    #messagePopup h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: var(--accent);
+    }
+
+    #messagePopup p {
+      font-size: 1.4rem;
+      white-space: pre-wrap;
+    }
+
+    #closeBtn {
+      margin-top: 20px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    #cursor {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%, -50%);
       pointer-events: none;
       z-index: 10000;
+      mix-blend-mode: difference;
     }
 
     .trail {
       width: 6px;
       height: 6px;
-      background: hotpink;
+      background: var(--accent);
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
+      animation: fade 0.6s forwards;
       z-index: 9999;
-      animation: fade 1s forwards;
     }
 
     @keyframes fade {
       to {
         opacity: 0;
-        transform: scale(0.5);
+        transform: scale(0);
       }
     }
 
-    .easter-egg {
-      display: none;
-      margin-top: 40px;
-      font-size: 1.5em;
-      animation: glow 2s infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% { color: #ff6eb4; }
-      50% { color: gold; }
-    }
-
     .particle {
-      position: absolute;
+      position: fixed;
       width: 10px;
       height: 10px;
       background: pink;
       border-radius: 50%;
       opacity: 0.6;
-      animation: float 8s linear infinite;
-      z-index: 0;
+      pointer-events: none;
+      animation: float 12s linear infinite;
     }
 
     @keyframes float {
-      from { transform: translateY(0); }
-      to { transform: translateY(-120vh); }
+      to {
+        transform: translateY(-120vh);
+      }
     }
 
-    audio { display: none; }
+    #easter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 28px;
+      opacity: 0.3;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    #secret {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ffe0f7;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      font-size: 1.5rem;
+      z-index: 1001;
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    }
+
+    body.dark #secret {
+      background: #2a2547;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
-  <!-- Custom Cursor -->
-  <div class="cursor" id="cursor"></div>
+  <div id="cursor"></div>
+  <button id="themeToggle" onclick="toggleTheme()">Toggle Theme</button>
+  <h1>🎁 Special Messages</h1>
 
-  <!-- Theme Toggle Button -->
-  <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+  <div class="container" id="giftContainer"></div>
 
-  <h1>🎁 Episode 6: The Final Surprise</h1>
-
-  <div class="gifts">
-    <!-- Gift Boxes with sender info -->
-    <div class="gift" onclick="revealMessage(this, 0)">
-      <div class="message"><strong>From: Shadman</strong><br>happy bday hrum, congrats on turning 19, but IMAGINE turning into an odd number, i could NEVER, i think this year is gonna be ASS for you but Good luck, ur parents are probably looking for marriage partners too, get uzair in line if you dont like anyone they choose (i hope u choose uzair bhai), plus, you could probably beat Ahmed Ali in an arm wrestle, but if you lose then u lost to a guy whose been using "malaria" as an excuse for over 5 years cus bros lazy to gain muscle 😂 and i know you might think "im bigger now" since you got older, but no, u didnt get taller, ur still a midget and wont even reach the top shelf, women stop growing at 18 or something, but good news is you can pick up rocks faster and throw it at me or uzair 😂</div>
-    </div>
-    <div class="gift" onclick="revealMessage(this, 1)">
-      <div class="message"><strong>From: Zoya</strong><br>Happy Birthday Hrum
-Since 19 February 2023 I am grateful to have a best friend like you, you are a gem of a person and i am lucky to have a friend like you. Thank you for being by my side always, guiding me, standing beside me in my worst, sharing gossip of our ex head girl and the third wheeler in your academy it made me laugh a lot. you are an ambitious girl with alot of dreams and i know you will achieve them. My best wishes once again happy birthday DR hrum imran🤍
-~ Rafay</div>
-    </div>
-    <div class="gift" onclick="revealMessage(this, 2)">
-      <div class="message"><strong>From: Raffay</strong><br>You’re more magical than any K-drama ✨</div>
-    </div>
-    <div class="gift" onclick="revealMessage(this, 3)">
-      <div class="message"><strong>From: Shiza</strong><br>I’m grateful for your presence in my life 💖</div>
-    </div>
-    <div class="gift" onclick="revealMessage(this, 4)">
-      <div class="message"><strong>From: Meher</strong><br>Your kindness inspires me everyday 🌸</div>
-    </div>
-    <div class="gift" onclick="revealMessage(this, 5)">
-      <div class="message"><strong>From: Mariam</strong><br>Noona, you’re irreplaceable 💫</div>
-    </div>
+  <div id="messagePopup">
+    <h2 id="senderName"></h2>
+    <p id="messageText"></p>
+    <button id="closeBtn" onclick="closePopup()">Close</button>
   </div>
 
-  <!-- Hidden Final Message -->
-  <div class="easter-egg" id="finalMessage">
-    🌠 “This entire journey was my gift to you... Thank you for being part of my story.” 💌
-  </div>
+  <div id="easter" onclick="document.getElementById('secret').style.display='block'">⭐</div>
+  <div id="secret">💖 You found the secret star! You're loved more than you know.</div>
 
-  <a href="ep5.html" id="nextBtn"><button class="btn" disabled>Go to Episode 5 ⬅️</button></a>
-  <a href="index.html" id="nextBtn"><button class="btn" disabled>Go to Main Menu ➡️</button></a>
-  <!-- Background Music -->
-  <audio autoplay loop id="bgMusic">
-    <source src="your-song.mp3" type="audio/mp3">
+  <audio id="bgm" loop>
+    <source src="Song1.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // Cursor + Trail
-    const cursor = document.getElementById("cursor");
-    document.addEventListener("mousemove", e => {
-      cursor.style.left = e.pageX + "px";
-      cursor.style.top = e.pageY + "px";
+    const messages = [
+      { sender: "Shadman", text: "happy bday hrum, congrats on turning 19, but IMAGINE turning into an odd number, i could NEVER, i think this year is gonna be ASS for you but Good luck, ur parents are probably looking for marriage partners too, get uzair in line if you dont like anyone they choose (i hope u choose uzair bhai), plus, you could probably beat Ahmed Ali in an arm wrestle, but if you lose then u lost to a guy whose been using "malaria" as an excuse for over 5 years cus bros lazy to gain muscle 😂 and i know you might think "im bigger now" since you got older, but no, u didnt get taller, ur still a midget and wont even reach the top shelf, women stop growing at 18 or something, but good news is you can pick up rocks faster and throw it at me or uzair 😂" },
+      { sender: "Ali", text: "Thanks for always being there. Happy birthday!" },
+      { sender: "Sara", text: "Wishing you joy and love always!" },
+      { sender: "Usman", text: "You're truly one of a kind. Never change!" },
+      { sender: "Noona", text: "My favorite person in the universe!" }
+    ];
 
-      let trail = document.createElement("div");
-      trail.className = "trail";
-      trail.style.left = e.pageX + "px";
-      trail.style.top = e.pageY + "px";
-      document.body.appendChild(trail);
-      setTimeout(() => trail.remove(), 500);
+    const giftContainer = document.getElementById('giftContainer');
+
+    messages.forEach((msg, i) => {
+      const gift = document.createElement('div');
+      gift.className = 'gift';
+      gift.onclick = () => showPopup(msg.sender, msg.text);
+      giftContainer.appendChild(gift);
     });
 
-    // Theme Toggle
+    function showPopup(sender, text) {
+      document.getElementById('senderName').textContent = `From: ${sender}`;
+      document.getElementById('messageText').textContent = text;
+      document.getElementById('messagePopup').style.display = 'block';
+    }
+
+    function closePopup() {
+      document.getElementById('messagePopup').style.display = 'none';
+    }
+
     function toggleTheme() {
-      document.body.classList.toggle("starry");
+      document.body.classList.toggle('dark');
     }
 
-    // Reveal Messages
-    let opened = Array(6).fill(false);
+    // custom cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.pageX + 'px';
+      cursor.style.top = e.pageY + 'px';
 
-    function revealMessage(el, index) {
-      // Close all others
-      document.querySelectorAll('.message').forEach(msg => msg.style.display = 'none');
+      const trail = document.createElement('div');
+      trail.className = 'trail';
+      trail.style.left = e.pageX + 'px';
+      trail.style.top = e.pageY + 'px';
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 600);
+    });
 
-      const msg = el.querySelector('.message');
-      msg.style.display = 'block';
-      opened[index] = true;
+    // background particles
+    setInterval(() => {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * window.innerWidth + 'px';
+      p.style.top = window.innerHeight + 'px';
+      p.style.animationDuration = 8 + Math.random() * 6 + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 14000);
+    }, 800);
 
-      // Confetti burst
-      for (let i = 0; i < 20; i++) {
-        let p = document.createElement("div");
-        p.className = "particle";
-        p.style.left = Math.random() * window.innerWidth + "px";
-        p.style.top = window.scrollY + Math.random() * window.innerHeight + "px";
-        p.style.animationDuration = (4 + Math.random() * 4) + "s";
-        document.body.appendChild(p);
-        setTimeout(() => p.remove(), 4000);
-      }
-
-      // Reveal Final Message
-      if (opened.every(Boolean)) {
-        document.getElementById("finalMessage").style.display = "block";
-      }
-    }
-
-    // Floating background particles
-    window.onload = () => {
-      for (let i = 0; i < 30; i++) {
-        let p = document.createElement("div");
-        p.className = "particle";
-        p.style.left = Math.random() * window.innerWidth + "px";
-        p.style.top = Math.random() * window.innerHeight + "px";
-        p.style.animationDuration = (6 + Math.random() * 6) + "s";
-        document.body.appendChild(p);
-      }
-    }
+    // autoplay music after interaction
+    document.body.addEventListener('click', () => {
+      document.getElementById('bgm').play();
+    }, { once: true });
   </script>
 </body>
 </html>
