@@ -104,28 +104,26 @@ a{text-decoration:none}
 <div id="secretStar" title="secret">✨</div>
 
 <div class="container">
-  <h1>Choose Your Birthday Adventure</h1>
+  <h1>🎊EP1-Choose Your Birthday Adventure🎊</h1>
   <img src="hrum_image.png" alt="Hrum" class="hero">
 
   <div id="typed"></div>
 
   <div class="choices">
-    <button class="btn" onclick="pick(0)">Magical Picnic</button>
-    <button class="btn" onclick="pick(1)">Rooftop Dinner</button>
-    <button class="btn" onclick="pick(2)">Jeju Trip</button>
-    <button class="btn" onclick="pick(3)">Movie Night</button>
-    <button id="secretOption" class="btn" style="display:none" onclick="pick(4)">✨ Secret Option</button>
+    <button class="btn" onclick="pick(0)">Birthday Party With Friendsc</button>
+    <button class="btn" onclick="pick(1)">Spend Time With Family</button>
+    <button class="btn" onclick="pick(2)">Relax At Home</button>
+    <button class="btn" onclick="pick(3)">Go Out Alone</button>
+    <button id="secretOption" class="btn" style="display:none" onclick="pick(4)">✨ Super Secret Special (Do not touch)</button>
   </div>
 
   <div id="output"></div>
 
-  <a href="index.html" id="nextBtn"><button class="btn" disabled>Go to Main Menu ⬅️</button></a>
-  <a href="ep2.html" id="nextBtn"><button class="btn" disabled>Go to Episode 2 ➡️</button></a>
 </div>
 
 <!-- Popup -->
 <div id="popup"><div class="popup-inner">
-  <p>🌟 Hidden Message 🌟<br>“Under every star, I find a reason to smile—and that reason is you.”</p>
+  <p>🌟 Hidden Message 🌟<br>“Under every star, I find a reason to smile—and that reason is you.enough with the cringe lol but this was the second easter egg congrats if you found both.”</p>
   <button class="close-btn" onclick="popup.style.display='none'">Close</button>
 </div></div>
 
@@ -176,11 +174,11 @@ setInterval(()=>{
 
 // ---------- Choice Logic ----------
 const messages=[
-  '🧺 You chose a magical picnic by the river!',
-  '🌌 You chose a starlit rooftop dinner!',
-  '✈️ You whisked away to Jeju Island!',
-  '🎬 You picked a cozy movie night under the stars!',
-  '💎 You unlocked a secret treasure adventure!'
+  '🧺 You chose going out with friends, Your friends are going to be happy, they cant wait to hangout with you and love to as well!! (Pstt Invite me Too Plzz i am joking have fun)',
+  '🌌 You chose family, great option what better thing to do than spend time with people who brought you in the world and took care of you till now, your safe space,your comfort!!',
+  '✈️ You Chose staying at home option i see, what are you gonna do sleep, watch kdramas and maybe eat food basically in your terms wasting time but today is your day waste it as much as you want as long as your happy!!',
+  '🎬 You chose going out alone over everythingg else, well I admire you because i could never do that but if thats what makes you happy go for it.(There are 2 hidden easter eggs on this EP find em all)',
+  '💎 Wow you seriously opened it when i told you not too jinja!!Well then here you go, this option is planning something with Uzair and giving him your time today and he will try to make it special,It said do no touch for a reason,well if you do end up going with this 100 Points For Gryffindor(Psst this was the 1st Easter Egg)'
 ];
 let picked=new Array(5).fill(false);
 function pick(idx){
