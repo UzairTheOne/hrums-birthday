@@ -49,12 +49,12 @@
       z-index: 10;
     }
     #board {
-      width: 480px;
-      height: 360px;
-      margin: 10px auto;
+      width: 1104px;
+      height: 736px;
+      margin: 20px auto;
       position: relative;
-      border: 3px dashed var(--accent);
-      border-radius: 12px;
+      border: 5px dashed var(--accent);
+      border-radius: 16px;
       background-color: white;
     }
     .piece {
@@ -232,7 +232,7 @@
             placed++;
             confetti({ particleCount: 40, spread: 70 });
             if (placed === rows * cols) {
-              document.getElementById("msg").textContent = "🎉 You completed the puzzle!";
+              document.getElementById("msg").textContent = "🎉 You completed the puzzle!Someone told me you might be more fond of this memory more then the others so I picked it, I hope it was to your liking.";
               nextBtn.style.display = "inline-block";
               confetti({ particleCount: 200, spread: 90 });
             }
