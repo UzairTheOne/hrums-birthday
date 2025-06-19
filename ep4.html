@@ -138,17 +138,14 @@
   <div class="cursor" id="cursor"></div>
 
   <div class="container">
-    <h1>Episode 4: A Quiz About Us 💕</h1>
+    <h1>💕 Episode 4: A Quiz About Us 💕</h1>
     <div id="quiz"></div>
     <div class="score" id="score"></div>
-    <div id="easterEgg">🎉 You remembered everything perfectly! Here's a secret: You're my favorite person in the universe 💖</div>
+    <div id="easterEgg">🎉 You remembered everything perfectly! Here's a secret: You're my favorite person in the universe, or are you? Well anyways you know the answer to that but I am glad you got everything correct.Have Fun with the last to Episodes they are the most important ones.I hope you like em!!! Happy birthday once again 💖</div>
   </div>
 
-  <a href="ep3.html" id="nextBtn"><button class="btn" disabled>Go to Episode 3 ⬅️</button></a>
-  <a href="ep5.html" id="nextBtn"><button class="btn" disabled>Go to Episode 5 ➡️</button></a>
-
   <audio id="bgMusic" loop autoplay>
-    <source src="quiz-music.mp3" type="audio/mp3" />
+    <source src="Song1.mp3" type="audio/mp3" />
   </audio>
 
   <canvas id="particles"></canvas>
@@ -175,12 +172,14 @@
 
     // Quiz questions
     const questions = [
-      { q: "We first started talking in?", options: ["2019", "2020", "2021"], answer: "2020" },
-      { q: "True or False: We love the same K-dramas.", options: ["True", "False"], answer: "True" },
-      { q: "Where did we plan to travel someday?", options: ["Seoul", "Tokyo", "Paris"], answer: "Seoul" },
-      { q: "True or False: We both love late-night convos.", options: ["True", "False"], answer: "True" },
-      { q: "Which app do we always use to chat?", options: ["WhatsApp", "Telegram", "Instagram"], answer: "Instagram" },
-      { q: "True or False: I forgot your birthday once.", options: ["True", "False"], answer: "False" }
+      { q: "We first started talking in?", options: ["2019", "2020", "2021","2022"], answer: "2020" },
+      { q: "I Got An A* in which subject in O levels because of You!!", options: ["Math", "English","Biology"], answer: "English" },
+      { q: "What was the First drama You Recommended To Me", options: ["WIFY", "Its Ok to be Not OK", "Lovely Runner"], answer: "WIFY" },
+      { q: "Which Subject Did I Check your Papers of", options: ["Math", "Physics","Chemistry"], answer: "Math" },
+      { q: "What is the thing I LOVE most about you!!", options: ["Personality", "Looks", "Smartness","All Of The Above"], answer: "All of The Above" },
+      { q: "Do I currently Like Someone", options: ["Yes", "No"], answer: "Yes" },
+      { q: "How Many Anime EP Did I watch in 3 Months in A2", options: ["3000","1500","750"], answer: "3000"},
+      { q: "Will We Ever Meet Face to Face ( Specifically in these Vacations)?",options:["Yes","No","Eww No"], answer: "Yes},
     ];
 
     let current = 0;
